@@ -9,6 +9,7 @@ use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
 
+
 if (isset($_SERVER['REQUEST_URI'])) {
     //$page = explode("/", $_SERVER['REQUEST_URI']);
     try {
