@@ -1,0 +1,17 @@
+{
+  "name": "vendor_name/olympiad-vetmanager",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "require": {
+    "ext-iconv": "*",
+    "ext-simplexml": "*",
+    "vlucas/phpdotenv": "*",
+    "ext-pdo": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "App\\": "src"
+    }
+  }
+}
