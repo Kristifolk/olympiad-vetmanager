@@ -3,6 +3,7 @@
   "description": "description",
   "minimum-stability": "stable",
   "license": "proprietary",
+  "version": "0.1",
   "require": {
     "ext-iconv": "*",
     "ext-simplexml": "*",

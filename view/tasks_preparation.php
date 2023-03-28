@@ -6,7 +6,10 @@
         <p>По истечению времени вы не сможете продолжать выполнение задания</p>
         <p>Вы можете закончить олимпиаду досрочно</p>
         <p>Желаем вам удачи в прохождении</p>
-        <a href="/task">Старт</a>
-        <a href="/">Назад</a>
+        <h1>Ваш логин: <?= $this->arguments['login'] ?></h1>
+        <h1>Ваш пароль: mrIA62dj</h1>
+        <h1>Платформа для выполнения задания: <a href="https://deviproff.vetmanager2.ru/login.php" target="_blank">deviproff.vetmanager2.ru</a></h1>
+        <a class="btn btn-for-a btn-start" href="/first_task">Старт</a>
+        <a class="btn btn-for-a btn-start" href="/">Назад</a>
     </div>
 </section>

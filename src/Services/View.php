@@ -5,7 +5,7 @@ class View
 {
     public function __construct(
         private readonly ViewPath $viewPath,
-        private array             $arguments = []
+        public array             $arguments = []
     )
     {
     }
