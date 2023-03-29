@@ -12,12 +12,6 @@
     <body>
         <main id="app">
             <?= $this->arguments['content'] ?>
-            <?php
-            if(!empty($this->arguments['timer']))
-            {
-                echo $this->arguments['timer'];
-            }
-            ?>
         </main>
         <script src="/resources/js/main.js"></script>
     </body>

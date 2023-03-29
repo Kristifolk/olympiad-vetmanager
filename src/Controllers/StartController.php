@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -13,14 +13,14 @@ class StartController
     {
         $html = (string)new View(ViewPath::Start);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response($templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echo();
     }
 
     public function viewTasksPreparation(): void
     {
         $html = new View(ViewPath::TasksPreparation, ['login' => $this->generateUserLogin()]);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response($templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echo();
     }
 
 

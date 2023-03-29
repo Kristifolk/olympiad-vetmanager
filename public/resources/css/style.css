@@ -118,6 +118,16 @@ li {
     font-weight: 500;
 }
 
+.input-timer {
+    width: 35px;
+    font-size: 32px;
+    line-height: 30px;
+    letter-spacing: 0.15px;
+    font-weight: 500;
+    background-color: transparent;
+    border: 0px solid;
+}
+
 /*PERCENTAGE COMPLETION*/
 .percentage-completion-container {
     margin: 20px;

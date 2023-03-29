@@ -1,9 +1,7 @@
-<div>
-    <div class="timer-container">
-        <p class="timer-content"><span class="timer-minute">50</span>:<span class="timer-second">59</span></p>
-    </div>
-    <div class="percentage-completion-container">
-        <p>Ваш прогресс выполнения задания</p>
-        <div class="percentage-completion">0%</div>
+<div class="timer-container">
+    <div class="timer-content">
+        <input name="timer-minute" id="timer-minute" class="timer-minute input-timer" value="<?= $_SESSION["EndTimeMinute"] = $this->arguments['startTimeMinute'] ?>>" readonly>
+        :
+        <input name="timer-second" id="timer-second" class="timer-second input-timer" value="<?= $_SESSION["EndTimeSecond"] = $this->arguments['startTimeSecond'] ?>" readonly>
     </div>
 </div>

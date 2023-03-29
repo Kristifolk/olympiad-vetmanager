@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
@@ -8,32 +8,48 @@ use App\Services\ViewPath;
 
 class ResultController
 {
+
+    public function __construct(
+    )
+    {
+    }
+
     public function viewResult(): void
     {
         $html = new View(ViewPath::Result,
             [
                 'fullTransitTime' =>
                     [
-                        'minute' => 20,
-                        'second' => 10,
+                        'minute' => $this->calculateSumTimeMinuteLoad(),
+                        'second' => $this->calculateSumTimeSecondLoad(),
                     ],
                 'taskTransitTime' =>
                     [
                         [
                             'numberTask' => 1,
-                            'minute' => 5,
-                            'second' => 10,
+                            'minute' => $_SESSION["1"]["ResultTimeMinute"],
+                            'second' => $_SESSION["1"]["ResultTimeSecond"],
                         ],
                         [
                             'numberTask' => 2,
-                            'minute' => 45,
-                            'second' => 2,
+                            'minute' => $_SESSION["2"]["ResultTimeMinute"],
+                            'second' => $_SESSION["2"]["ResultTimeSecond"],
                         ],
                     ]
             ]
         );
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response($templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echo();
+    }
+
+    public function calculateSumTimeMinuteLoad(): int
+    {
+        return $_SESSION["1"]["ResultTimeMinute"] + $_SESSION["2"]["ResultTimeMinute"];
+    }
+
+    public function calculateSumTimeSecondLoad(): int
+    {
+        return $_SESSION["1"]["ResultTimeSecond"] + $_SESSION["2"]["ResultTimeSecond"];
     }
 }

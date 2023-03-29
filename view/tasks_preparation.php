@@ -9,7 +9,7 @@
         <h1>Ваш логин: <?= $this->arguments['login'] ?></h1>
         <h1>Ваш пароль: mrIA62dj</h1>
         <h1>Платформа для выполнения задания: <a href="https://deviproff.vetmanager2.ru/login.php" target="_blank">deviproff.vetmanager2.ru</a></h1>
-        <a class="btn btn-for-a btn-start" href="/first_task">Старт</a>
+        <a class="btn btn-for-a btn-start" href="/task?id=1">Старт</a>
         <a class="btn btn-for-a btn-start" href="/">Назад</a>
     </div>
 </section>

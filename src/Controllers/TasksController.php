@@ -1,7 +1,8 @@
-<?php
+<?php declare(strict_types=1);
 
 namespace App\Controllers;
 
+use App\Class\Timer;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -9,9 +10,28 @@ use App\Services\ViewPath;
 class TasksController
 {
     public string $clientFullName;
+    public int $taskNumber = 1;
+    public int $startTimeOlympiadMinute;
+    public int $startTimeOlympiadSecond;
+
+    public function __construct(
+        public int $idTask,
+    )
+    {
+    }
 
     public function viewTaskType(ViewPath $path): void
     {
+//        $_SESSION["$this->idTask"] = [
+//            "StartTimeMinute" => ,
+//            "StartTimeSecond" => ,
+//            "ResultTimeMinute" => ,
+//            "ResultTimeSecond" => ,
+//            "EndTimeMinute" => ,
+//            "EndTimeSecond" => ,
+//        ];
+        (new Timer())->startTime($this->idTask);
+        //$this->time = (new Timer())->getLeadTimeTask($timeGetMinute, $timeGetSecond);
         $html = new View(
             $path,
             [
@@ -22,10 +42,26 @@ class TasksController
                 'animalAge' => $this->generateAnimalAge()
             ]
         );
-        $timerHtml = new View(ViewPath::TimerContent);
-        $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html, 'timer' => $timerHtml]);
-        (new Response($templateWithContent))->echo();
+        $timerHtml = new View(ViewPath::TimerContent,
+            [
+                'startTimeMinute' => $_SESSION["$this->idTask"]["StartTimeMinute"],
+                'startTimeSecond' => $_SESSION["$this->idTask"]["StartTimeSecond"]
+            ]
+        );
+        $percentageCompletionHtml = new View(ViewPath::PercentageCompletionContent);
+        $templateWithContentTask = new View(ViewPath::TemplateContentTask,
+            [
+                'task' => $html,
+                'timer' => $timerHtml,
+                'percentageCompletion' => $percentageCompletionHtml,
+                'taskNumber' => $this->taskNumber
+            ]
+        );
+        $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $templateWithContentTask]);
+        (new Response((string)$templateWithContent))->echo();
+        $this->taskNumber++;
     }
+
 
     public function generateAnimalAge(): string
     {
