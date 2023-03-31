@@ -1,14 +1,17 @@
 {
   "name": "vendor_name/olympiad-vetmanager",
   "description": "description",
-  "minimum-stability": "stable",
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "license": "proprietary",
   "version": "0.1",
   "require": {
     "ext-iconv": "*",
     "ext-simplexml": "*",
     "vlucas/phpdotenv": "*",
-    "ext-pdo": "*"
+    "ext-pdo": "*",
+    "guzzlehttp/guzzle": "^7.0",
+    "ioncurly/vetmanager-api-gateway": "dev-master"
   },
   "autoload": {
     "psr-4": {

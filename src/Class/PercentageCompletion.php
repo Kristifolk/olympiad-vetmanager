@@ -1,7 +1,7 @@
 <?php declare(strict_types=1);
 
 namespace App\Class;
-
+session_start();
 class PercentageCompletion
 {
     public int $startPercent = 0;
@@ -24,6 +24,6 @@ class PercentageCompletion
 
     public function calculatePercentageCountParagraph(): int
     {
-        return 100 / 10;
+        return 100 / 16;
     }
 }

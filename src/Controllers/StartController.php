@@ -2,9 +2,12 @@
 
 namespace App\Controllers;
 
+use App\Class\Task\AuthorizationRequest;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
+
+use GuzzleHttp\Client;
 
 session_start();
 
@@ -22,6 +25,7 @@ class StartController
     public function viewTasksPreparation(): void
     {
         $_SESSION["TestLogin"] = $this->generateUserLogin();
+
         $html = new View(ViewPath::TasksPreparation, ['login' => $_SESSION["TestLogin"]]);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();

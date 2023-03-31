@@ -7,8 +7,8 @@
         <p>Вы можете закончить олимпиаду досрочно</p>
         <p>Желаем вам удачи в прохождении</p>
         <h1>Ваш логин: <?= $this->arguments['login'] ?></h1>
-        <h1>Ваш пароль: mrIA62dj</h1>
-        <h1>Платформа для выполнения задания: <a href="https://deviproff.vetmanager2.ru/login.php" target="_blank">deviproff.vetmanager2.ru</a>
+        <h1>Ваш пароль: iJ1x9nfO</h1>
+        <h1>Платформа для выполнения задания: <a href="https://devmel.vetmanager2.ru/login.php" target="_blank">devmel.vetmanager2.ru</a>
         </h1>
         <div class="btn-content">
             <a class="btn btn-for-a btn-start" href="/start">Старт</a>

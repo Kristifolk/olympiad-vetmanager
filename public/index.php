@@ -2,6 +2,7 @@
 require_once dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.php";
 
 
+use App\Class\Task\AuthorizationRequest;
 use App\Class\Timer;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
