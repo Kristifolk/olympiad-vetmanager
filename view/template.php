@@ -1,5 +1,6 @@
+<?php session_start();?>
 <!doctype html>
-<html lang="en">
+<html lang="en" class="page">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport"
@@ -9,8 +10,8 @@
 
         <title>Олимпиада Vetmanager</title>
     </head>
-    <body>
-        <main id="app">
+    <body class="main-background">
+        <main id="app" >
             <?= $this->arguments['content'] ?>
         </main>
         <script src="/resources/js/main.js"></script>

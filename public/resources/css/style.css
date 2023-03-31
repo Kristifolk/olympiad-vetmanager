@@ -15,7 +15,6 @@
 }
 
 body {
-    height: 100%;
     margin: 0px;
     padding: 0px;
     font-family: 'Droid Sans Bold font', sans-serif;;
@@ -26,7 +25,9 @@ body {
     background-color: var(--basic-white);
 }
 
+
 h1, h2, h3 {
+    line-height: 1.5;
     margin: 10px 5px;
 }
 
@@ -53,17 +54,34 @@ li {
     list-style: none;
 }
 
+.main-background {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-image: url("../img/background_programma-dlya-veter.jpg");
+}
+
 .container {
     display: flex;
     flex-direction: column;
     height: 100%;
     align-items: center;
-    max-width: 1160px;
+    max-width: 1000px;
     padding: 0px 20px;
 
-    margin-top: 10%;
     margin-left: auto;
     margin-right: auto;
+}
+.container-section {
+    max-width: 1000px;
+    padding: 0px 20px;
+
+    margin-left: auto;
+    margin-right: auto;
+}
+.btn-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .btn {
@@ -90,6 +108,8 @@ li {
 }
 
 .btn-for-a {
+    /*margin-right: auto;*/
+    /*margin-left: auto;*/
     display: block;
     text-align: center;
     width: 15em;
@@ -145,4 +165,37 @@ li {
     line-height: 30px;
     letter-spacing: 0.15px;
     font-weight: 500;
+}
+
+.input-percentage-completion {
+    color: var(--basic-white);
+    width: 82px;
+    display: block;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+/*START PAGE*/
+.section-start {
+    max-width: 1000px;
+    font-size: 24px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20%;
+    text-align: center;
+}
+
+/*NOT FOUND*/
+.container-not-found {
+    margin-top: 20%;
+    max-width: 1000px;
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.header-not-found {
+    display: inline;
+    font-size: 250px;
+    flex-direction: column;
 }

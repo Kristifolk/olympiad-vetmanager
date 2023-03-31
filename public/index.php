@@ -10,41 +10,23 @@ use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
 
-
-
-
-
 if (isset($_SERVER['REQUEST_URI'])) {
     try {
         match ($_SERVER['REQUEST_URI']) {
-            '/' => (new StartController())->viewStart(),
+            '/' => (new StartController())->viewInstructions(),
             '/tasks_preparation' => (new StartController())->viewTasksPreparation(),
-            '/task?id=1' => (new TasksController($_GET['id']))->viewTaskType(ViewPath::FirstTypeTask),
-            '/task?id=2' => (new TasksController($_GET['id']))->viewTaskType(ViewPath::SecondTypeTask),
-            '/results' => (new ResultController())->viewResult(),
+            '/start' => (new Timer())->startTimer(),
+            '/task?id=1', '/task?id=2'=> (new TasksController($_GET['id']))->viewTask(),
+            '/store?id=1', '/store?id=2' => (new Timer())->storeTaskValue($_GET['id'], null),
+            '/result' => (new ResultController())->viewResult(),
+            '/store?id=1&option=result' => (new Timer())->storeTaskValue($_GET['id'], $_GET['option']),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {
-        //$html = new View(ViewPath::NotFound);
-        //(new Response( $html))->echo();
+        $html = new View(ViewPath::NotFound);
+        $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
+        (new Response((string)$templateWithContent))->echo();
     }
 }
-
-//if(isset($_GET['task-number'])) {
-//
-//    try {
-//        match ($_GET['task-number']) {
-//            '1' => (new Timer(49, 59))->getTimeBalance((int)mb_substr($_GET['timer-minute'], 0, -1), $_GET['timer-second'], ViewPath::SecondTypeTask),
-//            '2' => (new Timer(49, 59))->getTimeBalance((int)mb_substr($_GET['timer-minute'], 0, -1), $_GET['timer-second'], ViewPath::Result),
-//            //'result' => (new Timer(49, 59))->viewResult($_GET['timer-minute'], $_GET['timer-second'])
-//            '1-result' => (new ResultController((int)mb_substr($_GET['timer-minute'], 0, -1), $_GET['timer-second'], 0, 0))->viewResult(),
-//            'all-result' => (new ResultController((int)mb_substr($_GET['timer-minute'], 0, -1), $_GET['timer-second'], (int)mb_substr($_GET['timer-minute'], 0, -1), $_GET['timer-second']))->viewResult(),
-//            //'result' => (new Timer(49, 59))->viewResult($_GET['timer-minute'], $_GET['timer-second'])
-//        };
-//    } catch (Exception $e) {
-//        //$html = new View(ViewPath::NotFound);
-//        //(new Response( $html))->echo();
-//    }
-//}
 
 exit(0);

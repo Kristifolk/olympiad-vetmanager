@@ -1,1 +1,11 @@
 <input name="task-number" id="task-number" value="<?= $this->arguments['taskNumber'] ?>" hidden="hidden">
+
+
+//        $_SESSION["$this->idTask"] = [
+//            "StartTimeMinute" => ,
+//            "StartTimeSecond" => ,
+//            "ResultTimeMinute" => ,
+//            "ResultTimeSecond" => ,
+//            "EndTimeMinute" => ,
+//            "EndTimeSecond" => ,
+//        ];

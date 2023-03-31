@@ -1,11 +1,23 @@
-const timerContent = document.querySelector('.timer-content');
-const timerStartTime = document.querySelector('.start-time');
-
 let timerMinuteContent = document.querySelector('.timer-minute');
 let timerSecondContent = document.querySelector('.timer-second');
 
+const btnNextTask = document.querySelector('#btn-task');
+const numberTask = document.querySelector('.task-number');
+const btnResultTasks = document.querySelector('#btn-result');
+
+timerMinuteContent.value = 49 - timerMinuteContent.value;
+timerSecondContent.value = 59 - timerSecondContent.value;
+
+if (numberTask.innerHTML === '1') {
+    btnResultTasks.href = "/store?id=1&option=result";
+}
+
+if (numberTask.innerHTML === '2') {
+    btnNextTask.style.visibility = 'hidden';
+    btnResultTasks.href = "/store?id=2";
+}
+
 setInterval(function () {
-    let timerSecondContent = document.querySelector('.timer-second');
     let timerSecondValue = timerSecondContent.value;
 
     if (timerSecondValue === "00") {
@@ -23,7 +35,6 @@ setInterval(function () {
 
 
 setInterval(function () {
-    let timerMinuteContent = document.querySelector('.timer-minute');
     let timerMinuteValue = timerMinuteContent.value;
 
     if (timerMinuteValue === "00") {
@@ -34,15 +45,4 @@ setInterval(function () {
     return timerMinuteContent.value = timerMinuteValue;
 }, 60000);
 
-const btnNextTask = document.querySelector('#btn-task');
-const numberTask = document.querySelector('.task-number');
-//const btnResult = document.querySelector('#btnResult');
-
-// if (numberTask.innerHTML === '1') {
-//     btnResult.href = "/task?id=2";
-// }
-if (numberTask.innerHTML === '2') {
-    btnNextTask.style.visibility = 'hidden';
-    //btnResult.href = "/results";
-}
 

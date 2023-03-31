@@ -1,4 +1,5 @@
-<section>
+<?php session_start(); ?>
+<section class="container">
     <h2>Ваш результат</h2>
     <div>
         <h3>Общее время прохождения олимпиады: <span class="changeable-text"></span></h3>

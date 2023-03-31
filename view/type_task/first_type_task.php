@@ -30,7 +30,7 @@
     <p>Вы врач в клинике “Котопес”, проведите эту ситуацию в программе “Ветменеджер” по адресу: адрес
         <a href="https://deviproff.vetmanager2.ru/login.php" target="_blank">deviproff.vet-manager.ru</a>
         , используя логин:
-        <span class="changeable-text">admin</span>
+        <span class="changeable-text"><?= $_SESSION["TestLogin"]?></span>
         и пароль
         <span class="changeable-text">mrIA62dj</span>
     </p>

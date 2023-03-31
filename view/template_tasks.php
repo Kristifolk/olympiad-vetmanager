@@ -1,10 +1,14 @@
-<section>
-    <?= $this->arguments['task'] ?>
-    <div class="execution-result">
+<section class="container">
+    <div id="content-task">
+        <?= $this->arguments['task'] ?>
+    </div>
+    <div method="post" class="execution-result form-current-data">
         <input name="task-number" id="task-number" value="<?= $this->arguments['taskNumber'] ?>" hidden="hidden">
         <?= $this->arguments['timer'] ?>
         <?= $this->arguments['percentageCompletion'] ?>
-        <a href="/task?id=2" id="btn-task" class="btn btn-for-a btn-task">Следующее задание</a>
     </div>
-    <a href="/results" id="btnResult" class="btn btn-for-a btn-start">Закончить олимпиаду</a>
+    <div class="btn-content">
+        <a href="/store?id=1" id="btn-task" class="btn btn-for-a btn-task">Следующее задание</a>
+        <a href="/store?id=1&option=result" id="btn-result" class="btn btn-for-a btn-start">Закончить олимпиаду</a>
+    </div>
 </section>

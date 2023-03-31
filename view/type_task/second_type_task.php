@@ -27,8 +27,10 @@
     </p>
     <h4>Ваша цель</h4>
     <p>Вы врач в клинике “Котопес”, проведите эту ситуацию в программе “Ветменеджер” по адресу: адрес
-        deviproff.vet-manager.ru, используя логин: admin и пароль mrIA62dj</p>
+        deviproff.vet-manager.ru, используя логин:
+        <span class="changeable-text"><?= $_SESSION["TestLogin"]?></span>
+        и пароль
+        <span class="changeable-text">mrIA62dj</span>
+    </p>
     <p>Время на выполнение задания 25 минут.</p>
 </div>
-
-
