@@ -6,10 +6,13 @@ use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
 
+session_start();
+
 class StartController
 {
     public string $loginUser;
-    public function viewStart(): void
+
+    public function viewInstructions(): void
     {
         $html = (string)new View(ViewPath::Start);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
@@ -18,11 +21,11 @@ class StartController
 
     public function viewTasksPreparation(): void
     {
-        $html = new View(ViewPath::TasksPreparation, ['login' => $this->generateUserLogin()]);
+        $_SESSION["TestLogin"] = $this->generateUserLogin();
+        $html = new View(ViewPath::TasksPreparation, ['login' => $_SESSION["TestLogin"]]);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();
     }
-
 
     public function generateUserLogin(): string
     {

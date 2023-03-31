@@ -7,55 +7,44 @@ use App\Controllers\TasksController;
 use App\Interfaces\TimeInterface;
 use App\Services\ViewPath;
 
-class Timer //implements TimeInterface
+session_start();
+
+class Timer
 {
-
-    public function __construct(
-//        public int $timeFullMinute,
-//        public int $timeFullSecond
-    )
+    public function startTimer(): void
     {
+        $_SESSION["StartTime"] = time();
+        header('Location: /task?id=1');
     }
 
-    public function startTime(int $idTask): void
+    /**
+     * @return array{minutes:int, seconds:int}
+     */
+    public function getTimerValues(): array
     {
-        session_start();
-        $_SESSION["$idTask"] = [
-            "StartTimeMinute" => 49,
-            "StartTimeSecond" => 59,
+        $currentTime = time();
+        $timeDifference = $currentTime - $_SESSION["StartTime"];
+
+        return $this->convertTimeOnMinuteAndSecond($timeDifference);
+    }
+
+    public function storeTaskValue(int $id, ?string $option): void
+    {
+        $_SESSION["timeEndTask-$id"] = $this->getTimerValues();
+
+        if ($id == '2' or $option == 'result') {
+            header('Location: /result');
+        } else {
+
+            header('Location: /task?id=2');
+        }
+    }
+
+    public function convertTimeOnMinuteAndSecond(int $timeDifference): array
+    {
+        return [
+            'minutes' => round($timeDifference / 60),
+            'seconds' => $timeDifference % 60
         ];
-        $this->getLeadTimeTaskResult($idTask);
-    }
-
-    public function getLeadTimeTaskResult(int $idTask): void
-    {
-        $_SESSION["$idTask"] = [
-            "ResultTimeMinute" => $this->calculationTimeTransitMinute($_SESSION["EndTimeMinute"]),
-            "ResultTimeSecond" => $this->calculationTimeTransitSecond($_SESSION["EndTimeMinute"])
-        ];
-    }
-
-//    public function getTimeBalance(): void
-//    {
-//        $this->getLeadTimeTaskResult($_SESSION["EndTimeMinute"], $_SESSION["EndTimeSecond"]);
-
-//        $_SESSION["EndTimeMinute"] =  $_SESSION["StartTimeMinute"];
-//        $_SESSION["EndTimeSecond"] = $_SESSION["StartTimeMinute"];
-        //(new TasksController($this->timeFullMinute, $this->timeFullSecond))->viewTaskType($path);
-        //header("Location: http://localhost:8080/task");
-//        if ($path == ViewPath::Result) {
-//            header("Location: http://localhost:8080/results");
-//            //(new ResultController($this->calculationTimeTransitMinute($timeGetMinute), $this->calculationTimeTransitSecond($timeGetSecond), 0, 0))->viewResult();
-//        }
- //   }
-
-    public function calculationTimeTransitMinute(int $timeGetMinute): int
-    {
-        return $_SESSION["StartTimeMinute"] - $timeGetMinute;
-    }
-
-    public function calculationTimeTransitSecond(int $timeGetSecond): int
-    {
-        return $_SESSION["StartTimeSecond"] - $timeGetSecond;
     }
 }
