@@ -7,13 +7,14 @@ use App\Class\Timer;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
 class TasksController
 {
     public string $clientFullName;
 
     public function __construct(
-        public int $idTask,
+         readonly int $idTask,
     )
     {
     }
@@ -27,19 +28,28 @@ class TasksController
         };
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
     public function viewTask(): void
     {
         $time = (new Timer())->getTimerValues();
         $path = $this->getView();
 
+        $_SESSION['FullNameClient'] = "Шубин Соломон Михайлович"; //$this->generateFullNameClient();
+        $_SESSION['AnimalName'] = $this->generateAnimalName();
+        $animalColor = $this->generateAnimalColor();
+        $_SESSION['AnimalAge'] = $this->generateAnimalAge();
+        $_SESSION['Diagnose'] = "Флегмона";
+
         $html = new View(
             $path,
             [
-                'fullNameClient' => $this->generateFullNameClient(),
+                'fullNameClient' => $_SESSION['FullNameClient'],
                 'lastAndFirstNameClient' => $this->generateLastAndFirstNameClient(),
-                'animalName' => $this->generateAnimalName(),
-                'animalColor' => $this->generateAnimalColor(),
-                'animalAge' => $this->generateAnimalAge()
+                'animalName' => $_SESSION['AnimalName'],
+                'animalColor' => $animalColor,
+                'animalAge' => $_SESSION['AnimalAge']
             ]
         );
 
@@ -51,7 +61,7 @@ class TasksController
         );
         $percentageCompletionHtml = new View(ViewPath::PercentageCompletionContent,
             [
-                'percentageCompletion' => (new PercentageCompletion($_SESSION["TestLogin"], 0))->getPercentageCompletion()
+                'percentageCompletion' => (new PercentageCompletion($this->idTask))->checkCompletedTasksForUser()
             ]
         );
         $templateWithContentTask = new View(ViewPath::TemplateContentTask,
@@ -66,62 +76,96 @@ class TasksController
         (new Response((string)$templateWithContent))->echo();
     }
 
-    public function generateAnimalAge(): string
+    private function generateAnimalAge(): string
     {
         $animalAgeArray = $this->dataAnimalAge();
-        return $animalAgeArray[rand(0, count($animalAgeArray) - 1)];
+        $age = $animalAgeArray[rand(0, count($animalAgeArray) - 1)];
+        $_SESSION['DateOfBirth'] = $age['dateOfBirth'];
+        return $age['totalYears'];
     }
 
-    public function dataAnimalAge(): array
+    private function dataAnimalAge(): array
     {
         return [
-            '2 мес',
-            '6 мес',
-            '8 мес',
-            '12 мес',
-            '18 мес',
-            '2 лет',
-            '3 лет',
-            '4 лет',
-            '5 лет',
-            '6 лет'
+            [
+                'totalYears' => '2 мес',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '6 мес',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '8 мес',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '12 мес',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '18 мес',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '2 лет',
+                'dateOfBirth' => ''],
+            [
+                'totalYears' => '3 лет',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '4 лет',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '5 лет',
+                'dateOfBirth' => ''
+            ],
+            [
+                'totalYears' => '6 лет',
+                'dateOfBirth' => ''
+            ]
         ];
     }
-    public function generateAnimalColor(): string
+
+    private function generateAnimalColor(): string
     {
         $animalColorArray = $this->dataAnimalColor();
-        return $animalColorArray[rand(0, count($animalColorArray) - 1)];
+        $color = $animalColorArray[rand(0, count($animalColorArray) - 1)];
+        $_SESSION['AnimalColor'] = $color['nominativeBase'];
+        return $color['genitiveBase'];
     }
 
-    public function dataAnimalColor(): array
+    private function dataAnimalColor(): array
     {
         return [
-            'белого',
-            'голубого',
-            'голубого черепахового',
-            'черепахового',
-            'колор-поинт',
-            'коричневого',
-            'лилового',
-            'палевого',
-            'персикового',
-            'разнообразного',
-            'рыжого',
-            'серебристого',
-            'серого',
-            'тигрового',
-            'черепахового',
-            'черноподпалого',
-            'черного',
+            ['nominativeBase' => 'белый', 'genitiveBase' => 'белого'],
+            ['nominativeBase' => 'голубой', 'genitiveBase' => 'голубого'],
+            ['nominativeBase' => 'голубой черепаховый', 'genitiveBase' => 'голубого черепахового'],
+            ['nominativeBase' => 'колор-поинт', 'genitiveBase' => 'колор-поинт'],
+            ['nominativeBase' => 'коричневый', 'genitiveBase' => 'коричневого'],
+            ['nominativeBase' => 'лиловый', 'genitiveBase' => 'лилового'],
+            ['nominativeBase' => 'палевый', 'genitiveBase' => 'палевого'],
+            ['nominativeBase' => 'персиковый', 'genitiveBase' => 'персикового'],
+            ['nominativeBase' => 'разнообразный', 'genitiveBase' => 'разнообразного'],
+            ['nominativeBase' => 'рыжий', 'genitiveBase' => 'рыжого'],
+            ['nominativeBase' => 'серебристый', 'genitiveBase' => 'серебристого'],
+            ['nominativeBase' => 'серый', 'genitiveBase' => 'серого'],
+            ['nominativeBase' => 'тигровый', 'genitiveBase' => 'тигрового'],
+            ['nominativeBase' => 'черепаховый', 'genitiveBase' => 'черепахового'],
+            ['nominativeBase' => 'черноподпалый', 'genitiveBase' => 'черноподпалого'],
+            ['nominativeBase' => 'черный', 'genitiveBase' => 'черного'],
         ];
     }
-    public function generateAnimalName(): string
+
+    private function generateAnimalName(): string
     {
         $animalNameArray = $this->dataAnimalName();
         return $animalNameArray[rand(0, count($animalNameArray) - 1)];
     }
 
-    public function dataAnimalName(): array
+    private function dataAnimalName(): array
     {
         return [
             'Фира',
@@ -166,21 +210,33 @@ class TasksController
             'Микаелла'
         ];
     }
-    public function generateFullNameClient(): string
+
+    private function generateFullNameClient(): string
     {
-        $fullNameArray = $this->dataFullNameClient();
-        $this->clientFullName = $fullNameArray[rand(0, count($fullNameArray) - 1)];
+        $nameClientArray = $this->dataNameClient();
+        $surnameClientArray = $this->dataSurnameClient();
+        $patronymicClientArray = $this->dataPatronymicClient();
+
+        $nameClient = 'Соломон';//$nameClientArray[rand(0, count($nameClientArray) - 1)];
+        $surnameClient = 'Шубин';//$surnameClientArray[rand(0, count($surnameClientArray) - 1)];
+        $patronymicClient = 'Михайлович';//$patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
+
+        $_SESSION['NameClient'] = 'Соломон';//$nameClient;
+        $_SESSION['SurnameClient'] = 'Шубин';//$surnameClient;
+        $_SESSION['PatronymicClient'] = 'Михайлович';//$patronymicClient;
+
+        $this->clientFullName = $nameClient . " " . $surnameClient . " " . $patronymicClient;
         return $this->clientFullName;
     }
 
-    public function generateLastAndFirstNameClient(): string
+    private function generateLastAndFirstNameClient(): string
     {
         $fullName = explode(" ", $this->clientFullName);
         return $fullName[1] . " " . $fullName[2];
     }
 
 
-    public function dataNameClient(): array
+    private function dataNameClient(): array
     {
         return [
             'Харитон',
@@ -225,7 +281,8 @@ class TasksController
             'Адриан'
         ];
     }
-    public function dataSurnameClient(): array
+
+    private function dataSurnameClient(): array
     {
         return [
             'Филатов',
@@ -270,7 +327,8 @@ class TasksController
             'Дроздов'
         ];
     }
-    public function dataPatronymicClient(): array
+
+    private function dataPatronymicClient(): array
     {
         return [
             'Тимофеевич',
@@ -315,7 +373,8 @@ class TasksController
             'Митрофанович'
         ];
     }
-    public function dataFullNameClient(): array
+
+    private function dataFullNameClient(): array
     {
         return [
             'Филатов Харитон Тимофеевич',

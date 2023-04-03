@@ -41,17 +41,17 @@ class ResultController
         (new Response((string)$templateWithContent))->echo();
     }
 
-    public function calculateSumTimeMinuteLoad(): int
+    private function calculateSumTimeMinuteLoad(): int
     {
         return (int)$_SESSION["timeEndTask-1"]["minutes"] + (int)$_SESSION["timeEndTask-2"]["minutes"];
     }
 
-    public function calculateSumTimeSecondLoad(): int
+    private function calculateSumTimeSecondLoad(): int
     {
         return (int)$_SESSION["timeEndTask-1"]["seconds"] + (int)$_SESSION["timeEndTask-2"]["seconds"];
     }
 
-    public function convertToPrettyString(string $time): string
+    private function convertToPrettyString(string $time): string
     {
         if (strlen($time) <= 1) {
             return '0' . $time;

@@ -31,14 +31,14 @@ class StartController
         (new Response((string)$templateWithContent))->echo();
     }
 
-    public function generateUserLogin(): string
+    private function generateUserLogin(): string
     {
         $userLoginArray = $this->dataUserLogin();
         $this->loginUser = $userLoginArray[rand(0, count($userLoginArray) - 1)];
         return $this->loginUser;
     }
 
-    public function dataUserLogin(): array
+    private function dataUserLogin(): array
     {
         return [
             'admin',

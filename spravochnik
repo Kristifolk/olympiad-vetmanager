@@ -9,3 +9,17 @@
 //            "EndTimeMinute" => ,
 //            "EndTimeSecond" => ,
 //        ];
+
+
+//        return Medcard::fromRequestGetByQueryBuilder($this->getApiGateway(),
+//            (new Builder())
+//                ->where('client_id', $idClient)
+//                ->where('pet_id', $idPet),
+//            1
+//);
+//        return User::fromRequestGetAll(
+//            $this->getApiGateway(),
+//            "filter=[{'property':'first_name', 'value':'Владимир'},{'property':'last_name', 'value':'Романичев'}]"
+//        );
+//        return User::fromRequestGetAll(
+//            $this->getApiGateway());

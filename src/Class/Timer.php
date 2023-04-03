@@ -40,7 +40,7 @@ class Timer
         }
     }
 
-    public function convertTimeOnMinuteAndSecond(int $timeDifference): array
+    private function convertTimeOnMinuteAndSecond(int $timeDifference): array
     {
         return [
             'minutes' => round($timeDifference / 60),

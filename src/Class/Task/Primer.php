@@ -2,18 +2,18 @@
 
 namespace App\Class\Task;
 
-use VetmanagerApiGateway\DAO\ComboManualItem;
-use VetmanagerApiGateway\DAO\Client;
-use VetmanagerApiGateway\ApiGateway;
+use App\Class\Task\DAO\ComboManualItem;
+use App\Class\Task\DAO\Client;
+use App\Class\Task\ApiGateway;
 use Otis22\VetmanagerRestApi\Query\Builder;
+use VetmanagerApiGateway\DTO\Client;
+use VetmanagerApiGateway\DTO\DAO\Client;
 
 class Primer
 {
 
     public function primer()
     {
-
-
         $apiGateway = ApiGateway::fromDomainAndApiKey(
             'devmel',
             'secretKey',
