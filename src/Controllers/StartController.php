@@ -24,6 +24,7 @@ class StartController
 
     public function viewTasksPreparation(): void
     {
+        $_SESSION["ResultPercentage"] = '0%';
         $_SESSION["TestLogin"] = $this->generateUserLogin();
 
         $html = new View(ViewPath::TasksPreparation, ['login' => $_SESSION["TestLogin"]]);

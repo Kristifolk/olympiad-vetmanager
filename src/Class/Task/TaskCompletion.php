@@ -8,10 +8,14 @@ use VetmanagerApiGateway\ApiGateway;
 use VetmanagerApiGateway\DTO\DAO\Client;
 use VetmanagerApiGateway\DTO\DAO\ComboManualItem;
 use VetmanagerApiGateway\DTO\DAO\ComboManualName;
+use VetmanagerApiGateway\DTO\DAO\Invoice;
 use VetmanagerApiGateway\DTO\DAO\Medcard;
 use VetmanagerApiGateway\DTO\DAO\Pet;
+use VetmanagerApiGateway\DTO\Enum\ComboManualName\Name;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayRequestException;
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayResponseEmptyException;
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayResponseException;
 
 
 class TaskCompletion
@@ -21,8 +25,8 @@ class TaskCompletion
     private int $idMedicalCard;
 
     public function __construct(
-        private string $domainName = 'devmel',
-        private string $apiKey = '31af0669fd1bcd6d145410795a6ef4f7'
+        readonly string $domainName = 'devmel',
+        readonly string $apiKey = '31af0669fd1bcd6d145410795a6ef4f7'
     )
     {
     }
@@ -42,11 +46,15 @@ class TaskCompletion
     /**
      * @throws VetmanagerApiGatewayException
      */
-    public function checkInitialAppointment()
-    {
-//        $client =// Client::fromRequestGetById($this->getApiGateway(), 1);
-//        return $client->;
-    }
+//    public function checkInitialAdmission(string $date)
+//    {
+//        if (!isset($idMedicalCard)) {
+//            return false;
+//        }
+//        create_date
+//        $medicalCard = Medcard::fromRequestGetById($this->getApiGateway(), $idMedicalCard);
+//        return true;
+//    }
 
     /**
      * @throws VetmanagerApiGatewayException
@@ -83,12 +91,15 @@ class TaskCompletion
         string $animalDateOfBirth,
     ): bool
     {
+        $comboManualIdForColors = $this->getColorIdByName($animalColor);
+        //$comboManualIdForColors = ComboManualName::getIdFromNameAsEnum($this->getApiGateway(), Name::PetColors);
+
         $pets = Pet::fromRequestGetByPagedQuery(
             $this->getApiGateway(),
             (new Builder())
                 ->where('alias', $aliasPet)
-                ->where('color_id', $this->getColorIdByName($animalColor))
-                ->where('birthday', $animalDateOfBirth)
+                // ->where('color_id', (string)$comboManualIdForColors)
+//                ->where('birthday', $animalDateOfBirth)
 //                ->where('first_name', $firstName)
 //                ->where('middle_name', $middleName)
 //                ->where('last_name', $lastName)
@@ -106,18 +117,20 @@ class TaskCompletion
     /**
      * @throws VetmanagerApiGatewayException
      */
-    private function getColorIdByName(string $colorName): int
+    private function getColorIdByName(string $colorName): string
     {
-        $idOfColorsInComboManual = ComboManualName::fromRequestGetByPagedQuery(
+        $idOfColorsInComboManual = 8;
+//        $idOfColorsInComboManual = ComboManualName::fromRequestGetByPagedQuery(
+//            $this->getApiGateway(),
+//            (new Builder())
+//                ->where('name', 'pet_colors')
+//                ->top(1)
+//        )[0]->id;
+
+        $colors = ComboManualItem::fromRequestGetByPagedQuery(
             $this->getApiGateway(),
             (new Builder())
-                ->where('name', 'pet_colors')
-                ->top(1)
-        )[0]->id;
-
-        $colors = ComboManualItem::fromRequestGetByPagedQuery($this->getApiGateway(),
-            (new Builder())
-                ->where('combo_manual_id', $idOfColorsInComboManual)
+                ->where('combo_manual_id', (string)$idOfColorsInComboManual)
                 ->where('title', $colorName)
                 ->top(1));
 
@@ -135,12 +148,12 @@ class TaskCompletion
 
         $medicalCards = Medcard::fromRequestGetByPagedQuery($this->getApiGateway(),
             (new Builder())
-                ->where('client_id', $this->idClient)
-                ->where('pet_id', $this->idPet)
+                ->where('client_id', (string)$this->idClient)
+                ->where('pet_id', (string)$this->idPet)
                 ->top(1)
         );
 
-        if (count($medicalCards)) {
+        if (count($medicalCards) == 1) {
             $this->idMedicalCard = $medicalCards[0]->id;
             return true;
         }
@@ -171,91 +184,81 @@ class TaskCompletion
     /**
      * @throws VetmanagerApiGatewayException
      */
-    public function checkAnimalDiagnosis(int $idDiagnoseForPet): bool
+    public function checkAnimalDiagnosis(string $nameDiagnoseForPet): bool
     {
-
-        $medicalCards = Medcard::fromRequestGetById($this->getApiGateway(), $this->idMedicalCard);
-        $diagnose = $medicalCards->diagnose;
-        //Выборка id диагноза из медкарт
-        $diagnose = substr($diagnose, 1);
-        $diagnose = substr($diagnose, 1, -2);
-        $result = explode('},{', $diagnose);
-
-        if (count($result) > 1) {
-            //Много, так нельзя
+        if (!isset($this->idMedicalCard)) {
             return false;
         }
-        $strResult = $result[0];
-        $arrResult = explode(',', $strResult);
-        $idDiagnose = (int)substr($arrResult[0], 5);
 
-        if (empty($idDiagnose) || $idDiagnose != $idDiagnoseForPet) {
+        $idDiagnoseFromName = $this->getDiagnosisIdByName($nameDiagnoseForPet);
+
+        if (empty($idDiagnoseFromName)) {
+            return false;
+        }
+
+        $medicalCards = Medcard::fromRequestGetById($this->getApiGateway(), (string)$this->idMedicalCard);
+
+
+        $diagnoseStr = $medicalCards->diagnose;
+        $diagnoseStr = substr($diagnoseStr, 1);
+        $diagnoseStr = substr($diagnoseStr, 1, -2);
+
+        $arrayIdAndType = explode('},{', $diagnoseStr);
+
+        $arrayIdDiagnose = [];
+
+        for ($i = 0; $i < count($arrayIdAndType); $i++) {
+            $str1 = $arrayIdAndType[$i];
+            $arrayNameAndValue = explode(',', $str1);
+
+            $arrayIdDiagnose[] = substr($arrayNameAndValue[0], 5);
+        }
+
+        if (!in_array($idDiagnoseFromName, $arrayIdDiagnose, true)) {
             return false;
         }
 
         return true;
     }
 
+    public function getDiagnosisIdByName(string $nameDiagnoseForPet): string
+    {
+        return '118';
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
     public function checkCreateInvoiceUsingCoupon(): bool
     {
-//        $admissions = Client::fromRequestGetByQueryBuilder(
-//            $this->getApiGateway(),
-//            (new Builder ())
-//                ->where('client_id', $idClient)
-//                ->top(1)
-//        );
-//
-//        if (count($admissions) == 0) {
-//            return false;
-//        }
-//
-//        return true;
+        if (!isset($this->idClient) || !isset($this->idPet)) {
+            return false;
+        }
+
+        $invoices = Invoice::fromRequestGetByPagedQuery($this->getApiGateway(),
+            (new Builder())
+                ->where('client_id', (string)$this->idClient)
+                ->where('pet_id', (string)$this->idPet)
+                ->where('amount', "1100.0000000000")
+                ->top(1)
+        );
+
+        if (count($invoices) == 0) {
+            return false;
+        }
+
+        return true;
     }
 
-    public function checkRepeatAppointmentToTheClinic(): bool
-    {
-//        $admissions = Client::fromRequestGetByQueryBuilder(
-//            $this->getApiGateway(),
-//            (new Builder ())
-//                ->where('client_id', $idClient)
-//                ->top(1)
-//        );
-//
-//        return $this->activateArrayResultStatus($admissions);
-    }
-
-//    public function activateArrayResultStatus(array $resultFunction): bool
+//    public function checkRepeatAppointmentToTheClinic(): bool
 //    {
-//        if (count($resultFunction) == 0) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
-//    public function checkAddingClientToTheProgram(): bool
-//    {
-//        $clients =
-//        if (count($resultFunction) == 0) {
-//            return false;
-//        }
-//
-//        return true;
-//    }
-//
-//    /**
-//     * @throws VetmanagerApiGatewayException
-//     */
-//    public function activateArrayResultClients(
-//        string $firstName,
-//        string $middleName,
-//        string $lastName,
-//    ): bool
-//    {
-//        if (count($this->checkAddingClientToTheProgram($firstName, $middleName, $lastName)) == 0) {
-//            return false;
-//        }
-//
-//        return true;
+////        $admissions = Client::fromRequestGetByQueryBuilder(
+////            $this->getApiGateway(),
+////            (new Builder ())
+////                ->where('client_id', $idClient)
+////                ->top(1)
+////        );
+////
+////        return $this->activateArrayResultStatus($admissions);
 //    }
 }

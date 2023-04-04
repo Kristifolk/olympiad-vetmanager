@@ -19,6 +19,7 @@ class ResultController
                     [
                         'minute' => $this->convertToPrettyString((string)$this->calculateSumTimeMinuteLoad()),
                         'second' => $this->convertToPrettyString((string)$this->calculateSumTimeSecondLoad()),
+                        'resultPercentage' => $_SESSION["ResultPercentage"],
                     ],
                 'taskTransitTime' =>
                     [

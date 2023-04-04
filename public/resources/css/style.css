@@ -55,9 +55,11 @@ li {
 }
 
 .main-background {
+    background: url("../img/background_programma-dlya-veter.jpg") no-repeat center top fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
     background-size: cover;
-    background-repeat: no-repeat;
-    background-image: url("../img/background_programma-dlya-veter.jpg");
 }
 
 .container {
@@ -169,7 +171,7 @@ li {
 
 .input-percentage-completion {
     color: var(--basic-white);
-    width: 82px;
+    width: 90px;
     display: block;
     text-align: center;
     margin-left: auto;

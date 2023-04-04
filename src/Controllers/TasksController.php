@@ -36,8 +36,8 @@ class TasksController
         $time = (new Timer())->getTimerValues();
         $path = $this->getView();
 
-        $_SESSION['FullNameClient'] = "Шубин Соломон Михайлович"; //$this->generateFullNameClient();
-        $_SESSION['AnimalName'] = $this->generateAnimalName();
+        $_SESSION['FullNameClient'] = $this->generateFullNameClient(); ///"Шубин Соломон Михайлович";
+        $_SESSION['AnimalName'] = "Дуся"; //$this->generateAnimalName();
         $animalColor = $this->generateAnimalColor();
         $_SESSION['AnimalAge'] = $this->generateAnimalAge();
         $_SESSION['Diagnose'] = "Флегмона";
@@ -213,17 +213,25 @@ class TasksController
 
     private function generateFullNameClient(): string
     {
-        $nameClientArray = $this->dataNameClient();
-        $surnameClientArray = $this->dataSurnameClient();
-        $patronymicClientArray = $this->dataPatronymicClient();
+//        $nameClientArray = $this->dataNameClient();
+//        $surnameClientArray = $this->dataSurnameClient();
+//        $patronymicClientArray = $this->dataPatronymicClient();
+//
+//        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
+//        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
+//        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
-        $nameClient = 'Соломон';//$nameClientArray[rand(0, count($nameClientArray) - 1)];
-        $surnameClient = 'Шубин';//$surnameClientArray[rand(0, count($surnameClientArray) - 1)];
-        $patronymicClient = 'Михайлович';//$patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
+        $nameClient = 'Соломон';
+        $surnameClient = 'Шубин';
+        $patronymicClient = 'Михайлович';
 
-        $_SESSION['NameClient'] = 'Соломон';//$nameClient;
-        $_SESSION['SurnameClient'] = 'Шубин';//$surnameClient;
-        $_SESSION['PatronymicClient'] = 'Михайлович';//$patronymicClient;
+        $_SESSION['NameClient'] = 'Соломон';
+        $_SESSION['SurnameClient'] = 'Шубин';
+        $_SESSION['PatronymicClient'] = 'Михайлович';
+
+        $_SESSION['NameClient'] = $nameClient;
+        $_SESSION['SurnameClient'] = $surnameClient;
+        $_SESSION['PatronymicClient'] = $patronymicClient;
 
         $this->clientFullName = $nameClient . " " . $surnameClient . " " . $patronymicClient;
         return $this->clientFullName;

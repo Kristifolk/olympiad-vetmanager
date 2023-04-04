@@ -9,7 +9,7 @@ use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 class PercentageCompletion
 {
     public int $startPercent = 0;
-    public int $currentPercent = 0;
+    public float $currentPercent = 0;
 
     public function __construct(
         public int $idTask
@@ -30,34 +30,36 @@ class PercentageCompletion
 //        }
         if ($taskCompletion->getIdClientToTheProgram(
             $_SESSION['NameClient'],
-            $_SESSION['SurnameClient'],
-            $_SESSION['PatronymicClient']
+            $_SESSION['PatronymicClient'],
+            $_SESSION['SurnameClient']
+
         )) {
-            $this->calculatePercentageCompletion();
+            $this->currentPercent = $this->calculatePercentageCompletion();
         }
-        if ($taskCompletion->checkAddingPetToTheProgram(
-            $_SESSION['AnimalName'],
-            $_SESSION['AnimalColor'],
-            $_SESSION['DateOfBirth']
-        )) {
-            $this->calculatePercentageCompletion();
-        }
+//        if ($taskCompletion->checkAddingPetToTheProgram(
+//            $_SESSION['AnimalName'],
+//            $_SESSION['AnimalColor'],
+//            $_SESSION['DateOfBirth']
+//        )) {
+//            $this->currentPercent = $this->calculatePercentageCompletion();
+//        }
         if ($taskCompletion->checkAddingMedicalCardToTheProgram()) {
-            $this->calculatePercentageCompletion();
+            $this->currentPercent = $this->calculatePercentageCompletion();
         }
-//        if ($taskCompletion->checkNoteTheComplaint()) {
-//            $this->calculatePercentageCompletion();
-//        }
-//        if ($taskCompletion->checkAnimalDiagnosis($_SESSION['Diagnose'])) {
-//            $this->calculatePercentageCompletion();
-//        }
-////        if($taskCompletion->checkCreateInvoiceUsingCoupon()) {
-////            $this->calculatePercentageCompletion();
-////        }
+        if ($taskCompletion->checkNoteTheComplaint()) {
+            $this->currentPercent = $this->calculatePercentageCompletion();
+        }
+        if ($taskCompletion->checkAnimalDiagnosis($_SESSION['Diagnose'])) {
+            $this->currentPercent = $this->calculatePercentageCompletion();
+        }
+        if($taskCompletion->checkCreateInvoiceUsingCoupon()) {
+            $this->currentPercent = $this->calculatePercentageCompletion();
+        }
 ////        if($taskCompletion->checkRepeatAppointmentToTheClinic()) {
-////            $this->calculatePercentageCompletion();
-////        }
-        return $this->currentPercent . "%";
+////            $this->currentPercent = $this->calculatePercentageCompletion();
+////
+         $_SESSION["ResultPercentage"] = $this->currentPercent . "%";
+        return $_SESSION["ResultPercentage"];
     }
 
     public function getPercentageCompletion(): string
@@ -65,10 +67,9 @@ class PercentageCompletion
         return $this->startPercent . "%";
     }
 
-    public function calculatePercentageCompletion(): string
+    public function calculatePercentageCompletion(): float
     {
-        $this->currentPercent = ($this->currentPercent + $this->calculatePercentageCountParagraph());
-        return $this->currentPercent . "%";
+        return ($this->currentPercent + $this->calculatePercentageCountParagraph());
     }
 
     private function calculatePercentageCountParagraph(): float
