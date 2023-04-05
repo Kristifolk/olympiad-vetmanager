@@ -35,7 +35,6 @@ class Timer
         if ($id == '2' or $option == 'result') {
             header('Location: /result');
         } else {
-
             header('Location: /task?id=2');
         }
     }

@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Class\Task\AuthorizationRequest;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -25,6 +24,11 @@ class StartController
     public function viewTasksPreparation(): void
     {
         $_SESSION["ResultPercentage"] = '0%';
+
+
+        $_SESSION["timeEndTask-1"] = ["minutes" => "00", "seconds" => "00"];
+        $_SESSION["timeEndTask-2"] = ["minutes" => "00", "seconds" => "00"];
+
         $_SESSION["TestLogin"] = $this->generateUserLogin();
 
         $html = new View(ViewPath::TasksPreparation, ['login' => $_SESSION["TestLogin"]]);

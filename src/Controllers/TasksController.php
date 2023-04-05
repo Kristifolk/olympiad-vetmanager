@@ -19,6 +19,7 @@ class TasksController
     {
     }
 
+
     private function getView(): ViewPath
     {
         return match ($this->idTask) {
@@ -61,7 +62,7 @@ class TasksController
         );
         $percentageCompletionHtml = new View(ViewPath::PercentageCompletionContent,
             [
-                'percentageCompletion' => (new PercentageCompletion($this->idTask))->checkCompletedTasksForUser()
+                'percentageCompletion' => (new PercentageCompletion())->checkCompletedTasksForUser()
             ]
         );
         $templateWithContentTask = new View(ViewPath::TemplateContentTask,

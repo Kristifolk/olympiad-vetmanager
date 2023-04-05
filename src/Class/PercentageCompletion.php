@@ -4,18 +4,17 @@ namespace App\Class;
 
 use App\Class\Task\TaskCompletion;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
-
+//session_start();
 
 class PercentageCompletion
 {
-    public int $startPercent = 0;
     public float $currentPercent = 0;
 
     public function __construct(
-        public int $idTask
     )
     {
     }
+
 
     /**
      * @throws VetmanagerApiGatewayException
@@ -36,17 +35,16 @@ class PercentageCompletion
         )) {
             $this->currentPercent = $this->calculatePercentageCompletion();
         }
-//        if ($taskCompletion->checkAddingPetToTheProgram(
-//            $_SESSION['AnimalName'],
-//            $_SESSION['AnimalColor'],
-//            $_SESSION['DateOfBirth']
-//        )) {
-//            $this->currentPercent = $this->calculatePercentageCompletion();
-//        }
+        if ($taskCompletion->checkAddingPetToTheProgram(
+            $_SESSION['AnimalName'],
+            $_SESSION['AnimalColor'],
+        )) {
+            $this->currentPercent = $this->calculatePercentageCompletion();
+        }
         if ($taskCompletion->checkAddingMedicalCardToTheProgram()) {
             $this->currentPercent = $this->calculatePercentageCompletion();
         }
-        if ($taskCompletion->checkNoteTheComplaint()) {
+        if ($taskCompletion->checkNoteTheComplaint("Больно где-то")) {
             $this->currentPercent = $this->calculatePercentageCompletion();
         }
         if ($taskCompletion->checkAnimalDiagnosis($_SESSION['Diagnose'])) {
@@ -62,14 +60,9 @@ class PercentageCompletion
         return $_SESSION["ResultPercentage"];
     }
 
-    public function getPercentageCompletion(): string
-    {
-        return $this->startPercent . "%";
-    }
-
     public function calculatePercentageCompletion(): float
     {
-        return ($this->currentPercent + $this->calculatePercentageCountParagraph());
+        return $this->currentPercent + $this->calculatePercentageCountParagraph();
     }
 
     private function calculatePercentageCountParagraph(): float
