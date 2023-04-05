@@ -23,3 +23,114 @@
 //        );
 //        return User::fromRequestGetAll(
 //            $this->getApiGateway());
+
+
+
+//    public function checkAnimalDiagnosis(string $nameDiagnoseForPet): bool
+//    {
+//        if (!isset($this->idMedicalCard)) {
+//            return false;
+//        }
+//
+//        $idDiagnoseFromName = $this->getDiagnosisIdByName($nameDiagnoseForPet);
+//
+//        if (empty($idDiagnoseFromName)) {
+//            return false;
+//        }
+//
+//        $medicalCards = MedicalCard::getById($this->getApiGateway(), $this->idMedicalCard);
+//
+//
+//        $diagnoseStr = $medicalCards->diagnose;
+//        $diagnoseStr = substr($diagnoseStr, 1);
+//        $diagnoseStr = substr($diagnoseStr, 1, -2);
+//
+//        $arrayIdAndType = explode('},{', $diagnoseStr);
+//
+//        $arrayIdDiagnose = [];
+//
+//        for ($i = 0; $i < count($arrayIdAndType); $i++) {
+//            $str1 = $arrayIdAndType[$i];
+//            $arrayNameAndValue = explode(',', $str1);
+//
+//            $arrayIdDiagnose[] = substr($arrayNameAndValue[0], 5);
+//        }
+//
+//        if (!in_array($idDiagnoseFromName, $arrayIdDiagnose, true)) {
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+//    public function getDiagnosisIdByName(string $nameDiagnoseForPet): string
+//    {
+//        $medicalCards = MedicalCard::getById($this->getApiGateway(), $this->idMedicalCard);
+//        $textMedicalCardDiagnose = $medicalCards->diagnoseText;
+//
+//        $arrayTextMedicalCardDiagnose = explode(';<br/>', $textMedicalCardDiagnose);
+//
+//        if (in_array($nameDiagnoseForPet, $arrayTextMedicalCardDiagnose)) {
+//            return 123;
+//        }
+//
+//        return '118';
+//    }
+
+
+//        $idOfColorsInComboManual = ComboManualName::fromRequestGetByPagedQuery(
+//            $this->getApiGateway(),
+//            (new Builder())
+//                ->where('name', 'pet_colors')
+//                ->top(1)
+//        )[0]->id;
+
+
+                //               ->where('color_id', $comboManualIdForColors)
+//                ->where('birthday', $animalDateOfBirth)
+//                ->where('first_name', $firstName)
+//                ->where('middle_name', $middleName)
+//                ->where('last_name', $lastName)
+
+//        $comboManualIdForColors = $this->getColorComboManualIdByName($animalColor);
+
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+//    private function getColorComboManualIdByName(string $colorName): string
+//    {
+//        $idOfColorsInComboManual = 8;
+//
+//        $colors = ComboManualItem::getByPagedQuery(
+//            $this->getApiGateway(),
+//            (new Builder())
+//                ->where('combo_manual_id', (string)$idOfColorsInComboManual)
+//                ->where('title', $colorName)
+//                ->top(1));
+//
+//        return (string)$colors[0]->value;
+//    }
+
+
+// async function fetchAndViewTheEndOlimpiade() {
+//     // let dataNowTimeMinute = timerMinuteContent.value;
+//     // let dataNowTimeSecond = timerSecondContent.value;
+//
+//     if (numberTask.value === '1') {
+//         let response = await fetch('/store?id=1&option=result', {
+//             method: 'POST',
+//             //body: dataNowPercentage
+//         });
+//     } else {
+//         let response = await fetch('/store?id=2&option=result', {
+//             method: 'POST',
+//             //body: dataNowPercentage
+//         });
+//     }
+//
+//     let json = await response.json();
+// }

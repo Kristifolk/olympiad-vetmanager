@@ -1,8 +1,8 @@
 <?php
 require_once dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.php";
 
-
-use App\Class\Task\AuthorizationRequest;
+use App\Class\PercentageCompletion;
+use App\Class\Task\UpdatePercentage;
 use App\Class\Timer;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
@@ -20,7 +20,8 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/task?id=1', '/task?id=2'=> (new TasksController($_GET['id']))->viewTask(),
             '/store?id=1', '/store?id=2' => (new Timer())->storeTaskValue($_GET['id'], null),
             '/result' => (new ResultController())->viewResult(),
-            '/store?id=1&option=result' => (new Timer())->storeTaskValue($_GET['id'], $_GET['option']),
+            '/store?id=1&option=result', '/store?id=2&option=result' => (new Timer())->storeTaskValue($_GET['id'], $_GET['option']),
+            '/update_percentage_completion' => (new UpdatePercentage())->updatePercentageCompletion(),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {
