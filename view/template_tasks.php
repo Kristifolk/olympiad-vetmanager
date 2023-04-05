@@ -8,7 +8,6 @@
         <?= $this->arguments['percentageCompletion'] ?>
     </div>
     <div class="btn-content">
-        <a href="/store?id=1" id="btn-task" class="btn btn-for-a btn-task">Следующее задание</a>
         <a href="/store?id=1&option=result" id="btn-result" class="btn btn-for-a btn-start">Закончить олимпиаду</a>
     </div>
 </section>

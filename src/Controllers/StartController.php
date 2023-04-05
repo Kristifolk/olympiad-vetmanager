@@ -26,8 +26,7 @@ class StartController
         $_SESSION["ResultPercentage"] = '0%';
 
 
-        $_SESSION["timeEndTask-1"] = ["minutes" => "00", "seconds" => "00"];
-        $_SESSION["timeEndTask-2"] = ["minutes" => "00", "seconds" => "00"];
+        $_SESSION["timeEndTask"] = ["minutes" => "00", "seconds" => "00"];
 
         $_SESSION["TestLogin"] = $this->generateUserLogin();
 

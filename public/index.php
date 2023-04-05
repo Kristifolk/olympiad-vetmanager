@@ -17,10 +17,10 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/' => (new StartController())->viewInstructions(),
             '/tasks_preparation' => (new StartController())->viewTasksPreparation(),
             '/start' => (new Timer())->startTimer(),
-            '/task?id=1', '/task?id=2'=> (new TasksController($_GET['id']))->viewTask(),
-            '/store?id=1', '/store?id=2' => (new Timer())->storeTaskValue($_GET['id'], null),
+            '/task?id=1'=> (new TasksController($_GET['id']))->viewTask(),
+            '/store?id=1' => (new Timer())->storeTaskValue($_GET['id'], null),
             '/result' => (new ResultController())->viewResult(),
-            '/store?id=1&option=result', '/store?id=2&option=result' => (new Timer())->storeTaskValue($_GET['id'], $_GET['option']),
+            '/store?id=1&option=result' => (new Timer())->storeTaskValue($_GET['id'], $_GET['option']),
             '/update_percentage_completion' => (new UpdatePercentage())->updatePercentageCompletion(),
             default => throw new \Exception('Unexpected match value'),
         };

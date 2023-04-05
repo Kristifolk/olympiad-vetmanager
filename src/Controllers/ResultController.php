@@ -15,26 +15,13 @@ class ResultController
     {
         $html = new View(ViewPath::Result,
             [
-                'fullTransitTime' =>
-                    [
-                        'minute' => $this->convertToPrettyString((string)$this->calculateSumTimeMinuteLoad()),
-                        'second' => $this->convertToPrettyString((string)$this->calculateSumTimeSecondLoad()),
-                        'resultPercentage' => $_SESSION["ResultPercentage"],
-                    ],
                 'taskTransitTime' =>
                     [
                         [
-                            'numberTask' => 1,
-                            'minute' => $this->convertToPrettyString((string)$_SESSION["timeEndTask-1"]["minutes"]),
-                            'second' => $this->convertToPrettyString((string)$_SESSION["timeEndTask-1"]["seconds"]),
-                        ],
-                        [
-                            'numberTask' => 2,
-                            'minute' => $this->convertToPrettyString((string)$_SESSION["timeEndTask-2"]["minutes"]),
-                            'second' => $this->convertToPrettyString((string)$_SESSION["timeEndTask-2"]["seconds"]),
+                            'minute' => $this->convertToPrettyString((string)$_SESSION["timeEndTask"]["minutes"]),
+                            'second' => $this->convertToPrettyString((string)$_SESSION["timeEndTask"]["seconds"]),
                         ],
                     ],
-
             ]
         );
 
@@ -42,15 +29,15 @@ class ResultController
         (new Response((string)$templateWithContent))->echo();
     }
 
-    private function calculateSumTimeMinuteLoad(): int
-    {
-        return (int)$_SESSION["timeEndTask-1"]["minutes"] + (int)$_SESSION["timeEndTask-2"]["minutes"];
-    }
-
-    private function calculateSumTimeSecondLoad(): int
-    {
-        return (int)$_SESSION["timeEndTask-1"]["seconds"] + (int)$_SESSION["timeEndTask-2"]["seconds"];
-    }
+//    private function calculateSumTimeMinuteLoad(): int
+//    {
+//        return (int)$_SESSION["timeEndTask-1"]["minutes"] + (int)$_SESSION["timeEndTask-2"]["minutes"];
+//    }
+//
+//    private function calculateSumTimeSecondLoad(): int
+//    {
+//        return (int)$_SESSION["timeEndTask-1"]["seconds"] + (int)$_SESSION["timeEndTask-2"]["seconds"];
+//    }
 
     private function convertToPrettyString(string $time): string
     {
