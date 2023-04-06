@@ -2,7 +2,7 @@
 require_once dirname(__DIR__, 1) . DIRECTORY_SEPARATOR . "config" . DIRECTORY_SEPARATOR . "config.php";
 
 use App\Class\PercentageCompletion;
-use App\Class\Task\UpdatePercentage;
+use App\Class\Task\UpdateData;
 use App\Class\Timer;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
@@ -18,10 +18,9 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/tasks_preparation' => (new StartController())->viewTasksPreparation(),
             '/start' => (new Timer())->startTimer(),
             '/task?id=1'=> (new TasksController($_GET['id']))->viewTask(),
-            '/store?id=1' => (new Timer())->storeTaskValue($_GET['id'], null),
+            '/store?id=1' => (new Timer())->storeTaskValue(),
             '/result' => (new ResultController())->viewResult(),
-            '/store?id=1&option=result' => (new Timer())->storeTaskValue($_GET['id'], $_GET['option']),
-            '/update_percentage_completion' => (new UpdatePercentage())->updatePercentageCompletion(),
+            '/update_percentage_completion' => (new UpdateData())->updatePercentageCompletion(),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {

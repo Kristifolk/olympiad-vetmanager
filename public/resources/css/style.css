@@ -73,6 +73,7 @@ li {
     margin-left: auto;
     margin-right: auto;
 }
+
 .container-section {
     max-width: 1000px;
     padding: 0px 20px;
@@ -80,6 +81,7 @@ li {
     margin-left: auto;
     margin-right: auto;
 }
+
 .btn-content {
     width: 100%;
     display: flex;
@@ -177,6 +179,7 @@ li {
     margin-left: auto;
     margin-right: auto;
 }
+
 /*START PAGE*/
 .section-start {
     max-width: 1000px;
@@ -204,7 +207,7 @@ li {
 
 /*MODAL WINDOW*/
 
-.container-modal-window{
+.container-modal-window {
     position: absolute;
     top: 0px;
     right: 40%;
@@ -221,3 +224,19 @@ li {
     border-radius: 3px;
 }
 
+/*TASK SECTION*/
+.header-task{
+    text-align: center;
+}
+.container-task {
+    background: rgba(255, 255, 255, 0.7);
+    padding: 20px 30px 30px 30px;
+    font-size: 14px;
+    border-radius: 3px;
+}
+
+.section-title {
+    margin: 10px 0px;
+    font-weight: 600;
+    font-size: 16px;
+}
