@@ -33,23 +33,33 @@ class StartController
     private function generateUserLogin(): string
     {
         $userLoginArray = $this->dataUserLogin();
-        $this->loginUser = $userLoginArray[rand(0, count($userLoginArray) - 1)];
+        $this->loginUser = $userLoginArray[rand(0, count($userLoginArray) - 1)]['login'];
+        $_SESSION["TestPassword"] = $userLoginArray[rand(0, count($userLoginArray) - 1)]['password'];
         return $this->loginUser;
     }
+
 
     private function dataUserLogin(): array
     {
         return [
-            'admin',
-            'admin2',
-            'admin3',
-            'admin4',
-            'admin5',
-            'admin6',
-            'admin7',
-            'admin8',
-            'admin9',
-            'admin10'
+            ['login' => 'admin1', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin2', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin3', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin4', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin5', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin6', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin7', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin8', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin9', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin10', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin11', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin12', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin13', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin14', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin15', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin16', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin17', 'password' => 'iJ1x9nfO'],
+            ['login' => 'admin18', 'password' => 'iJ1x9nfO'],
         ];
     }
 

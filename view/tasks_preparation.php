@@ -7,7 +7,7 @@
         <p>Вы можете закончить олимпиаду досрочно</p>
         <p>Желаем вам удачи в прохождении</p>
         <h1>Ваш логин: <?= $this->arguments['login'] ?></h1>
-        <h1>Ваш пароль: iJ1x9nfO</h1>
+        <h1>Ваш пароль: <?= $_SESSION["TestPassword"]?></h1>
         <h1>Платформа для выполнения задания: <a href="https://devmel.vetmanager2.ru/login.php" target="_blank">devmel.vetmanager2.ru</a>
         </h1>
         <div class="btn-content">

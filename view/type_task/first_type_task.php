@@ -32,7 +32,7 @@
         , используя логин:
         <span class="changeable-text"><?= $_SESSION["TestLogin"]?></span>
         и пароль
-        <span class="changeable-text">iJ1x9nfO</span>
+        <span class="changeable-text"><?= $_SESSION["TestPassword"]?></span>
     </p>
     <p>Время на выполнение задания 25 минут.</p>
 </div>
