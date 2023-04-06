@@ -2,20 +2,32 @@
 
 namespace App\Controllers;
 
+use App\File\FileData;
+
 class TaskCollection
 {
     private string $clientFullName;
+
     public function defaultSessionData(): void
     {
         $_SESSION["ResultPercentage"] = '0%';
         $_SESSION["TimeEndTask"] = ["minutes" => "00", "seconds" => "00"];
         $_SESSION['Diagnose'] = "Абсцесс";
     }
+
     public function generateUserLogin(): void
     {
         $userLoginArray = $this->dataUserLogin();
-        $_SESSION["TestLogin"] = $userLoginArray[rand(0, count($userLoginArray) - 1)]['login'];
-        $_SESSION["TestPassword"] = $userLoginArray[rand(0, count($userLoginArray) - 1)]['password'];
+        $userData = $userLoginArray[rand(0, count($userLoginArray) - 1)];
+
+        $userLogin = $userData['login'];
+
+        if (!(new FileData())->checkLoginUserInToFile($userLogin)) {
+            $this->generateUserLogin();
+        } else {
+            $_SESSION["TestLogin"] = $userData['login'];
+            $_SESSION["TestPassword"] = $userData['password'];
+        }
     }
 
 
@@ -370,6 +382,7 @@ class TaskCollection
             ]
         ];
     }
+
     private function dataUserLogin(): array
     {
         return [

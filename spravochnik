@@ -134,3 +134,26 @@
 //
 //     let json = await response.json();
 // }
+
+
+        //file_put_contents($filename, '<?php $arr = ' . var_export($arr, true) . ';');
+
+//        $dataFile = fopen($this->userTxt, 'w+') or die("не удалось открыть файл");
+//        if (flock($dataFile, LOCK_EX)) {
+//            $lines = explode ("\n", fread ($dataFile, filesize($this->userTxt)));
+//
+//            foreach ($lines as $line) {
+//                $userdata = explode ( " ", $line);
+//
+//                if ( filter_var($userdata[0], FILTER_SANITIZE_EMAIL) == $user ) {
+//                    $freename = $userdata[0] $userdata[1];
+//                    break;
+//                } else {
+//                    $freename = 'Пользователь <b></b> не найден.<br><br>';
+//                }
+//            }
+//        } else {
+//            echo "Ошибка: Файл пользователей не может быть заблокирован на время работы программы<br>";
+//        }
+//
+//        fclose($dataFile);

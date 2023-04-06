@@ -9,11 +9,11 @@ use App\Services\View;
 use App\Services\ViewPath;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
-readonly class TasksController
+class TasksController
 {
 
     public function __construct(
-        public int $idTask,
+         readonly int $idTask,
     )
     {
     }
