@@ -6,8 +6,6 @@ use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
 
-use GuzzleHttp\Client;
-
 session_start();
 
 class StartController
@@ -23,10 +21,7 @@ class StartController
 
     public function viewTasksPreparation(): void
     {
-        $_SESSION["ResultPercentage"] = '0%';
-
-
-        $_SESSION["timeEndTask"] = ["minutes" => "00", "seconds" => "00"];
+        $this->defaultSessionData();
 
         $_SESSION["TestLogin"] = $this->generateUserLogin();
 
@@ -56,5 +51,11 @@ class StartController
             'admin9',
             'admin10'
         ];
+    }
+
+    private function defaultSessionData(): void
+    {
+        $_SESSION["ResultPercentage"] = '0%';
+        $_SESSION["TimeEndTask"] = ["minutes" => "00", "seconds" => "00"];
     }
 }

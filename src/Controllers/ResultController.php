@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Class\Timer;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -17,10 +16,9 @@ class ResultController
             [
                 'taskTransitTime' =>
                     [
-                        [
-                            'minute' => $this->convertToPrettyString((string)$_SESSION["timeEndTask"]["minutes"]),
-                            'second' => $this->convertToPrettyString((string)$_SESSION["timeEndTask"]["seconds"]),
-                        ],
+                        'minute' => $this->convertToPrettyString((string)$_SESSION["TimeEndTask"]["minutes"]),
+                        'second' => $this->convertToPrettyString((string)$_SESSION["TimeEndTask"]["seconds"]),
+                        'resultPercentage' => $_SESSION["ResultPercentage"]
                     ],
             ]
         );
@@ -29,21 +27,12 @@ class ResultController
         (new Response((string)$templateWithContent))->echo();
     }
 
-//    private function calculateSumTimeMinuteLoad(): int
-//    {
-//        return (int)$_SESSION["timeEndTask-1"]["minutes"] + (int)$_SESSION["timeEndTask-2"]["minutes"];
-//    }
-//
-//    private function calculateSumTimeSecondLoad(): int
-//    {
-//        return (int)$_SESSION["timeEndTask-1"]["seconds"] + (int)$_SESSION["timeEndTask-2"]["seconds"];
-//    }
-
     private function convertToPrettyString(string $time): string
     {
         if (strlen($time) <= 1) {
             return '0' . $time;
         }
+
         return $time;
     }
 }

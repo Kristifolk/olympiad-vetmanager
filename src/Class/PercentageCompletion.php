@@ -37,8 +37,16 @@ class PercentageCompletion
         }
         if ($taskCompletion->checkAddingPetToTheProgram(
             $_SESSION['AnimalName'],
-            $_SESSION['AnimalColor'],
+            $_SESSION['NameClient'],
+            $_SESSION['PatronymicClient'],
+            $_SESSION['SurnameClient'],
         )) {
+            $this->currentPercent = $this->calculatePercentageCompletion();
+        }
+        if ($taskCompletion->checkColorPetToTheProgram($_SESSION['AnimalColor'])) {
+            $this->currentPercent = $this->calculatePercentageCompletion();
+        }
+        if ($taskCompletion->checkBreedPetToTheProgram("корело-финская лайка")) {
             $this->currentPercent = $this->calculatePercentageCompletion();
         }
         if ($taskCompletion->checkAddingMedicalCardToTheProgram()) {
@@ -50,9 +58,9 @@ class PercentageCompletion
         if ($taskCompletion->checkAnimalDiagnosis($_SESSION['Diagnose'])) {
             $this->currentPercent = $this->calculatePercentageCompletion();
         }
-        if($taskCompletion->checkCreateInvoiceUsingCoupon()) {
-            $this->currentPercent = $this->calculatePercentageCompletion();
-        }
+//        if($taskCompletion->checkCreateInvoiceUsingCoupon()) {
+//            $this->currentPercent = $this->calculatePercentageCompletion();
+//        }
 ////        if($taskCompletion->checkRepeatAppointmentToTheClinic()) {
 ////            $this->currentPercent = $this->calculatePercentageCompletion();
 ////

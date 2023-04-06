@@ -44,19 +44,6 @@ class TaskCompletion
     /**
      * @throws VetmanagerApiGatewayException
      */
-//   public function checkInitialAdmission(string $date)
-////    {
-////        if (!isset($idMedicalCard)) {
-////            return false;
-////        }
-////        create_date
-////        $medicalCard = Medcard::fromRequestGetById($this->getApiGateway(), $idMedicalCard);
-////        return true;
-//    }
-
-    /**
-     * @throws VetmanagerApiGatewayException
-     */
     public function getIdClientToTheProgram(
         string $firstName,
         string $middleName,
@@ -85,7 +72,9 @@ class TaskCompletion
      */
     public function checkAddingPetToTheProgram(
         string $aliasPet,
-        string $animalColor,
+        string $firstName,
+        string $middleName,
+        string $lastName,
     ): bool
     {
         $pets = Pet::getByPagedQuery(
@@ -95,17 +84,78 @@ class TaskCompletion
                 ->top(1)
         );
 
-        $pet = $pets[0];
-        $colorAsComboManualItem = ComboManualItem::getByPetColorId($this->getApiGateway(), $pet->colorId);
-
-        if (!count($pets) || $animalColor != $colorAsComboManualItem->title) {
+        if (count($pets) != 1 ||
+            $pets[0]->client->firstName != $firstName ||
+            $pets[0]->client->middleName != $middleName ||
+            $pets[0]->client->lastName != $lastName){
             return false;
         }
 
-        $this->idPet = $pet->id;
+        $this->idPet = $pets[0]->id;
         return true;
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+    public function checkColorPetToTheProgram(
+        string $animalColor
+    ): bool
+    {
+        if (!isset($this->idPet)) {
+            return false;
+        }
+
+        $pets = Pet::getById($this->getApiGateway(), $this->idPet);
+        $colorAsComboManualItem = ComboManualItem::getByPetColorId($this->getApiGateway(), $pets->colorId);
+
+        if ($animalColor != $colorAsComboManualItem->title) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+    public function checkDateOfBirthPetToTheProgram(
+        string $dateOfBirth,
+    ): bool
+    {
+        if (!isset($this->idPet)) {
+            return false;
+        }
+
+        $pets = Pet::getById($this->getApiGateway(), $this->idPet);
+        $pet = $pets[0];
+
+        if ($pet["birthday"] != $dateOfBirth) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+    public function checkBreedPetToTheProgram(
+        string $breedPet,
+    ): bool
+    {
+        if (!isset($this->idPet)) {
+            return false;
+        }
+
+        $pets = Pet::getById($this->getApiGateway(), $this->idPet);
+
+        if ($pets->breed->title != $breedPet) {
+            return false;
+        }
+
+        return true;
+    }
     /**
      * @throws VetmanagerApiGatewayException
      */
@@ -118,7 +168,8 @@ class TaskCompletion
         $medicare = MedicalCardsByClient::getByClientId($this->getApiGateway(), $this->idClient);
         $medicalCardsByClient = $medicare['medicalcards'];
 
-        if (count($medicalCardsByClient) >= 1) /** @var array $medicalCardsByClient */
+        if (count($medicalCardsByClient) >= 1)
+            /** @var array $medicalCardsByClient */
             for ($i = 0; $i < count($medicalCardsByClient); $i++) {
                 $idPets = $medicalCardsByClient[$i]['pet_id'];
 
@@ -173,6 +224,51 @@ class TaskCompletion
     }
 
     /**
+     * @throws VetmanagerApiGatewayRequestException
+     * @throws VetmanagerApiGatewayException
+     */
+    public function checkVaccineForPets(string $nameVaccine): bool
+    {
+        $vaccineAsComboManualItem = ComboManualItem::getByVaccineTypeId($this->getApiGateway(), $pets[0]->colorId);
+
+        return false;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayRequestException
+     * @throws VetmanagerApiGatewayException
+     */
+    public function checkAdmissionTypeForPets(): bool
+    {
+        $admissionTypeAsComboManualItem = ComboManualItem::getByAdmissionTypeId($this->getApiGateway(), $admission[0]->id);
+
+        return false;
+    }
+    public function checkTypeDiagnosisForPets(): bool
+    {
+        //$admissionAsComboManualItem = ComboManualItem::getOneByValueAndComboManualName($this->getApiGateway(), $pets[0]->colorId);
+
+        return false;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayRequestException
+     */
+    public function checkInitialAdmission(string $typeAdmission)
+    {
+        if (!isset($this->idMedicalCard)) {
+            return false;
+        }
+        //create_date
+        //$medicalCard = Medcard::fromRequestGetById($this->getApiGateway(), $this->idMedicalCard);
+        //$admission = Admi
+
+        $admissionTypeAsComboManualItem = ComboManualItem::getByAdmissionTypeId($this->getApiGateway(), $admission[0]->id);
+
+        return true;
+    }
+
+    /**
      * @throws VetmanagerApiGatewayException
      */
     public function checkCreateInvoiceUsingCoupon(): bool
@@ -207,4 +303,6 @@ class TaskCompletion
 //
 //        return $this->activateArrayResultStatus($admissions);
 //    }
+
+
 }
