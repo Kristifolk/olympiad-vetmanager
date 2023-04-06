@@ -27,23 +27,35 @@ class Timer
 
         return $this->convertTimeOnMinuteAndSecond($timeDifference);
     }
-
-    public function storeTaskValue(int $id, ?string $option): void
+    public function getStringTime():string
     {
-        $_SESSION["timeEndTask-$id"] = $this->getTimerValues();
+        $arrayTime = $this->getTimerValues();
 
-        if ($id == '2' or $option == 'result') {
-            header('Location: /result');
-        } else {
-            header('Location: /task?id=2');
-        }
+        $stringTime = $arrayTime["minutes"] . ":" . $arrayTime["seconds"];
+        return $stringTime;
+    }
+
+    public function storeTaskValue(): void
+    {
+        $_SESSION["TimeEndTask"] = $this->getTimerValues();
+        header('Location: /result');
     }
 
     private function convertTimeOnMinuteAndSecond(int $timeDifference): array
     {
         return [
-            'minutes' => round($timeDifference / 60),
-            'seconds' => $timeDifference % 60
+            'minutes' => $this->beautifulTimeForJS((int)round($timeDifference / 60)),
+            'seconds' => $this->beautifulTimeForJS($timeDifference % 60)
         ];
     }
+
+    private function beautifulTimeForJS(int $time):string
+    {
+        if($time < 10){
+            return "0" . $time;
+        }
+
+        return (string)$time;
+    }
+
 }

@@ -21,6 +21,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/store?id=1' => (new Timer())->storeTaskValue(),
             '/result' => (new ResultController())->viewResult(),
             '/update_percentage_completion' => (new UpdateData())->updatePercentageCompletion(),
+            '/update_time' => (new UpdateData())->updateTimeForTimerJS(),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {

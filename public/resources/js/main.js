@@ -51,17 +51,31 @@ setInterval(function() {
     fetchAndViewUpdatePercentage().then(json => {
         inputPercentageCompletion.value = json + "%";
     });
-}, 10000);
+}, 20000);
 
+setInterval(function() {
+    fetchAndViewUpdateTimer().then(json=> {
+        $arr = String(json).split(':');
+        timerMinuteContent.value = 24 - $arr[0];
+        timerSecondContent.value = 59 - $arr[1];
+        console.log(json);
+    });
+}, 30000);
 
 async function fetchAndViewUpdatePercentage() {
-    let dataNowPercentage = inputPercentageCompletion.value.slice(0, -1);
-
     let response = await fetch('/update_percentage_completion', {
         method: 'POST',
     });
 
     return await response.json();
+}
+
+async function fetchAndViewUpdateTimer() {
+    let response = await fetch('/update_time', {
+        method: 'POST',
+    });
+
+    return await response.text();
 }
 
 function creatModalWindowEndOlimpiada() {
