@@ -8,6 +8,7 @@ use App\Class\Task\ApiGateway;
 use Otis22\VetmanagerRestApi\Query\Builder;
 use VetmanagerApiGateway\DTO\Client;
 use VetmanagerApiGateway\DTO\DAO\Client;
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayRequestException;
 
 class Primer
 {
@@ -35,5 +36,44 @@ class Primer
         $comboManualItemTitle = $crmComboManualItems[0]->title;
     }
 
+    private function checkVaccineForPets(string $nameVaccine): bool
+    {
+        // $vaccineAsComboManualItem = ComboManualItem::getByVaccineTypeId($this->apiGateway, $pets[0]->colorId);
 
+        return false;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayRequestException
+     */
+    private function checkAdmissionTypeForPets(): bool
+    {
+        $admissionTypeAsComboManualItem = \VetmanagerApiGateway\DTO\DAO\ComboManualItem::getByAdmissionTypeId($this->apiGateway, $admission[0]->id);
+
+        return false;
+    }
+
+    private function checkTypeDiagnosisForPets(): bool
+    {
+        //$admissionAsComboManualItem = ComboManualItem::getOneByValueAndComboManualName($this->apiGateway, $pets[0]->colorId);
+
+        return false;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayRequestException
+     */
+    private function checkInitialAdmission(string $typeAdmission)
+    {
+        if (!isset($this->idMedicalCard)) {
+            return false;
+        }
+        //create_date
+        //$medicalCard = Medcard::fromRequestGetById($this->apiGateway, $this->idMedicalCard);
+        //$admission = Admi
+
+        $admissionTypeAsComboManualItem = ComboManualItem::getByAdmissionTypeId($this->apiGateway, $admission[0]->id);
+
+        return true;
+    }
 }

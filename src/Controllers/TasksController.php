@@ -54,7 +54,7 @@ class TasksController
         );
         $percentageCompletionHtml = new View(ViewPath::PercentageCompletionContent,
             [
-                'percentageCompletion' => (new PercentageCompletion())->checkCompletedTasksForUser()
+                'percentageCompletion' => (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%'
             ]
         );
         $templateWithContentTask = new View(ViewPath::TemplateContentTask,

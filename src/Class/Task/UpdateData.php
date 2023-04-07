@@ -15,7 +15,7 @@ class UpdateData
      */
     public function updatePercentageCompletion(): void
     {
-        $string = (new PercentageCompletion())->checkCompletedTasksForUser();
+        $string = (new PercentageCompletion())->checkCompletedTasksForUserInPercents();
         echo substr($string, 0, -1);
     }
 
