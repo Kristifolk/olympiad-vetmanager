@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\File\FileData;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -29,9 +30,13 @@ class StartController
 
     private function loadDataTask():void
     {
+        $userData = (new FileData())->getLoginAndPasswordToParticipant();
+        $_SESSION["TestLogin"] = $userData['login'];
+        $_SESSION["TestPassword"] = $userData['password'];
+
         $taskData = new TaskCollection();
         $taskData->defaultSessionData();
-        $taskData->generateUserLogin();
+        //$taskData->generateUserLogin();
         $taskData->generateAnimalAge();
         $taskData->generateAnimalColor();
         $taskData->generateAnimalName();

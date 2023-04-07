@@ -7,6 +7,7 @@ use App\Class\Timer;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
 use App\Controllers\TasksController;
+use App\File\FileData;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -22,6 +23,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/result' => (new ResultController())->viewResult(),
             '/update_percentage_completion' => (new UpdateData())->updatePercentageCompletion(),
             '/update_time' => (new UpdateData())->updateTimeForTimerJS(),
+            //'/resources/file/userCollection.json' => (new FileData)->checkLoginUserInToFile('dfsef'),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {

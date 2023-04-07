@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
+
 use App\File\FileData;
+use GuzzleHttp\Exception\GuzzleException;
 
 class TaskCollection
 {
@@ -15,20 +17,20 @@ class TaskCollection
         $_SESSION['Diagnose'] = "Абсцесс";
     }
 
-    public function generateUserLogin(): void
-    {
-        $userLoginArray = $this->dataUserLogin();
-        $userData = $userLoginArray[rand(0, count($userLoginArray) - 1)];
-
-        $userLogin = $userData['login'];
-
-        if (!(new FileData())->checkLoginUserInToFile($userLogin)) {
-            $this->generateUserLogin();
-        } else {
-            $_SESSION["TestLogin"] = $userData['login'];
-            $_SESSION["TestPassword"] = $userData['password'];
-        }
-    }
+//    public function generateUserLogin(): void
+//    {
+//        $userLoginArray = $this->dataUserLogin();
+//        $userData = $userLoginArray[rand(0, count($userLoginArray) - 1)];
+//
+//        $userLogin = $userData['login'];
+//
+//        if (!(new FileData())->checkLoginUserInToFile($userLogin)) {
+//            $this->generateUserLogin();
+//        }
+//        (new FileData())->putDataInToFile($userLogin, $userData['password']);
+//        $_SESSION["TestLogin"] = $userData['login'];
+//        $_SESSION["TestPassword"] = $userData['password'];
+//    }
 
     public function generateAnimalAge(): void
     {
