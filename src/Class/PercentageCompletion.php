@@ -80,7 +80,7 @@ class PercentageCompletion
                 //$this->checkTextTemplate("Больно где-то"),
                 $this->checkResultAppointmentIsAdded($medcard, "Повторный прием"),/**/
                 $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, (string)$_SESSION['Diagnose']),
-                $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, (string)$_SESSION['Diagnose']),/**/
+                $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),/**/
 
                 /*Creating Invoice*/
 
@@ -163,6 +163,7 @@ class PercentageCompletion
 
         return json_decode($medicalCard->diagnose, true);
     }
+
     /**
      * @throws VetmanagerApiGatewayException
      */
@@ -336,15 +337,16 @@ class PercentageCompletion
         }
 
         $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::DiagnoseTypes);
-        $typeDiagnoses = ComboManualItem::getByQueryBuilder(
+        $typeDiagnoses = ComboManualItem::getByPagedQuery(
             $this->apiGateway,
             (new Builder())
                 ->where('title', $nameTypeDiagnoseForPet)
                 ->where('combo_manual_id', (string)$comboManualNameId)
+                ->top(1)
         );
 
         foreach ($diagnoses as $diagnosis) {
-            if ($diagnosis["type"] === $typeDiagnoses->value) {
+            if ($diagnosis["type"] === $typeDiagnoses[0]->value) {
                 return true;
             }
         }
