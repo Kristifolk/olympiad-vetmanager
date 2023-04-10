@@ -7,13 +7,16 @@ class FileData
 {
     public int $countUsers = 0;
 
+    /**
+     * @throws \JsonException
+     */
     public function getDataInToFile(string $fileName): mixed
     {
         $ourData = file_get_contents($fileName);
 
         if ($ourData) {
             // Преобразуем в объект
-            $object = json_decode($ourData, true);
+            $object = json_decode($ourData, true, 512, JSON_THROW_ON_ERROR);
             // выводим объект
             return $object;
         }

@@ -56,21 +56,17 @@ class TaskCollection
 
     public function generateFullNameClient(): void
     {
-        $nameClientArray = $this->dataNameClient();
-        $surnameClientArray = $this->dataSurnameClient();
-        $patronymicClientArray = $this->dataPatronymicClient();
-
-        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
-        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
-        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
-
-//        $nameClient = 'Соломон';
-//        $surnameClient = 'Шубин';
-//        $patronymicClient = 'Михайлович';
+//        $nameClientArray = $this->dataNameClient();
+//        $surnameClientArray = $this->dataSurnameClient();
+//        $patronymicClientArray = $this->dataPatronymicClient();
 //
-//        $_SESSION['NameClient'] = 'Соломон';
-//        $_SESSION['SurnameClient'] = 'Шубин';
-//        $_SESSION['PatronymicClient'] = 'Михайлович';
+//        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
+//        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
+//        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
+
+        $nameClient = 'Соломон';
+        $surnameClient = 'Шубин';
+        $patronymicClient = 'Михайлович';
 
         $_SESSION['NameClient'] = $nameClient;
         $_SESSION['SurnameClient'] = $surnameClient;
