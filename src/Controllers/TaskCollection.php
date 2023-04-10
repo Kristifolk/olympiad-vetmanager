@@ -86,6 +86,12 @@ class TaskCollection
         $_SESSION['LastAndFirstNameClient'] = $fullName[1] . " " . $fullName[2];
     }
 
+    public function generateBreedPet(): void
+    {
+        $arrayBreeds = (new FileData)->getDataInToFile(PET_BREEDS_PATH);
+        $_SESSION['Breed'] = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
+
+    }
 
     private function dataNameClient(): array
     {
@@ -274,46 +280,46 @@ class TaskCollection
     private function dataAnimalName(): array
     {
         return [
-            'Фира',
-            'Лейла',
-            'Сьюзен',
-            'Айрис',
-            'Аврора',
-            'Галилея',
-            'Шанси',
-            'Рута',
-            'Фабби',
-            'Вента',
-            'Ронда',
-            'Окки',
-            'Шкода',
-            'Лисичка',
-            'Соня',
-            'Вира',
-            'Абель',
-            'Юша',
-            'Гретхен',
-            'Шелби',
-            'Сайга',
-            'Валгала',
-            'Диана',
-            'Ямайка',
-            'Ямми',
-            'Булка',
-            'Виоль',
-            'Рошель',
-            'Ильда',
-            'Анжи',
-            'Омега',
-            'Зайка',
-            'Гаара',
-            'Веселина',
-            'Сильва',
-            'Верна',
-            'Рони',
-            'Джеси',
-            'Йошка',
-            'Микаелла'
+            ['alias' => 'Фира', 'gender' => 'female'],
+            ['alias' =>'Лейла', 'gender' => 'female'],
+            ['alias' =>'Сьюзен', 'gender' => 'female'],
+            ['alias' =>'Айрис', 'gender' => 'male'],
+            ['alias' =>'Аврора', 'gender' => 'female'],
+            ['alias' =>'Галилея', 'gender' => 'female'],
+            ['alias' =>'Шанси', 'gender' => 'male'],
+            ['alias' =>'Рута', 'gender' => 'female'],
+            ['alias' =>'Фабби', 'gender' => 'female'],
+            ['alias' =>'Вента', 'gender' => 'female'],
+            ['alias' =>'Ронда', 'gender' => 'female'],
+            ['alias' =>'Окки', 'gender' => 'male'],
+            ['alias' =>'Шкода', 'gender' => 'female'],
+            ['alias' =>'Лисичка', 'gender' => 'female'],
+            ['alias' =>'Соня', 'gender' => 'female'],
+            ['alias' =>'Вира', 'gender' => 'female'],
+            ['alias' =>'Абель', 'gender' => 'female'],
+            ['alias' =>'Юша', 'gender' => 'male'],
+            ['alias' =>'Гретхен', 'gender' => 'male'],
+            ['alias' =>'Шелби', 'gender' => 'male'],
+            ['alias' =>'Сайга', 'gender' => 'female'],
+            ['alias' =>'Валгала', 'gender' => 'female'],
+            ['alias' =>'Диана', 'gender' => 'female'],
+            ['alias' =>'Ямайка', 'gender' => 'female'],
+            ['alias' =>'Ямми', 'gender' => 'female'],
+            ['alias' =>'Булка', 'gender' => 'female'],
+            ['alias' =>'Виоль', 'gender' => 'female'],
+            ['alias' =>'Рошель', 'gender' => 'female'],
+            ['alias' =>'Ильда', 'gender' => 'female'],
+            ['alias' =>'Анжи', 'gender' => 'female'],
+            ['alias' =>'Омега', 'gender' => 'female'],
+            ['alias' =>'Зайка', 'gender' => 'female'],
+            ['alias' =>'Гаара', 'gender' => 'female'],
+            ['alias' =>'Веселина', 'gender' => 'female'],
+            ['alias' =>'Сильва', 'gender' => 'female'],
+            ['alias' =>'Верна', 'gender' => 'female'],
+            ['alias' =>'Рони', 'gender' => 'male'],
+            ['alias' =>'Джеси', 'gender' => 'female'],
+            ['alias' =>'Йошка', 'gender' => 'male'],
+            ['alias' =>'Микаелла', 'gender' => 'female']
         ];
     }
 

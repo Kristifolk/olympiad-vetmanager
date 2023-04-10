@@ -40,6 +40,7 @@ class StartController
         $taskData->generateAnimalAge();
         $taskData->generateAnimalColor();
         $taskData->generateAnimalName();
+        $taskData->generateBreedPet();
         $taskData->generateFullNameClient();
         $taskData->generateLastAndFirstNameClient();
     }

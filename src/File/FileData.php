@@ -7,7 +7,7 @@ class FileData
 {
     public int $countUsers = 0;
 
-    private function getDataInToFile(string $fileName): mixed
+    public function getDataInToFile(string $fileName): mixed
     {
         $ourData = file_get_contents($fileName);
 

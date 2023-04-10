@@ -66,7 +66,7 @@ class PercentageCompletion
 
 
                 $this->getIdAddingMedicalCardToTheProgram(),
-                $this->checkPurposeApointment("Первичный приём"),
+                $this->checkPurposeAppointment("Первичный приём"),
                 $this->checkTextTemplate("Абсцесс"),
                 //$this->checkTextTemplate("Больно где-то"),
                 $this->checkResultApointment("Вторичный приём"),
@@ -168,11 +168,33 @@ class PercentageCompletion
 
     private function checkTypePetToTheProgram(string $typePet): bool
     {
+        if (!isset($this->idPet)) {
+            return false;
+        }
+
+        $pets = Pet::getById($this->apiGateway, $this->idPet);
+        $pet = $pets[0];
+
+        if ($pet->type->type == $typePet) {
+            return true;
+        }
+
         return false;
     }
 
     private function checkGenderPetToTheProgram(string $gender): bool
     {
+        if (!isset($this->idPet)) {
+            return false;
+        }
+
+        $pets = Pet::getById($this->apiGateway, $this->idPet);
+        $pet = $pets[0];
+
+        if ($pet->sex == $gender) {
+            return true;
+        }
+
         return false;
     }
 
@@ -256,7 +278,7 @@ class PercentageCompletion
         return false;
     }
 
-    private function checkPurposeApointment(): bool
+    private function checkPurposeAppointment(): bool
     {
         return false;
     }
