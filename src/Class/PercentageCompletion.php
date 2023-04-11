@@ -13,6 +13,7 @@ use VetmanagerApiGateway\DO\DTO\DAO\Invoice;
 use VetmanagerApiGateway\DO\DTO\DAO\MedicalCard;
 use VetmanagerApiGateway\DO\DTO\DAO\Pet;
 use VetmanagerApiGateway\DO\Enum\ComboManualName\Name;
+use VetmanagerApiGateway\DO\Enum\Pet\Sex;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayRequestException;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayResponseEmptyException;
@@ -54,10 +55,9 @@ class PercentageCompletion
             $_SESSION['SurnameClient']);
 
         $medcard = $this->getMedicalCardDaoByName($pet);
-//        $medcardsByPet = $pet->medicalCards;
 
         $diagnoses = $this->getAnimalDiagnosisForMedicalCard($medcard);
-
+        $invoice = $this->getInvoiceForClient($medcard);
 
         $this->calculateResults(
             [
@@ -67,7 +67,7 @@ class PercentageCompletion
 
                 $this->checkPetIsAdded($pet),
                 $this->checkTypePetIsAdded($pet, "dog"),
-                $this->checkGenderPetIsAdded($pet, "124585"),
+                $this->checkGenderPetIsAdded($pet, "mail"),
                 $this->checkDateOfBirthPetIsAdded($pet, "124585"),/**/
                 $this->checkBreedPetIsAdded($pet, "корело-финская лайка"),
                 $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
@@ -75,34 +75,31 @@ class PercentageCompletion
                 /*ADD MEDICARE*/
 
                 $this->getIdMedicalCardIsAdded($medcard),
-                //$this->checkPurposeAppointmentIsAdded($medcards, "Первичный"),/**/
-                //$this->checkTextTemplateIsAdded($medcard, "Абсцесс"),
-                //$this->checkTextTemplate("Больно где-то"),
-                $this->checkResultAppointmentIsAdded($medcard, "Повторный прием"),/**/
+                $this->checkPurposeAppointmentIsAdded($medcard, "Первичный"),
+                $this->checkTextTemplateIsAdded($medcard),
+                $this->checkResultAppointmentIsAdded($medcard, "Повторный прием"),
                 $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, (string)$_SESSION['Diagnose']),
-                $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),/**/
+                $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
 
                 /*Creating Invoice*/
 
-                $this->checkInitialAppointmentForInvoice($_SESSION['Diagnose']),
-                $this->checkInitialOpeningOfAbscessForInvoice($_SESSION['Diagnose']),
-                $this->checkInitialSanitationOfTheWoundForInvoice($_SESSION['Diagnose']),
-                $this->checkInitialInjectionInvoice("тип иньекции"),
-                $this->checkInitialInjectionInvoice("тип иньекции"),
-                $this->checkInitialPaymentTypeForInvoice($_SESSION['Diagnose']),
+                $this->checkInitialAppointmentForInvoice($invoice),
+                $this->checkInitialInjectionInvoice($invoice, "Байтрил (мл)"),
+                $this->checkInitialInjectionInvoice($invoice, "Байтрил (мл)"),
+                $this->checkInitialInjectionInvoice($invoice, "Байтрил (мл)"),
+                $this->checkInitialInjectionInvoice($invoice, "Байтрил (мл)"),
+                $this->checkInitialPaymentTypeForInvoice($invoice),
 
                 /*Coupon application*/
 
-                $this->checkInitialCouponApplicationForInvoice($_SESSION['Diagnose']),
+                $this->checkInitialCouponApplicationForInvoice($invoice),
 
                 /*Repeat Appointment*/
 
-                $this->checkRepeatAppointmentToTheClinic(),
-                $this->checkCreateInvoiceUsingCoupon()
+                $this->checkRepeatAppointmentToTheClinic($client),
+                //$this->checkCreateInvoiceUsingCoupon()
             ]
         );
-//         $_SESSION["ResultPercentage"] = $this->numberOfTasksCompleted . "%";
-//        return $_SESSION["ResultPercentage"];
         return $this->calculatePercentageResults();
     }
 
@@ -119,7 +116,7 @@ class PercentageCompletion
 
     private function calculatePercentageResults(): float
     {
-        return round($this->numberOfTasksCompleted / ($this->numberOfTasksCompleted + $this->numberOfTasksFailed), 2);
+        return round(($this->numberOfTasksCompleted + $this->numberOfTasksFailed) / $this->numberOfTasksCompleted, 2);
     }
 
     private function getClientDaoByName(string $firstName, string $middleName, string $lastName): ?Client
@@ -155,6 +152,33 @@ class PercentageCompletion
         return $pets[0];
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+    private function getMedicalCardDaoByName(?Pet $pet, string $typeAdmissionTitle = 'Первичный'): ?MedicalCard
+    {
+        if (is_null($pet)) {
+            return null;
+        }
+
+        $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::AdmissionType);
+
+        $typeAdmission = ComboManualItem::getByQueryBuilder(
+            $this->apiGateway,
+            (new Builder())
+                ->where('title', $typeAdmissionTitle)
+                ->where('combo_manual_id', (string)$comboManualNameId)
+        );
+
+        foreach ($pet->medicalCards as $medCard) {
+            if ($medCard->admissionTypeId == $typeAdmission[0]->value) {
+                return $medCard;
+            }
+        }
+
+        return null;
+    }
+
     private function getAnimalDiagnosisForMedicalCard(?MedicalCard $medicalCard): mixed
     {
         if (is_null($medicalCard)) {
@@ -162,6 +186,26 @@ class PercentageCompletion
         }
 
         return json_decode($medicalCard->diagnose, true);
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     * @throws VetmanagerApiGatewayRequestException
+     * @throws VetmanagerApiGatewayResponseException
+     * @throws VetmanagerApiGatewayResponseEmptyException
+     */
+    private function getInvoiceForClient(?MedicalCard $medicalCard): Invoice|null
+    {
+        if (is_null($medicalCard)) {
+            return null;
+        }
+
+        if (is_null($medicalCard->invoice)) {
+            return null;
+        }
+
+        $invoise = Invoice::getById($this->apiGateway, $medicalCard->invoiceId);
+        return $invoise;
     }
 
     /**
@@ -191,14 +235,14 @@ class PercentageCompletion
 
     private function checkGenderPetIsAdded(?Pet $pet, string $gender): bool
     {
-        if (is_null($pet) || $pet->sex != $gender) {
-            return true;
+        if (is_null($pet)) {
+            return false;
         }
 
-        return false;
+        return $pet->sex == $gender;
     }
 
-    private function checkDateOfBirthPetIsAdded(?Pet $pet, string $dateOfBirth,): bool
+    private function checkDateOfBirthPetIsAdded(?Pet $pet, string $dateOfBirth): bool
     {
         if (is_null($pet)) {
             return false;
@@ -209,11 +253,11 @@ class PercentageCompletion
 
     private function checkBreedPetIsAdded(?Pet $pet, string $breedPet): bool
     {
-        if (is_null($pet) || $pet->breed->title != $breedPet) {
+        if (is_null($pet)) {
             return false;
         }
 
-        return true;
+        return $pet->breed->title == $breedPet;
     }
 
     /**
@@ -227,7 +271,7 @@ class PercentageCompletion
 
         $colorAsComboManualItem = ComboManualItem::getByPetColorId($this->apiGateway, $pet->colorId);
 
-        if ($animalColor != $colorAsComboManualItem->title) {
+        if ($animalColor !== $colorAsComboManualItem->title) {
             return false;
         }
 
@@ -242,13 +286,10 @@ class PercentageCompletion
         return (bool)$medicalCard;
     }
 
-    /**
-     * @throws VetmanagerApiGatewayException
-     */
-    private function getMedicalCardDaoByName(?Pet $pet, string $typeAdmissionTitle = 'Первичный'): ?MedicalCard
+    private function checkPurposeAppointmentIsAdded(?MedicalCard $medicalCard, string $typeAdmissionTitle): bool
     {
-        if (is_null($pet)) {
-            return null;
+        if (is_null($medicalCard)) {
+            return false;
         }
 
         $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::AdmissionType);
@@ -260,29 +301,28 @@ class PercentageCompletion
                 ->where('combo_manual_id', (string)$comboManualNameId)
         );
 
-        foreach ($pet->medicalCards as $medCard) {
-            if ($medCard->admissionTypeId == $typeAdmission[0]->value) {
-                return $medCard;
-            }
+        if ($medicalCard->meetResultId == (int)$typeAdmission[0]->value) {
+            return true;
         }
 
-        return null;
+        return false;
     }
 
     /**
      * @throws VetmanagerApiGatewayException
      */
-
-    private function checkTextTemplateIsAdded(?MedicalCard $medicalCard, string $complaintByTask): bool
+    private function checkTextTemplateIsAdded(?MedicalCard $medicalCard): bool
     {
         if (is_null($medicalCard)) {
             return false;
         }
 
-        $medicalCard = MedicalCard::getById($this->apiGateway, $this->idOfMedicalCard);
-        $complaint = $medicalCard->description;
+        $healingProcessForMedCard = $medicalCard->description;
+        $healingProcess = "Назначения при абсцессе";
 
-        if (!empty($complaint) && $complaint == $complaintByTask) {
+        $position = strripos($healingProcessForMedCard, $healingProcess);
+
+        if (!empty($healingProcessForMedCard) && (bool)$position) {
             return true;
         }
 
@@ -307,20 +347,22 @@ class PercentageCompletion
                 ->where('combo_manual_id', (string)$comboManualNameId)
         );
 
-        if ($medicalCard->meetResultId == $typeAdmission[0]->value) {
+        if ($medicalCard->meetResultId == (int)$typeAdmission[0]->value) {
             return true;
         }
 
         return false;
     }
 
-    private function checkAnimalDiagnosisIsAdded(array $diagnoses, string $nameDiagnoseForPet): bool
+    private function checkAnimalDiagnosisIsAdded(array $diagnoses, string $diagnoseTitleForPet): bool
     {
         if (empty($diagnoses)) {
             return false;
         }
 
+        // $diagnosisData = MedicalCard::getAll()
 
+        //$diagnosisData =
         foreach ($diagnoses as $diagnosis) {
             if ($diagnosis["id"] == "118") {
                 return true;
@@ -337,12 +379,11 @@ class PercentageCompletion
         }
 
         $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::DiagnoseTypes);
-        $typeDiagnoses = ComboManualItem::getByPagedQuery(
+        $typeDiagnoses = ComboManualItem::getByQueryBuilder(
             $this->apiGateway,
             (new Builder())
                 ->where('title', $nameTypeDiagnoseForPet)
                 ->where('combo_manual_id', (string)$comboManualNameId)
-                ->top(1)
         );
 
         foreach ($diagnoses as $diagnosis) {
@@ -356,76 +397,95 @@ class PercentageCompletion
 
     /*Creating Invoice*/
 
-
-    private function checkInitialAppointmentForInvoice(mixed $Diagnose): bool
+    private function checkInitialAppointmentForInvoice(?Invoice $invoice): bool
     {
+        return (bool)$invoice;
+    }
+
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
+    private function checkInitialInjectionInvoice(?Invoice $invoice, string $injectionTitle): bool
+    {
+        if (is_null($invoice)) {
+            return false;
+        }
+
+        $invoiceDocuments = $invoice->invoiceDocuments;
+
+        $dataInjection = DAO\Good::getByQueryBuilder(
+            $this->apiGateway,
+            (new Builder())
+                ->where('title', $injectionTitle)
+        );
+
+        if (empty($dataInjection)) {
+            return false;
+        }
+
+        foreach ($invoiceDocuments as $invoiceDocument) {
+            if ($invoiceDocument->goodId == $dataInjection[0]->id) {
+                return true;
+            }
+        }
+
         return false;
     }
 
-    private function checkInitialOpeningOfAbscessForInvoice(mixed $Diagnose): bool
+    private function checkInitialPaymentTypeForInvoice(?Invoice $invoice): bool
     {
-        return false;
-    }
+        if (is_null($invoice)) {
+            return false;
+        }
 
-    private function checkInitialSanitationOfTheWoundForInvoice(mixed $Diagnose): bool
-    {
-        return false;
-    }
+        if ($invoice->status == "exec") {
+            return true;
+        }
 
-    private function checkInitialInjectionInvoice(string $typeInjection): bool
-    {
-        return false;
-    }
-
-    private function checkInitialPaymentTypeForInvoice(mixed $Diagnose): bool
-    {
         return false;
     }
 
     /*Coupon application*/
 
-    private function checkInitialCouponApplicationForInvoice(mixed $Diagnose): bool
+    private function checkInitialCouponApplicationForInvoice(?Invoice $invoice): bool
     {
+        if (is_null($invoice)) {
+            return false;
+        }
+
+        if ($invoice->discount == 10.0) {
+            return true;
+        }
+
         return false;
     }
 
     /*Repeat Appointment*/
 
-    private function checkRepeatAppointmentToTheClinic(): bool
+    private function checkRepeatAppointmentToTheClinic(?Client $client): bool
     {
+//        $repeatAdmission = DAO\AdmissionFromGetAll::q
         return false;
     }
 
-    private function checkCreateInvoiceUsingCoupon(): bool
-    {
-        if (!isset($this->idOfClient) || !isset($this->idOfPet)) {
-            return false;
-        }
-
-        $invoices = Invoice::getByPagedQuery($this->apiGateway,
-            (new Builder())
-                ->where('client_id', (string)$this->idOfClient)
-                ->where('pet_id', (string)$this->idOfPet)
-                ->where('amount', "1100.0000000000")
-                ->top(1)
-        );
-
-        if (count($invoices) == 0) {
-            return false;
-        }
-
-        return true;
-    }
-
-//    private function checkRepeatAppointmentToTheClinic(): bool
+//    private function checkCreateInvoiceUsingCoupon(): bool
 //    {
-//        $admissions = Client::fromRequestGetByQueryBuilder(
-//            $this->apiGateway,
-//            (new Builder ())
-//                ->where('client_id', $idClient)
+//        if (!isset($this->idOfClient) || !isset($this->idOfPet)) {
+//            return false;
+//        }
+//
+//        $invoices = Invoice::getByPagedQuery($this->apiGateway,
+//            (new Builder())
+//                ->where('client_id', (string)$this->idOfClient)
+//                ->where('pet_id', (string)$this->idOfPet)
+//                ->where('amount', "1100.0000000000")
 //                ->top(1)
 //        );
 //
-//        return $this->activateArrayResultStatus($admissions);
+//        if (count($invoices) == 0) {
+//            return false;
+//        }
+//
+//        return true;
 //    }
 }

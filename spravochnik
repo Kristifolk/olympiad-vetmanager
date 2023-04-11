@@ -166,3 +166,14 @@ $arrayId = [];
 //        }
 //
 //        fclose($dataFile);
+
+
+//    private function checkInitialOpeningOfAbscessForInvoice(?Invoice $invoice): bool
+//    {
+//        return false;
+//    }
+//
+//    private function checkInitialSanitationOfTheWoundForInvoice(?Invoice $invoice): bool
+//    {
+//        return false;
+//    }
