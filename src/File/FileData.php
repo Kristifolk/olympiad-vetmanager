@@ -48,8 +48,9 @@ class FileData
         $idUser = $this->getIdUserToParticipant();
         $arrayLoginAndPassword = $this->getDataInToFile(USER_DATA_PATH);
         $dataUser = $arrayLoginAndPassword["$idUser"];
-        $this->putNewDataFileForTask(["$idUser" => $dataUser]);
-        return $arrayLoginAndPassword["$idUser"];
+        $this->putDefaultDataFileForTaskUser(["$idUser" => $dataUser]);
+        $dataUser[] = $idUser;
+        return $dataUser;
     }
 
     private function putFileOverwrite(array $userData): void
@@ -57,10 +58,18 @@ class FileData
         file_put_contents(USER_AVAILABLE_PATH, json_encode($userData, true));
     }
 
-    private function putNewDataFileForTask(array $taskData): void
+    /**
+     * @throws \JsonException
+     */
+    private function putDefaultDataFileForTaskUser(array $userData): void
     {
         $getData = $this->getDataInToFile(USER_TASKS_PATH);
-        $putData = substr(json_encode($taskData, true), 1);
+
+        $putData = substr(json_encode($userData, true), 1);
+        $putData = substr($putData, 0, -2);
+        $taskData = substr(json_encode($this->getDataInToFile(TASK_DEFAULT_DATA), true), 1);
+
+        $putData = $putData . "," . $taskData . "}";
 
         if (count($getData) !== 0) {
             $getData = substr(json_encode($getData, true), 0, -1);
@@ -71,5 +80,22 @@ class FileData
 
         $fullData = $getData . $putData;
         file_put_contents(USER_TASKS_PATH, $fullData);
+    }
+
+    public function putNewDataFileForTask(array $newData, array $deleteDataUser, int $userId): void
+    {
+        $getData = $this->getDataInToFile(USER_TASKS_PATH);
+        unset($getData[$userId]);
+        $getData[$userId] = [$deleteDataUser, $newData];
+        file_put_contents(USER_TASKS_PATH, json_encode($getData, true));
+    }
+
+    /**
+     * @throws \JsonException
+     */
+    public function getDataForUserId(int $userId): mixed
+    {
+        $arrayDataAllUsers = $this->getDataInToFile(USER_TASKS_PATH);
+        return $arrayDataAllUsers[$userId];
     }
 }

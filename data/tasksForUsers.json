@@ -1,1 +1,929 @@
-{"2":{"login":"admin2","password":"123"},"3":{"login":"admin3","password":"123"},"4":{"login":"admin4","password":"123"},"5":{"login":"admin5","password":"123"},"6":{"login":"admin6","password":"123"},"7":{"login":"admin7","password":"123"},"8":{"login":"admin8","password":"123"},"9":{"login":"admin9","password":"123"},"10":{"login":"admin10","password":"123"},"1":{"login":"admin1","password":"123"},"4":{"login":"admin4","password":"123"}}
+{
+  "5": {
+    "login": "admin5",
+    "password": "123"
+  },
+  "6": {
+    "login": "admin6",
+    "password": "123",
+    "add_client": {
+      "done": "false",
+      "marks": "2"
+    },
+    "add_pet": {
+      "alias": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "type": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "gender": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "dateOfBirth": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "breed": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "color": {
+        "done": "false",
+        "marks": "0.5"
+      }
+    },
+    "add_medical_card": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "text_template": {
+        "done": "false",
+        "marks": "1"
+      },
+      "result_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "animal_diagnosis": {
+        "done": "false",
+        "marks": "2"
+      },
+      "type_animal_diagnosis": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_invoice": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "opening_of_abscess": {
+        "done": "false",
+        "marks": "1"
+      },
+      "sanitation_of_wound": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_antibiotic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "payment_type": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_coupon": {
+      "done": "false",
+      "marks": "6"
+    },
+    "add_repeat_appointment": {
+      "done": "false",
+      "marks": "2"
+    }
+  },
+  "7": {
+    "login": "admin7",
+    "password": "123",
+    "add_client": {
+      "done": "false",
+      "marks": "2"
+    },
+    "add_pet": {
+      "alias": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "type": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "gender": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "dateOfBirth": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "breed": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "color": {
+        "done": "false",
+        "marks": "0.5"
+      }
+    },
+    "add_medical_card": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "text_template": {
+        "done": "false",
+        "marks": "1"
+      },
+      "result_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "animal_diagnosis": {
+        "done": "false",
+        "marks": "2"
+      },
+      "type_animal_diagnosis": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_invoice": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "opening_of_abscess": {
+        "done": "false",
+        "marks": "1"
+      },
+      "sanitation_of_wound": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_antibiotic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "payment_type": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_coupon": {
+      "done": "false",
+      "marks": "6"
+    },
+    "add_repeat_appointment": {
+      "done": "false",
+      "marks": "2"
+    }
+  },
+  "8": {
+    "login": "admin8",
+    "password": "123",
+    "add_client": {
+      "done": "false",
+      "marks": "2"
+    },
+    "add_pet": {
+      "alias": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "type": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "gender": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "dateOfBirth": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "breed": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "color": {
+        "done": "false",
+        "marks": "0.5"
+      }
+    },
+    "add_medical_card": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "text_template": {
+        "done": "false",
+        "marks": "1"
+      },
+      "result_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "animal_diagnosis": {
+        "done": "false",
+        "marks": "2"
+      },
+      "type_animal_diagnosis": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_invoice": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "opening_of_abscess": {
+        "done": "false",
+        "marks": "1"
+      },
+      "sanitation_of_wound": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_antibiotic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "payment_type": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_coupon": {
+      "done": "false",
+      "marks": "6"
+    },
+    "add_repeat_appointment": {
+      "done": "false",
+      "marks": "2"
+    }
+  },
+  "9": {
+    "login": "admin9",
+    "password": "123",
+    "add_client": {
+      "done": "false",
+      "marks": "2"
+    },
+    "add_pet": {
+      "alias": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "type": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "gender": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "dateOfBirth": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "breed": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "color": {
+        "done": "false",
+        "marks": "0.5"
+      }
+    },
+    "add_medical_card": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "text_template": {
+        "done": "false",
+        "marks": "1"
+      },
+      "result_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "animal_diagnosis": {
+        "done": "false",
+        "marks": "2"
+      },
+      "type_animal_diagnosis": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_invoice": {
+      "purpose_appointment": {
+        "done": "false",
+        "marks": "1"
+      },
+      "opening_of_abscess": {
+        "done": "false",
+        "marks": "1"
+      },
+      "sanitation_of_wound": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_antibiotic": {
+        "done": "false",
+        "marks": "1"
+      },
+      "payment_type": {
+        "done": "false",
+        "marks": "1"
+      }
+    },
+    "add_coupon": {
+      "done": "false",
+      "marks": "6"
+    },
+    "add_repeat_appointment": {
+      "done": "false",
+      "marks": "2"
+    }
+  },
+  "10": {
+    "login": "admin10",
+    "password": "123",
+    "add_client": {
+      "done": "false",
+      "marks": "2"
+    },
+    "alias": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "type": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "gender": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "dateOfBirth": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "breed": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "color": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "purpose_appointment": {
+      "done": "false",
+      "marks": "1"
+    },
+    "text_template": {
+      "done": "false",
+      "marks": "1"
+    },
+    "result_appointment": {
+      "done": "false",
+      "marks": "1"
+    },
+    "animal_diagnosis": {
+      "done": "false",
+      "marks": "2"
+    },
+    "type_animal_diagnosis": {
+      "done": "false",
+      "marks": "1"
+    },
+    "appointment_invoice": {
+      "done": "false",
+      "marks": "1"
+    },
+    "opening_of_abscess": {
+      "done": "false",
+      "marks": "1"
+    },
+    "sanitation_of_wound": {
+      "done": "false",
+      "marks": "1"
+    },
+    "injection_analgesic_antipyretic": {
+      "done": "false",
+      "marks": "1"
+    },
+    "injection_antibiotic": {
+      "done": "false",
+      "marks": "1"
+    },
+    "payment_type": {
+      "done": "false",
+      "marks": "1"
+    },
+    "add_coupon": {
+      "done": "false",
+      "marks": "6"
+    },
+    "add_repeat_appointment": {
+      "done": "false",
+      "marks": "2"
+    }
+  },
+  "1": {
+    "login": "admin1",
+    "password": "123",
+    "add_client": {
+      "done": "false",
+      "marks": "2"
+    },
+    "alias": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "type": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "gender": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "dateOfBirth": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "breed": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "color": {
+      "done": "false",
+      "marks": "0.5"
+    },
+    "purpose_appointment": {
+      "done": "false",
+      "marks": "1"
+    },
+    "text_template": {
+      "done": "false",
+      "marks": "1"
+    },
+    "result_appointment": {
+      "done": "false",
+      "marks": "1"
+    },
+    "animal_diagnosis": {
+      "done": "false",
+      "marks": "2"
+    },
+    "type_animal_diagnosis": {
+      "done": "false",
+      "marks": "1"
+    },
+    "appointment_invoice": {
+      "done": "false",
+      "marks": "1"
+    },
+    "opening_of_abscess": {
+      "done": "false",
+      "marks": "1"
+    },
+    "sanitation_of_wound": {
+      "done": "false",
+      "marks": "1"
+    },
+    "injection_analgesic_antipyretic": {
+      "done": "false",
+      "marks": "1"
+    },
+    "injection_antibiotic": {
+      "done": "false",
+      "marks": "1"
+    },
+    "payment_type": {
+      "done": "false",
+      "marks": "1"
+    },
+    "add_coupon": {
+      "done": "false",
+      "marks": "6"
+    },
+    "add_repeat_appointment": {
+      "done": "false",
+      "marks": "2"
+    }
+  },
+  "2": [
+    [
+      [
+        [
+          "admin2",
+          "123"
+        ],
+        {
+          "add_client": {
+            "done": "true",
+            "marks": "2"
+          },
+          "alias": {
+            "done": "true",
+            "marks": "0.5"
+          },
+          "type": {
+            "done": "true",
+            "marks": "0.5"
+          },
+          "gender": {
+            "done": "false",
+            "marks": "0.5"
+          },
+          "dateOfBirth": {
+            "done": "false",
+            "marks": "0.5"
+          },
+          "breed": {
+            "done": "false",
+            "marks": "0.5"
+          },
+          "color": {
+            "done": "false",
+            "marks": "0.5"
+          },
+          "purpose_appointment": {
+            "done": "true",
+            "marks": "1"
+          },
+          "text_template": {
+            "done": "true",
+            "marks": "1"
+          },
+          "result_appointment": {
+            "done": "true",
+            "marks": "1"
+          },
+          "animal_diagnosis": {
+            "done": "false",
+            "marks": "2"
+          },
+          "type_animal_diagnosis": {
+            "done": "false",
+            "marks": "1"
+          },
+          "appointment_invoice": {
+            "done": "true",
+            "marks": "1"
+          },
+          "opening_of_abscess": {
+            "done": "true",
+            "marks": "1"
+          },
+          "sanitation_of_wound": {
+            "done": "true",
+            "marks": "1"
+          },
+          "injection_analgesic_antipyretic": {
+            "done": "true",
+            "marks": "1"
+          },
+          "injection_antibiotic": {
+            "done": "true",
+            "marks": "1"
+          },
+          "payment_type": {
+            "done": "false",
+            "marks": "1"
+          },
+          "add_coupon": {
+            "done": "false",
+            "marks": "6"
+          },
+          "add_repeat_appointment": {
+            "done": "false",
+            "marks": "2"
+          }
+        }
+      ],
+      {
+        "add_client": {
+          "done": "true"
+        },
+        "alias": {
+          "done": "true"
+        },
+        "type": {
+          "done": "true"
+        },
+        "purpose_appointment": {
+          "done": "true"
+        },
+        "text_template": {
+          "done": "true"
+        },
+        "result_appointment": {
+          "done": "true"
+        },
+        "appointment_invoice": {
+          "done": "true"
+        },
+        "opening_of_abscess": {
+          "done": "true"
+        },
+        "sanitation_of_wound": {
+          "done": "true"
+        },
+        "injection_analgesic_antipyretic": {
+          "done": "true"
+        },
+        "injection_antibiotic": {
+          "done": "true"
+        }
+      }
+    ],
+    {
+      "add_client": {
+        "done": "true"
+      },
+      "alias": {
+        "done": "true"
+      },
+      "type": {
+        "done": "true"
+      },
+      "purpose_appointment": {
+        "done": "true"
+      },
+      "text_template": {
+        "done": "true"
+      },
+      "result_appointment": {
+        "done": "true"
+      },
+      "appointment_invoice": {
+        "done": "true"
+      },
+      "opening_of_abscess": {
+        "done": "true"
+      },
+      "sanitation_of_wound": {
+        "done": "true"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "true"
+      },
+      "injection_antibiotic": {
+        "done": "true"
+      }
+    }
+  ],
+  "3": [
+    [
+      "admin3",
+      "123"
+    ],
+    {
+      "add_client": {
+        "done": "true",
+        "marks": "2"
+      },
+      "alias": {
+        "done": "true",
+        "marks": "0.5"
+      },
+      "type": {
+        "done": "true",
+        "marks": "0.5"
+      },
+      "gender": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "dateOfBirth": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "breed": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "color": {
+        "done": "false",
+        "marks": "0.5"
+      },
+      "purpose_appointment": {
+        "done": "true",
+        "marks": "1"
+      },
+      "text_template": {
+        "done": "true",
+        "marks": "1"
+      },
+      "result_appointment": {
+        "done": "true",
+        "marks": "1"
+      },
+      "animal_diagnosis": {
+        "done": "false",
+        "marks": "2"
+      },
+      "type_animal_diagnosis": {
+        "done": "false",
+        "marks": "1"
+      },
+      "appointment_invoice": {
+        "done": "true",
+        "marks": "1"
+      },
+      "opening_of_abscess": {
+        "done": "true",
+        "marks": "1"
+      },
+      "sanitation_of_wound": {
+        "done": "true",
+        "marks": "1"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "true",
+        "marks": "1"
+      },
+      "injection_antibiotic": {
+        "done": "true",
+        "marks": "1"
+      },
+      "payment_type": {
+        "done": "false",
+        "marks": "1"
+      },
+      "add_coupon": {
+        "done": "false",
+        "marks": "6"
+      },
+      "add_repeat_appointment": {
+        "done": "false",
+        "marks": "2"
+      }
+    }
+  ],
+  "4": [
+    [
+      [
+        "admin4",
+        "123"
+      ],
+      {
+        "add_client": {
+          "title": "\u0421\u043e\u0437\u0434\u0430\u043d\u0438\u0435 \u043a\u043b\u0438\u0435\u043d\u0442\u0430",
+          "done": "true",
+          "marks": "2"
+        },
+        "alias": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u043a\u043b\u0438\u0447\u043a\u0443 \u043f\u0438\u0442\u043e\u043c\u0446\u0430",
+          "done": "true",
+          "marks": "0.5"
+        },
+        "type": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0442\u0438\u043f \u043f\u0438\u0442\u043e\u043c\u0446\u0430",
+          "done": "true",
+          "marks": "0.5"
+        },
+        "gender": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u043f\u043e\u043b \u043f\u0438\u0442\u043e\u043c\u0446\u0430",
+          "done": "false",
+          "marks": "0.5"
+        },
+        "dateOfBirth": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0434\u0430\u0442\u0443 \u0440\u043e\u0436\u0434\u0435\u043d\u0438\u044f \u043f\u0438\u0442\u043e\u043c\u0446\u0430",
+          "done": "false",
+          "marks": "0.5"
+        },
+        "breed": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u043f\u043e\u0440\u043e\u0434\u0443 \u043f\u0438\u0442\u043e\u043c\u0446\u0430",
+          "done": "false",
+          "marks": "0.5"
+        },
+        "color": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u043e\u043a\u0440\u0430\u0441 \u043f\u0438\u0442\u043e\u043c\u0446\u0430",
+          "done": "false",
+          "marks": "0.5"
+        },
+        "purpose_appointment": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0446\u0435\u043b\u044c \u043e\u0431\u0440\u0430\u0449\u0435\u043d\u0438\u044f",
+          "done": "true",
+          "marks": "1"
+        },
+        "text_template": {
+          "title": "\u041f\u0440\u0438\u043c\u0435\u043d\u0438\u043b\u0438 \u0442\u0435\u043a\u0441\u0442\u043e\u0432\u044b\u0439 \u0448\u0430\u0431\u043b\u043e\u043d \u0437\u0430\u0431\u043e\u043b\u0435\u0432\u0430\u043d\u0438\u044f",
+          "done": "true",
+          "marks": "1"
+        },
+        "result_appointment": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0440\u0435\u0437\u0443\u043b\u044c\u0442\u0430\u0442 \u043f\u043e\u0441\u0435\u0449\u0435\u043d\u0438\u044f ",
+          "done": "true",
+          "marks": "1"
+        },
+        "animal_diagnosis": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0434\u0438\u0430\u0433\u043d\u043e\u0437",
+          "done": "false",
+          "marks": "2"
+        },
+        "type_animal_diagnosis": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0442\u0438\u043f \u0434\u0438\u0430\u0433\u043d\u043e\u0437\u0430",
+          "done": "false",
+          "marks": "1"
+        },
+        "appointment_invoice": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u043f\u0435\u0440\u0432\u0438\u0447\u043d\u044b\u0439 \u043f\u0440\u0438\u0435\u043c ",
+          "done": "true",
+          "marks": "1"
+        },
+        "opening_of_abscess": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0432 \u0441\u0447\u0451\u0442\u0435 \u0432\u0441\u043a\u0440\u044b\u0442\u0438\u0435 \u0430\u0431\u0441\u0446\u0435\u0441\u0441\u0430",
+          "done": "true",
+          "marks": "1"
+        },
+        "sanitation_of_wound": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0432 \u0441\u0447\u0451\u0442\u0435 \u0441\u0430\u043d\u0430\u0446\u0438\u044f \u0440\u0430\u043d\u044b",
+          "done": "true",
+          "marks": "1"
+        },
+        "injection_analgesic_antipyretic": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0432 \u0441\u0447\u0451\u0442\u0435 \u0443\u043a\u043e\u043b \u043e\u0431\u0435\u0437\u0431\u043e\u043b\u0438\u0432\u0430\u044e\u0449\u0438\u0439 \u0436\u0430\u0440\u043e\u043f\u043e\u043d\u0438\u0436\u0430\u044e\u0449\u0438\u0439",
+          "done": "true",
+          "marks": "1"
+        },
+        "injection_antibiotic": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0432 \u0441\u0447\u0451\u0442\u0435 \u0443\u043a\u043e\u043b \u0441 \u0430\u043d\u0442\u0438\u0431\u0438\u043e\u0442\u0438\u043a\u043e\u043c",
+          "done": "true",
+          "marks": "1"
+        },
+        "payment_type": {
+          "title": "\u0423\u043a\u0430\u0437\u0430\u043b\u0438 \u0442\u0438\u043f \u043e\u043f\u043b\u0430\u0442\u044b \u0441\u0447\u0451\u0442\u0430",
+          "done": "false",
+          "marks": "1"
+        },
+        "add_coupon": {
+          "title": "\u041f\u0440\u0438\u043c\u0435\u043d\u0435\u043d\u0438\u0435 \u043a\u0443\u043f\u043e\u043d\u0430",
+          "done": "false",
+          "marks": "6"
+        },
+        "add_repeat_appointment": {
+          "title": "\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u043f\u043e\u0432\u0442\u043e\u0440\u043d\u043e\u0433\u043e \u043f\u0440\u0438\u0435\u043c\u0430",
+          "done": "false",
+          "marks": "2"
+        }
+      }
+    ],
+    {
+      "add_client": {
+        "done": "true"
+      },
+      "alias": {
+        "done": "true"
+      },
+      "type": {
+        "done": "true"
+      },
+      "purpose_appointment": {
+        "done": "true"
+      },
+      "text_template": {
+        "done": "true"
+      },
+      "result_appointment": {
+        "done": "true"
+      },
+      "appointment_invoice": {
+        "done": "true"
+      },
+      "opening_of_abscess": {
+        "done": "true"
+      },
+      "sanitation_of_wound": {
+        "done": "true"
+      },
+      "injection_analgesic_antipyretic": {
+        "done": "true"
+      },
+      "injection_antibiotic": {
+        "done": "true"
+      }
+    }
+  ]
+}

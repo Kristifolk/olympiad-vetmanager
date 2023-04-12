@@ -560,12 +560,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/ionov-e/vetmanager-api-gateway.git",
-                "reference": "0729495fef42386fdbf75435320adac5c85783d5"
+                "reference": "e3d1acb39058bf17b3216ca71f17596d7a2591b6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ionov-e/vetmanager-api-gateway/zipball/0729495fef42386fdbf75435320adac5c85783d5",
-                "reference": "0729495fef42386fdbf75435320adac5c85783d5",
+                "url": "https://api.github.com/repos/ionov-e/vetmanager-api-gateway/zipball/e3d1acb39058bf17b3216ca71f17596d7a2591b6",
+                "reference": "e3d1acb39058bf17b3216ca71f17596d7a2591b6",
                 "shasum": ""
             },
             "require": {
@@ -602,7 +602,7 @@
                 "issues": "https://github.com/ionov-e/vetmanager-api-gateway/issues",
                 "source": "https://github.com/ionov-e/vetmanager-api-gateway/tree/master"
             },
-            "time": "2023-04-11T14:13:33+00:00"
+            "time": "2023-04-12T12:41:47+00:00"
         },
         {
             "name": "otis22/php-interfaces",
