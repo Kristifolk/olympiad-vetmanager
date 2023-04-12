@@ -31,6 +31,7 @@ class StartController
     private function loadDataTask():void
     {
         $userData = (new FileData())->getLoginAndPasswordToParticipant();
+        $_SESSION["UserId"] = $userData[0];
         $_SESSION["TestLogin"] = $userData['login'];
         $_SESSION["TestPassword"] = $userData['password'];
 

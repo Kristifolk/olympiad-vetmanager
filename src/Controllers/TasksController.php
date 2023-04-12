@@ -34,7 +34,7 @@ class TasksController
     {
         $time = (new Timer())->getTimerValues();
         $path = $this->getView();
-
+        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
         $html = new View(
             $path,
             [
@@ -54,7 +54,7 @@ class TasksController
         );
         $percentageCompletionHtml = new View(ViewPath::PercentageCompletionContent,
             [
-                'percentageCompletion' => (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%'
+                'percentageCompletion' => $_SESSION["ResultPercentage"]
             ]
         );
         $templateWithContentTask = new View(ViewPath::TemplateContentTask,

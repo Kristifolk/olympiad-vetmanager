@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\File\FileData;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -10,8 +11,11 @@ session_start();
 
 class ResultController
 {
+
+
     public function viewResult(): void
     {
+        $dataResultUser = $this->getResultData();
         $html = new View(ViewPath::Result,
             [
                 'taskTransitTime' =>
@@ -20,6 +24,8 @@ class ResultController
                         'second' => $this->convertToPrettyString((string)$_SESSION["TimeEndTask"]["seconds"]),
                         'resultPercentage' => $_SESSION["ResultPercentage"]
                     ],
+                'resultTask' => $dataResultUser,
+                'resultMarks' => (string)$this->getResultTrueMarks($dataResultUser)
             ]
         );
 
@@ -35,4 +41,27 @@ class ResultController
 
         return $time;
     }
+
+    /**
+     * @throws \JsonException
+     */
+    private function getResultData(): array
+    {
+        $allDataUser = (new FileData())->getDataForUserId($_SESSION["UserId"]);
+        return $allDataUser[1];
+    }
+
+    private function getResultTrueMarks(array $data): float
+    {
+        $result = 0;
+
+        foreach ($data as $value) {
+            if ($value["done"] == "true") {
+                $result += $value["marks"];
+            }
+        }
+
+        return $result;
+    }
+
 }

@@ -31,12 +31,13 @@ class Timer
     {
         $arrayTime = $this->getTimerValues();
 
-        $stringTime = $arrayTime["minutes"] . ":" . $arrayTime["seconds"];
+        $stringTime = $this->beautifulTimeForJS($arrayTime["minutes"]) . ":" . $this->beautifulTimeForJS($arrayTime["seconds"]);
         return $stringTime;
     }
 
     public function storeTaskValue(): void
     {
+        (new PercentageCompletion())->storePercentageCompletionIntoFile();
         $_SESSION["TimeEndTask"] = $this->getTimerValues();
         header('Location: /result');
     }
@@ -57,5 +58,4 @@ class Timer
 
         return (string)$time;
     }
-
 }

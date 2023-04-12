@@ -16,7 +16,8 @@ class UpdateData
     public function updatePercentageCompletion(): void
     {
         $string = (new PercentageCompletion())->checkCompletedTasksForUserInPercents();
-        echo substr($string, 0, -1);
+        $_SESSION["ResultPercentage"] = $string . "%";
+        echo $string;
     }
 
     public function updateTimeForTimerJS(): void
