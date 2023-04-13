@@ -37,7 +37,6 @@ class StartController
 
         $taskData = new TaskCollection();
         $taskData->defaultSessionData();
-        //$taskData->generateUserLogin();
         $taskData->generateAnimalAge();
         $taskData->generateAnimalColor();
         $taskData->generateAnimalName();

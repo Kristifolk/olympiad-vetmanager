@@ -1,74 +1,76 @@
-let timerMinuteContent = document.querySelector('.timer-minute');
-let timerSecondContent = document.querySelector('.timer-second');
+let inputPercentageCompletion = document.querySelector(".input-percentage-completion");
+let app = document.querySelector('#app');
+
+let timerMinuteContent = document.querySelector('#timer-minute');
+let timerSecondContent = document.querySelector('#timer-second');
 
 const numberTask = document.querySelector('.task-number');
 const btnResultTasks = document.querySelector('#btn-result');
 
-let inputPercentageCompletion = document.querySelector(".input-percentage-completion");
-let app = document.querySelector('#app');
 
-timerMinuteContent.value = 24 - timerMinuteContent.value;
-timerSecondContent.value = 59 - timerSecondContent.value;
+/*TIMER*/
 
 
-let timerIntervalSecond = setInterval(function () {
-    let timerSecondValue = timerSecondContent.value;
+//
+// if (24 - timerMinuteContent.value < "10") {
+//     timerMinuteContent.value = "0" + $timeMinuteContent;
+// } else {
+//     timerMinuteContent.value = $timeMinuteContent;
+// }
 
-    if (timerSecondValue === "00") {
-        timerSecondValue = "60";
-    }
+console
+let timeMinuteStart = 25 - timerMinuteContent.value;
+let timerSecondStart = 60 - timerSecondContent.value;
 
-    timerSecondValue--;
+window.onload = function () {
+    var minute = timeMinuteStart;
+    var sec = timerSecondStart;
+    setInterval(function () {
+        document.getElementById("systemTime").value =
+            minute + " : " + sec;
+        sec--;
+        if (sec === "00") {
+            minute--;
+            sec = 60;
+            if (minute === 0) {
+                minute = 5;
+            }
+        }
+    }, 1000);
+};
 
-    if (timerSecondValue < "10") {
-        timerSecondValue = "0" + timerSecondValue;
-    }
+function startTimer(duration, display) {
+    var timer = duration, minutes, seconds;
+    let interval = setInterval(function () {
+        minutes = parseInt(timer / 60, 10);
+        seconds = parseInt(timer % 60, 10);
 
-    return timerSecondContent.value = timerSecondValue;
-}, 1000);
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
 
+        if (minutes === "05" && seconds === "00") {
+            setTimeout(() => {
+                clearInterval(interval);
+            }, 0);
 
-let timerIntervalMinute = setInterval(function () {
-    let timerMinuteValue = timerMinuteContent.value;
+            creatModalWindowEndOlimpiada();
+        }
+        display.value = minutes + ":" + seconds;
 
-    if (timerMinuteValue === "19" && timerSecondContent.value === "01") {
-        creatModalWindowEndOlimpiada();
-    }
-
-    timerMinuteValue--;
-
-    if (timerMinuteValue < "10") {
-        timerMinuteValue = "0" + timerMinuteValue;
-    }
-
-    return timerMinuteContent.value = timerMinuteValue;
-}, 60000);
-
-
-/*PERCENTAGE COMPLETION*/
-
-setInterval(function() {
-    fetchAndViewUpdatePercentage().then(json => {
-        inputPercentageCompletion.value = json + "%";
-    });
-}, 20000);
-
-setInterval(function() {
-    fetchAndViewUpdateTimer().then(json=> {
-        $arr = String(json).split(':');
-        timerMinuteContent.value = 24 - $arr[0];
-        timerSecondContent.value = 59 - $arr[1];
-        console.log(json);
-    });
-}, 30000);
-
-async function fetchAndViewUpdatePercentage() {
-    let response = await fetch('/update_percentage_completion', {
-        method: 'POST',
-    });
-
-    return await response.json();
+        if (--timer < 0) {
+            timer = duration;
+        }
+    }, 1000);
 }
+
+window.onload = function () {
+
+    let allTimeMinutes = timeMinuteStart * timerSecondStart;
+    let display = document.querySelector('#systemTime');
+    console.log(timeMinuteStart);
+    startTimer(allTimeMinutes, display);
+};
+
 
 async function fetchAndViewUpdateTimer() {
     let response = await fetch('/update_time', {
@@ -78,10 +80,36 @@ async function fetchAndViewUpdateTimer() {
     return await response.text();
 }
 
-function creatModalWindowEndOlimpiada() {
-    setTimeout(() => { clearInterval(timerIntervalMinute); }, 0);
-    setTimeout(() => { clearInterval(timerIntervalSecond); }, 0);
+setInterval(function () {
+    fetchAndViewUpdateTimer().then(json => {
+        $arr = String(json).split(':');
 
+        if ($arr[0] >= 25) {
+            creatModalWindowEndOlimpiada();
+        }
+
+        $minute = 24 - $arr[0];
+        $second  = 59 - $arr[1];
+
+        if ($minute < 10) {
+            timerMinuteContent.value = "0" + $minute;
+        } else {
+            timerMinuteContent.value = $minute;
+        }
+
+        if ($second < 10) {
+            timerSecondContent.value = "0" + $second;
+        } else {
+            timerSecondContent.value = $second;
+        }
+
+        console.log(json);
+    });
+}, 30000);
+
+/*MODAL WINDOW*/
+
+function creatModalWindowEndOlimpiada() {
     let div = document.createElement('div');
     let p = document.createElement('p');
     let a = document.createElement('a');
@@ -94,13 +122,27 @@ function creatModalWindowEndOlimpiada() {
     div.appendChild(p);
     div.appendChild(a);
 
-    if(numberTask.innerHTML === '1') {
-        a.href = '/store?id=1&option=result';
+    if (numberTask.innerHTML === '1') {
+        a.href = '/store?id=1';
     }
-    if(numberTask.innerHTML === '2') {
-        a.href = '/store?id=2&option=result';
-    }
+
     btnResultTasks.href = '#';
 
     app.appendChild(div);
+}
+
+/*PERCENTAGE COMPLETION*/
+
+setInterval(function () {
+    fetchAndViewUpdatePercentage().then(json => {
+        inputPercentageCompletion.value = json + "%";
+    });
+}, 20000);
+
+async function fetchAndViewUpdatePercentage() {
+    let response = await fetch('/update_percentage_completion', {
+        method: 'POST',
+    });
+
+    return await response.json();
 }

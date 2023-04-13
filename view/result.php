@@ -1,5 +1,5 @@
 <section class="container">
-    <h2>Ваш результат</h2>
+    <h2>Ваш результат, <?= $_SESSION['TestLogin'] ?></h2>
     <div>
         <h3>Общее время прохождения олимпиады: <span
             class="changeable-text"><?= $this->arguments['taskTransitTime']['minute'] ?>:<?= $this->arguments['taskTransitTime']['second'] ?></span>

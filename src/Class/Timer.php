@@ -2,11 +2,6 @@
 
 namespace App\Class;
 
-use App\Controllers\ResultController;
-use App\Controllers\TasksController;
-use App\Interfaces\TimeInterface;
-use App\Services\ViewPath;
-
 session_start();
 
 class Timer
@@ -27,11 +22,12 @@ class Timer
 
         return $this->convertTimeOnMinuteAndSecond($timeDifference);
     }
-    public function getStringTime():string
+
+    public function getStringTime(): string
     {
         $arrayTime = $this->getTimerValues();
 
-        $stringTime = $this->beautifulTimeForJS($arrayTime["minutes"]) . ":" . $this->beautifulTimeForJS($arrayTime["seconds"]);
+        $stringTime = $arrayTime["minutes"] . ":" . $arrayTime["seconds"];
         return $stringTime;
     }
 
@@ -50,9 +46,9 @@ class Timer
         ];
     }
 
-    private function beautifulTimeForJS(int $time):string
+    private function beautifulTimeForJS(int $time): string
     {
-        if($time < 10){
+        if ($time < 10) {
             return "0" . $time;
         }
 

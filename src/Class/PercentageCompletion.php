@@ -34,6 +34,9 @@ class PercentageCompletion
         );
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
     public function checkCompletedTasksForUserInPercents(): float
     {
         $this->calculateResults($this->calculateCompletedTaskItem());
