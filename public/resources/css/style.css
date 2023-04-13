@@ -112,11 +112,21 @@ li {
 }
 
 .btn-for-a {
-    /*margin-right: auto;*/
-    /*margin-left: auto;*/
     display: block;
     text-align: center;
     width: 15em;
+}
+
+.input-form {
+    width: 100%;
+    font-size: 16px;
+    font-family: 'Droid Sans Bold font', sans-serif;
+    line-height: 30px;
+    letter-spacing: 0.15px;
+    font-weight: 500;
+    border: solid 3px var(--primary-green);
+    border-radius: 3px;
+    margin: 10px 0px;
 }
 
 .changeable-text {
@@ -225,9 +235,10 @@ li {
 }
 
 /*TASK SECTION*/
-.header-task{
+.header-task {
     text-align: center;
 }
+
 .container-task {
     background: rgba(255, 255, 255, 0.7);
     padding: 20px 30px 30px 30px;
@@ -239,4 +250,25 @@ li {
     margin: 10px 0px;
     font-weight: 600;
     font-size: 16px;
+}
+
+/*ADMIN PANEL*/
+.container-admin {
+    align-items: flex-start;
+}
+
+.table-admin {
+    width: 100%;
+    border-collapse: collapse;
+    border: 2px solid var(--primary-green);
+    border-radius: 3px;
+    margin: 10px 0px 20px 0px;
+}
+
+th, td {
+    border: 2px solid var(--primary-green);
+}
+
+.input-search {
+    width: 31%;
 }
