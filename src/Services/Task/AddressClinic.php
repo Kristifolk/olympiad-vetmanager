@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Class\Task;
+namespace App\Services\Task;
 
 class AddressClinic
 {

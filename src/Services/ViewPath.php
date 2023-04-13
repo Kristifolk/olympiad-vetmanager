@@ -9,7 +9,9 @@ enum ViewPath: string
     case Result = __DIR__ . "/../../view/result.php";
     case NotFound = __DIR__ . "/../../view/not_found.php";
     case TemplateContent = __DIR__ . "/../../view/template.php";
+    case AdminPanel = __DIR__ . "/../../view/admin_panel.php";
     case TemplateContentTask = __DIR__ . "/../../view/template_tasks.php";
     case TimerContent = __DIR__ . "/../../view/component/timer.php";
     case PercentageCompletionContent = __DIR__ . "/../../view/component/percentage_completion.php";
+
 }

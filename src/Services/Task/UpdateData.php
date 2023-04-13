@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Class\Task;
+namespace App\Services\Task;
 
-use App\Class\PercentageCompletion;
-use App\Class\Timer;
+use App\Services\PercentageCompletion;
+use App\Services\Timer;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
 session_start();

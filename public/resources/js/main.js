@@ -18,59 +18,33 @@ const btnResultTasks = document.querySelector('#btn-result');
 //     timerMinuteContent.value = $timeMinuteContent;
 // }
 
-console
-let timeMinuteStart = 25 - timerMinuteContent.value;
-let timerSecondStart = 60 - timerSecondContent.value;
 
 window.onload = function () {
-    var minute = timeMinuteStart;
-    var sec = timerSecondStart;
-    setInterval(function () {
+    let minutesLeft = 24 - timerMinuteContent.value;
+    let secondsLeft = 59 - timerSecondContent.value;
+    let interval = setInterval(function () {
         document.getElementById("systemTime").value =
-            minute + " : " + sec;
-        sec--;
-        if (sec === "00") {
-            minute--;
-            sec = 60;
-            if (minute === 0) {
-                minute = 5;
+            minutesLeft + " : " + secondsLeft;
+        secondsLeft--;
+        if (secondsLeft === 0) {
+            minutesLeft--;
+            secondsLeft = 59;
+            if (minutesLeft === 0) {
+                minutesLeft = 5;
             }
         }
-    }, 1000);
-};
+        minutesLeft = minutesLeft < 10 ? "0" + minutesLeft : minutesLeft;
+        secondsLeft = secondsLeft < 10 ? "0" + secondsLeft : secondsLeft;
 
-function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    let interval = setInterval(function () {
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        if (minutes === "05" && seconds === "00") {
+        if (minutesLeft === "00" && secondsLeft === "00") {
             setTimeout(() => {
                 clearInterval(interval);
             }, 0);
-
             creatModalWindowEndOlimpiada();
         }
-        display.value = minutes + ":" + seconds;
 
-        if (--timer < 0) {
-            timer = duration;
-        }
     }, 1000);
-}
-
-window.onload = function () {
-
-    let allTimeMinutes = timeMinuteStart * timerSecondStart;
-    let display = document.querySelector('#systemTime');
-    console.log(timeMinuteStart);
-    startTimer(allTimeMinutes, display);
 };
-
 
 async function fetchAndViewUpdateTimer() {
     let response = await fetch('/update_time', {
@@ -82,28 +56,30 @@ async function fetchAndViewUpdateTimer() {
 
 setInterval(function () {
     fetchAndViewUpdateTimer().then(json => {
-        $arr = String(json).split(':');
+        let apiData = String(json).split(':');
+        let minutesPastFromServer = apiData[0];
+        let secondsPastFromServer = apiData[1];
 
-        if ($arr[0] >= 25) {
+        if (minutesPastFromServer >= 25) {
             creatModalWindowEndOlimpiada();
         }
 
-        $minute = 24 - $arr[0];
-        $second  = 59 - $arr[1];
+        let minutesLeft = 25 - minutesPastFromServer;
+        let secondsLeft = 60 - secondsPastFromServer;
 
-        if ($minute < 10) {
-            timerMinuteContent.value = "0" + $minute;
+        if (minutesLeft < 10) {
+            timerMinuteContent.value = "0" + minutesLeft;
         } else {
-            timerMinuteContent.value = $minute;
+            timerMinuteContent.value = minutesLeft;
         }
 
-        if ($second < 10) {
-            timerSecondContent.value = "0" + $second;
+        if (secondsLeft < 10) {
+            timerSecondContent.value = "0" + secondsLeft;
         } else {
-            timerSecondContent.value = $second;
+            timerSecondContent.value = secondsLeft;
         }
 
-        console.log(json);
+        console.log('Time from server: ' + apiData);
     });
 }, 30000);
 
@@ -145,4 +121,47 @@ async function fetchAndViewUpdatePercentage() {
     });
 
     return await response.json();
+}
+
+
+/*SEARCH*/
+document.addEventListener('keyup', search);
+
+// function search() {
+//     let input = document.getElementById("inputSearch");
+//     let filter = input.value.toUpperCase();
+//     let ul = document.getElementById("content-table");
+//     let li = ul.getElementsByTagName("li");
+//
+//
+//     // Перебирайте все элементы списка и скрывайте те, которые не соответствуют поисковому запросу
+//     for (let i = 0; i < li.length; i++) {
+//         let span = li[i].getElementsByTagName("span")[0];
+//         let table = li[i].getElementsByTagName("table")[0];
+//         console.log(span);
+//         if (span[i].textContent.toUpperCase().indexOf(filter) > -1) {
+//             span[i].style.display = "";
+//             table[i].style.display = "";
+//         } else {
+//             span[i].style.display = "none";
+//             table[i].style.display = "none";
+//         }
+//     }
+// }
+
+function search() {
+    let input = document.getElementById("inputSearch");
+    let filter = input.value.toUpperCase();
+    let ul = document.getElementById("content-table");
+    let li = ul.getElementsByTagName("li");
+
+    // Перебирайте все элементы списка и скрывайте те, которые не соответствуют поисковому запросу
+    for (let i = 0; i < li.length; i++) {
+        let span = li[i].getElementsByTagName("span")[0];
+        if (span.innerHTML.toUpperCase().indexOf(filter) > -1) {
+            li[i].style.display = "";
+        } else {
+            li[i].style.display = "none";
+        }
+    }
 }

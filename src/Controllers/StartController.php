@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\File\FileData;
+use App\Services\Data;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -30,8 +30,8 @@ class StartController
 
     private function loadDataTask():void
     {
-        $userData = (new FileData())->getLoginAndPasswordToParticipant();
-        $_SESSION["UserId"] = $userData[0];
+        $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant();
+        $_SESSION["UserId"] = $userData['userId'];
         $_SESSION["TestLogin"] = $userData['login'];
         $_SESSION["TestPassword"] = $userData['password'];
 

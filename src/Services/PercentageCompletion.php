@@ -1,8 +1,7 @@
 <?php declare(strict_types=1);
 
-namespace App\Class;
+namespace App\Services;
 
-use App\File\FileData;
 use Otis22\VetmanagerRestApi\Query\Builder;
 use VetmanagerApiGateway\ApiGateway;
 use VetmanagerApiGateway\DO\DTO\DAO;
@@ -105,22 +104,24 @@ class PercentageCompletion
 
     /**
      * @throws \JsonException
+     * @throws VetmanagerApiGatewayException
      */
     public function storePercentageCompletionIntoFile(): void
     {
-        $dataUser = (new FileData())->getDataForUserId((int)$_SESSION["UserId"]);
+        $userId = (int)$_SESSION["UserId"];
+        $dataUser = (new Data())->getDataForUserId($userId);
         $arrayResult = $this->calculateCompletedTaskItem();
 
-        $deleteDataUser[] = array_shift($dataUser);
-        $deleteDataUser[] = array_shift($dataUser);
+        $loginAndPassword = $dataUser[0];
+        $taskArray = $dataUser[1];
 
         foreach ($arrayResult as $key => $value) {
-            if ($value == true) {
-                $dataUser[$key]["done"] = "true";
+            if ($value) {
+                $taskArray[$key]["done"] = "true";
             }
         }
 
-        (new FileData())->putNewDataFileForTask($dataUser, $deleteDataUser, (int)$_SESSION["UserId"]);
+        (new Data())->putNewDataFileForTask($taskArray, $loginAndPassword, $userId);
     }
 
     private function calculateResults(array $checkAddingClientToTheProgram): void
@@ -150,7 +151,6 @@ class PercentageCompletion
                 ->where('last_name', $lastName)
                 ->top(1)
         );
-
         return !empty($clients) ? $clients[0] : null;
     }
 
@@ -301,20 +301,11 @@ class PercentageCompletion
 
         $colorAsComboManualItem = ComboManualItem::getByPetColorId($this->apiGateway, $pet->colorId);
 
-        if ($animalColor !== $colorAsComboManualItem->title) {
-            return false;
-        }
-
-        return true;
+        return $animalColor == $colorAsComboManualItem->title;
     }
 
 
     /*ADD MEDICARE*/
-
-    public function getIdMedicalCardIsAdded(?MedicalCard $medicalCard): bool
-    {
-        return (bool)$medicalCard;
-    }
 
     private function checkPurposeAppointmentIsAdded(?MedicalCard $medicalCard, string $typeAdmissionTitle): bool
     {
@@ -331,11 +322,7 @@ class PercentageCompletion
                 ->where('combo_manual_id', (string)$comboManualNameId)
         );
 
-        if ($medicalCard->meetResultId == (int)$typeAdmission[0]->value) {
-            return true;
-        }
-
-        return false;
+        return $medicalCard->meetResultId == (int)$typeAdmission[0]->value;
     }
 
     /**
