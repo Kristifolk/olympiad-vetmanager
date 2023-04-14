@@ -11,8 +11,6 @@ session_start();
 
 class StartController
 {
-    public string $loginUser;
-
     public function viewInstructions(): void
     {
         $html = (string)new View(ViewPath::Start);
@@ -20,6 +18,9 @@ class StartController
         (new Response((string)$templateWithContent))->echo();
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function viewTasksPreparation(): void
     {
         $this->loadDataTask();
@@ -28,9 +29,12 @@ class StartController
         (new Response((string)$templateWithContent))->echo();
     }
 
-    private function loadDataTask():void
+    /**
+     * @throws \JsonException
+     */
+    private function loadDataTask(): void
     {
-        $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant();
+        $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"]);
         $_SESSION["UserId"] = $userData['userId'];
         $_SESSION["TestLogin"] = $userData['login'];
         $_SESSION["TestPassword"] = $userData['password'];

@@ -127,41 +127,56 @@ async function fetchAndViewUpdatePercentage() {
 /*SEARCH*/
 document.addEventListener('keyup', search);
 
-// function search() {
-//     let input = document.getElementById("inputSearch");
-//     let filter = input.value.toUpperCase();
-//     let ul = document.getElementById("content-table");
-//     let li = ul.getElementsByTagName("li");
-//
-//
-//     // Перебирайте все элементы списка и скрывайте те, которые не соответствуют поисковому запросу
-//     for (let i = 0; i < li.length; i++) {
-//         let span = li[i].getElementsByTagName("span")[0];
-//         let table = li[i].getElementsByTagName("table")[0];
-//         console.log(span);
-//         if (span[i].textContent.toUpperCase().indexOf(filter) > -1) {
-//             span[i].style.display = "";
-//             table[i].style.display = "";
-//         } else {
-//             span[i].style.display = "none";
-//             table[i].style.display = "none";
-//         }
-//     }
-// }
-
 function search() {
-    let input = document.getElementById("inputSearch");
+    let input = document.querySelector("#inputSearch");
     let filter = input.value.toUpperCase();
-    let ul = document.getElementById("content-table");
-    let li = ul.getElementsByTagName("li");
+    let div = document.querySelector("#content-table");
+    let article = div.getElementsByTagName("article");
 
-    // Перебирайте все элементы списка и скрывайте те, которые не соответствуют поисковому запросу
-    for (let i = 0; i < li.length; i++) {
-        let span = li[i].getElementsByTagName("span")[0];
+    for (let i = 0; i < article.length; i++) {
+        let span = article[i].getElementsByTagName("span")[0];
         if (span.innerHTML.toUpperCase().indexOf(filter) > -1) {
-            li[i].style.display = "";
+            article[i].style.display = "";
         } else {
-            li[i].style.display = "none";
+            article[i].style.display = "none";
         }
+    }
+}
+
+/*AUTHORIZATION*/
+
+async function fetchAndViewAuthorization() {
+    const form = new FormData(document.querySelector("form.form-authorization"));
+    let app = document.querySelector('#app');
+
+    let response = await fetch('/authorization_participant', {
+        method: 'POST',
+        body: form
+    });
+    window.location = "http://0.0.0.0:8080/tasks_preparation";
+}
+
+function validateInputUser() {
+    let lastNameInput = document.querySelector("#last-name");
+    let firstNameInput = document.querySelector("#first-name");
+    let middleNameInput = document.querySelector("#middle-name");
+
+    if(lastNameInput.value === "") {
+        lastNameInput.placeholder = "Введиете свою фамилию!";
+        lastNameInput.style.borderColor = "red";
+    }
+
+    if(firstNameInput.value === "") {
+        firstNameInput.placeholder = "Введиете своё имя!";
+        firstNameInput.style.borderColor = "red";
+    }
+
+    if(middleNameInput.value === "") {
+        middleNameInput.placeholder = "Введиете своё отчетсво!";
+        middleNameInput.style.borderColor = "red";
+    }
+
+    if(lastNameInput.value !== "" && firstNameInput.value !== "" && middleNameInput.value !== "") {
+        fetchAndViewAuthorization().then(r => "");
     }
 }

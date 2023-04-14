@@ -112,8 +112,9 @@ class PercentageCompletion
         $dataUser = (new Data())->getDataForUserId($userId);
         $arrayResult = $this->calculateCompletedTaskItem();
 
-        $loginAndPassword = $dataUser[0];
-        $taskArray = $dataUser[1];
+        $practicianData = $dataUser[0];
+        $loginAndPassword = $dataUser[1];
+        $taskArray = $dataUser[2];
 
         foreach ($arrayResult as $key => $value) {
             if ($value) {
@@ -121,7 +122,7 @@ class PercentageCompletion
             }
         }
 
-        (new Data())->putNewDataFileForTask($taskArray, $loginAndPassword, $userId);
+        (new Data())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId);
     }
 
     private function calculateResults(array $checkAddingClientToTheProgram): void

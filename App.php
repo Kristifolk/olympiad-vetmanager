@@ -1,6 +1,7 @@
 <?php
 
 use App\Controllers\AdminController;
+use App\Controllers\AuthorizationController;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
 use App\Controllers\TasksController;
@@ -14,15 +15,20 @@ if (isset($_SERVER['REQUEST_URI'])) {
     try {
         match ($_SERVER['REQUEST_URI']) {
             '/' => (new StartController())->viewInstructions(),
+            '/authorization' => (new AuthorizationController())->viewAuthentication(),
             '/tasks_preparation' => (new StartController())->viewTasksPreparation(),
             '/start' => (new Timer())->startTimer(),
-            '/task?id=1'=> (new TasksController($_GET['id']))->viewTask(),
+            '/task?id=1' => (new TasksController($_GET['id']))->viewTask(),
             '/store?id=1' => (new Timer())->storeTaskValue(),
             '/result' => (new ResultController())->viewResult(),
             '/update_percentage_completion' => (new UpdateData())->updatePercentageCompletion(),
             '/update_time' => (new UpdateData())->updateTimeForTimerJS(),
             '/admin' => (new AdminController())->viewResult(),
-            //'/resources/file/userCollection.json' => (new FileData)->checkLoginUserInToFile('dfsef'),
+            '/authorization_participant' => (new AuthorizationController())->validationAuthentication(
+                trim($_POST['last-name']),
+                trim($_POST['first-name']),
+                trim($_POST['middle-name'])
+            ),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {

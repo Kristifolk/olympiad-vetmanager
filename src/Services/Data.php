@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Controllers\AuthorizationController;
+
 class Data
 {
     /**
@@ -50,13 +52,14 @@ class Data
     /**
      * @throws \JsonException
      */
-    public function getIdAndLoginAndPasswordOfParticipant(): array
+    public function getIdAndLoginAndPasswordOfParticipant(array $participantData): array
     {
+
         $idUser = $this->getAvailableUserId();
 
         $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_DATA_PATH);
-        $dataUser = $arrayLoginAndPassword[(string) $idUser];
-        $this->putDefaultDataFileForTaskUser($idUser, $dataUser);
+        $dataUser = $arrayLoginAndPassword[(string)$idUser];
+        $this->putDefaultDataFileForTaskUser($idUser, $dataUser, $participantData);
         $dataUser['userId'] = $idUser;
         return $dataUser;
     }
@@ -64,23 +67,24 @@ class Data
     /**
      * @throws \JsonException
      */
-    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword): void
+    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData): void
     {
         $defaultTaskData = $this->getDataFromJsonFile(TASK_DEFAULT_DATA);
-        $arrayToInsert = [(string) $userId => [$userLoginAndPassword, $defaultTaskData]];
+        $arrayToInsert = [(string)$userId => [$participantData, $userLoginAndPassword, $defaultTaskData]];
 
         $existingUsersWithTasks = $this->getDataFromJsonFile(USER_TASKS_PATH);
-        $newUsersWithTasks = array_merge($existingUsersWithTasks, $arrayToInsert);
-        file_put_contents(USER_TASKS_PATH, json_encode($newUsersWithTasks, JSON_UNESCAPED_UNICODE));
+
+        $existingUsersWithTasks[$userId] = $arrayToInsert[$userId];
+        file_put_contents(USER_TASKS_PATH, json_encode($existingUsersWithTasks, JSON_UNESCAPED_UNICODE));
     }
 
     /**
      * @throws \JsonException
      */
-    public function putNewDataFileForTask(array $taskData, array $loginAndPassword, int $userId): void
+    public function putNewDataFileForTask(array $taskData, array $loginAndPassword, array $practicianData, int $userId): void
     {
         $userTasksData = $this->getDataFromJsonFile(USER_TASKS_PATH);
-        $userTasksData[$userId] = [$loginAndPassword, $taskData];
+        $userTasksData[$userId] = [$practicianData, $loginAndPassword, $taskData];
         file_put_contents(USER_TASKS_PATH, json_encode($userTasksData, JSON_UNESCAPED_UNICODE));
     }
 
