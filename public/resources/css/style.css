@@ -153,7 +153,7 @@ li {
 }
 
 .input-timer {
-    width: 80px;
+    width: 100px;
     font-size: 32px;
     line-height: 30px;
     letter-spacing: 0.15px;
@@ -233,7 +233,19 @@ li {
     border: solid 3px var(--primary-green);
     border-radius: 3px;
 }
+/*AUTHORIZATION MODAL WINDOW*/
 
+.authorization-window{
+    padding: 0px 20px 10px 20px;
+    text-align: center;
+    width: 300px;
+    top: 25%;
+}
+
+.label-form{
+    width: 100%;
+    text-align: left;
+}
 /*TASK SECTION*/
 .header-task {
     text-align: center;
@@ -253,6 +265,7 @@ li {
 }
 
 /*ADMIN PANEL*/
+
 .container-admin {
     align-items: flex-start;
 }
@@ -270,5 +283,13 @@ th, td {
 }
 
 .input-search {
-    width: 31%;
+    width: 35%;
+}
+
+.tr-failed-user{
+    background-color: rgb(249 27 27 / 22%);
+}
+
+#content-table {
+    width: 100%;
 }

@@ -15,7 +15,7 @@ class AdminController
     public function viewResult(): void
     {
         $dataResultUser = $this->getResultData();
-        $html = new View(ViewPath::AdminPanel, ['resultTask' => $dataResultUser]);
+        $html = new View(ViewPath::AdminPanel, ['resultTask' => $dataResultUser, 'resultMarks' => $this->getResultTrueMarks($dataResultUser)]);
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();
@@ -35,8 +35,8 @@ class AdminController
         $result = 0;
 
         foreach ($data as $value) {
-            if ($value[1]["done"] == "true") {
-                $result += $value["marks"];
+            if ($value[2]["done"] == "true") {
+                $result += $value[2]["marks"];
             }
         }
 
