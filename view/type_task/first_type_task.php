@@ -13,7 +13,7 @@
         <span class="changeable-text"><?= $this->arguments['fullNameClient'] ?></span>
         с купоном «Я профессионал» и своей любимой собакой по кличке
         <span class="changeable-text"><?= $this->arguments['animalName'] ?></span>
-        , породы <span class="changeable-text">корело-финская лайка</span>,
+        , породы <span class="changeable-text"><?= $this->arguments['breed'] ?></span>,
         <span class="changeable-text"><?= $this->arguments['animalColor'] ?></span>
         цвета, в возрасте
         <span class="changeable-text"><?= $this->arguments['animalAge'] ?></span>.
@@ -29,7 +29,7 @@
     </p>
     <p class="section-title">Ваша цель</p>
     <p>Вы врач в клинике “Котопес”, проведите эту ситуацию в программе “Ветменеджер” по адресу: адрес
-        <a href="https://devmel.vetmanager2.ru/login.php" target="_blank">devmel.vet-manager.ru</a>
+        <a href="https://deviproff.vetmanager2.ru/login.php" target="_blank">deviproff.vetmanager.ru</a>
         , используя логин:
         <span class="changeable-text"><?= $_SESSION["TestLogin"]?></span>
         и пароль

@@ -2,6 +2,8 @@
 
 namespace App\Services\Task;
 
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
+
 session_start();
 
 class Timer
@@ -27,12 +29,16 @@ class Timer
     {
         $arrayTime = $this->getTimerValues();
 
-        $stringTime = $arrayTime["minutes"] . ":" . $arrayTime["seconds"];
-        return $stringTime;
+        return $arrayTime["minutes"] . ":" . $arrayTime["seconds"];
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     * @throws \JsonException
+     */
     public function storeTaskValue(): void
     {
+        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
         (new PercentageCompletion())->storePercentageCompletionIntoFile();
         $_SESSION["TimeEndTask"] = $this->getTimerValues();
         header('Location: /result');

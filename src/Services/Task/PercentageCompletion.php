@@ -23,8 +23,8 @@ class PercentageCompletion
 
     /** @throws VetmanagerApiGatewayRequestException */
     public function __construct(
-        string $domainName = 'devmel',
-        string $apiKey = '31af0669fd1bcd6d145410795a6ef4f7'
+        string $domainName = 'deviproff',
+        string $apiKey = 'd7d4e868c36d0961c6b1d90a5797e00b'
     )
     {
         $this->apiGateway = ApiGateway::fromDomainAndApiKey(
@@ -50,15 +50,15 @@ class PercentageCompletion
     {
         $_SESSION['Diagnose'] = "Аллергический дерматит";
         $client = $this->getClientDaoByName(
-            $_SESSION['NameClient'],
-            $_SESSION['PatronymicClient'],
-            $_SESSION['SurnameClient']
+            (string)$_SESSION['NameClient'],
+            (string)$_SESSION['PatronymicClient'],
+            (string)$_SESSION['SurnameClient']
         );
 
-        $pet = $this->getPetDaoByAliasAndClient($_SESSION['AnimalName'],
-            $_SESSION['NameClient'],
-            $_SESSION['PatronymicClient'],
-            $_SESSION['SurnameClient']);
+        $pet = $this->getPetDaoByAliasAndClient((string)$_SESSION['AnimalName'],
+            (string)$_SESSION['NameClient'],
+            (string)$_SESSION['PatronymicClient'],
+            (string)$_SESSION['SurnameClient']);
 
         $medicalCard = $this->getMedicalCardDaoByName($pet, "Первичный");
 
@@ -71,9 +71,9 @@ class PercentageCompletion
 
             "alias" => $this->checkPetIsAdded($pet),
             "type" => $this->checkTypePetIsAdded($pet, "dog"),
-            "gender" => $this->checkGenderPetIsAdded($pet, "mail"),
-            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, "124585"),/**/
-            "breed" => $this->checkBreedPetIsAdded($pet, "корело-финская лайка"),
+            "gender" => $this->checkGenderPetIsAdded($pet, $_SESSION['AnimalGender']),
+            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['DateOfBirth']),/**/
+            "breed" => $this->checkBreedPetIsAdded($pet, $_SESSION['Breed']['title']),
             "color" => $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
 
             /*ADD MEDICARE*/

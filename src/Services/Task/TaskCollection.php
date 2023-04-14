@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controllers;
+namespace App\Services\Task;
 
 
 use App\Services\Data;
@@ -35,26 +35,20 @@ class TaskCollection
     public function generateAnimalName(): void
     {
         $animalNameArray = $this->dataAnimalName();
-        $_SESSION['AnimalName'] = "Дуся";//$animalNameArray[rand(0, count($animalNameArray) - 1)];
+        $pet = $animalNameArray[rand(0, count($animalNameArray) - 1)];
+        $_SESSION['AnimalName'] = $pet["alias"];
+        $_SESSION['AnimalGender'] = $pet["gender"];
     }
 
     public function generateFullNameClient(): void
     {
-//        $nameClientArray = $this->dataNameClient();
-//        $surnameClientArray = $this->dataSurnameClient();
-//        $patronymicClientArray = $this->dataPatronymicClient();
-//
-//        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
-//        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
-//        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
+        $nameClientArray = $this->dataNameClient();
+        $surnameClientArray = $this->dataSurnameClient();
+        $patronymicClientArray = $this->dataPatronymicClient();
 
-        $nameClient = 'Соломон';
-        $surnameClient = 'Шубин';
-        $patronymicClient = 'Михайлович';
-
-        $_SESSION['NameClient'] = $nameClient;
-        $_SESSION['SurnameClient'] = $surnameClient;
-        $_SESSION['PatronymicClient'] = $patronymicClient;
+        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
+        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
+        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
         $_SESSION['FullNameClient'] = $nameClient . " " . $surnameClient . " " . $patronymicClient;
         $this->clientFullName = $_SESSION['FullNameClient'];
@@ -66,6 +60,9 @@ class TaskCollection
         $_SESSION['LastAndFirstNameClient'] = $fullName[1] . " " . $fullName[2];
     }
 
+    /**
+     * @throws \JsonException
+     */
     public function generateBreedPet(): void
     {
         $arrayBreeds = (new Data)->getDataFromJsonFile(PET_BREEDS_PATH);
@@ -211,95 +208,49 @@ class TaskCollection
         ];
     }
 
-    private function dataFullNameClient(): array
-    {
-        return [
-            'Филатов Харитон Тимофеевич',
-            'Мишин Альфред Робертович',
-            'Лапин Ибрагил Егорович',
-            'Макаров Афанасий Владиславович',
-            'Шубин Вячеслав Андреевич',
-            'Овчинников Клим Макарович',
-            'Веселов Соломон Филатович',
-            'Цветков Эрнест Робертович',
-            'Русаков Богдан Пётрович',
-            'Шилов Иосиф Максович',
-            'Антонов Вальтер Максович',
-            'Абрамов Аскольд Геннадьевич',
-            'Дмитриев Дмитрий Игнатьевич',
-            'Терентьев Виталий Яковович',
-            'Зимин Ярослав Аристархович',
-            'Жуков Адриан Мартынович',
-            'Бобылёв Макар Павлович',
-            'Беспалов Константин Никитевич',
-            'Александров Осип Артёмович',
-            'Зимин Сергей Михайлович',
-            'Данилов Степан Тимурович',
-            'Панов Адам Олегович',
-            'Агафонов Демьян Вячеславович',
-            'Большаков Давид Владленович',
-            'Галкин Юлиан Арсеньевич',
-            'Галкин Фрол Федорович',
-            'Мамонтов Альфред Германнович',
-            'Титов Бронислав Куприянович',
-            'Харитонов Венедикт Станиславович',
-            'Шарапов Аполлон Витальевич',
-            'Уваров Макар Яковович',
-            'Жуков Геннадий Максович',
-            'Емельянов Лавр Иринеевич',
-            'Ефремов Юлиан Парфеньевич',
-            'Калинин Авраам Наумович',
-            'Анисимов Лев Артемович',
-            'Брагин Мстислав Вадимович',
-            'Воробьёв Авраам Дамирович',
-            'Суворов Любовь Аристархович',
-            'Дроздов Адриан Митрофанович'
-        ];
-    }
-
     private function dataAnimalName(): array
     {
         return [
             ['alias' => 'Фира', 'gender' => 'female'],
-            ['alias' =>'Лейла', 'gender' => 'female'],
-            ['alias' =>'Сьюзен', 'gender' => 'female'],
-            ['alias' =>'Айрис', 'gender' => 'male'],
-            ['alias' =>'Аврора', 'gender' => 'female'],
-            ['alias' =>'Галилея', 'gender' => 'female'],
-            ['alias' =>'Шанси', 'gender' => 'male'],
-            ['alias' =>'Рута', 'gender' => 'female'],
-            ['alias' =>'Фабби', 'gender' => 'female'],
-            ['alias' =>'Вента', 'gender' => 'female'],
-            ['alias' =>'Ронда', 'gender' => 'female'],
-            ['alias' =>'Окки', 'gender' => 'male'],
-            ['alias' =>'Шкода', 'gender' => 'female'],
-            ['alias' =>'Лисичка', 'gender' => 'female'],
-            ['alias' =>'Соня', 'gender' => 'female'],
-            ['alias' =>'Вира', 'gender' => 'female'],
-            ['alias' =>'Абель', 'gender' => 'female'],
-            ['alias' =>'Юша', 'gender' => 'male'],
-            ['alias' =>'Гретхен', 'gender' => 'male'],
-            ['alias' =>'Шелби', 'gender' => 'male'],
-            ['alias' =>'Сайга', 'gender' => 'female'],
-            ['alias' =>'Валгала', 'gender' => 'female'],
-            ['alias' =>'Диана', 'gender' => 'female'],
-            ['alias' =>'Ямайка', 'gender' => 'female'],
-            ['alias' =>'Ямми', 'gender' => 'female'],
-            ['alias' =>'Булка', 'gender' => 'female'],
-            ['alias' =>'Виоль', 'gender' => 'female'],
-            ['alias' =>'Рошель', 'gender' => 'female'],
-            ['alias' =>'Ильда', 'gender' => 'female'],
-            ['alias' =>'Анжи', 'gender' => 'female'],
-            ['alias' =>'Омега', 'gender' => 'female'],
-            ['alias' =>'Зайка', 'gender' => 'female'],
-            ['alias' =>'Гаара', 'gender' => 'female'],
-            ['alias' =>'Веселина', 'gender' => 'female'],
-            ['alias' =>'Сильва', 'gender' => 'female'],
-            ['alias' =>'Верна', 'gender' => 'female'],
-            ['alias' =>'Рони', 'gender' => 'male'],
-            ['alias' =>'Джеси', 'gender' => 'female'],
-            ['alias' =>'Йошка', 'gender' => 'male'],
-            ['alias' =>'Микаелла', 'gender' => 'female']
+            ['alias' => 'Лейла', 'gender' => 'female'],
+            ['alias' => 'Сьюзен', 'gender' => 'female'],
+            ['alias' => 'Айрис', 'gender' => 'male'],
+            ['alias' => 'Аврора', 'gender' => 'female'],
+            ['alias' => 'Галилея', 'gender' => 'female'],
+            ['alias' => 'Шанси', 'gender' => 'male'],
+            ['alias' => 'Рута', 'gender' => 'female'],
+            ['alias' => 'Фабби', 'gender' => 'female'],
+            ['alias' => 'Вента', 'gender' => 'female'],
+            ['alias' => 'Ронда', 'gender' => 'female'],
+            ['alias' => 'Окки', 'gender' => 'male'],
+            ['alias' => 'Шкода', 'gender' => 'female'],
+            ['alias' => 'Лисичка', 'gender' => 'female'],
+            ['alias' => 'Соня', 'gender' => 'female'],
+            ['alias' => 'Вира', 'gender' => 'female'],
+            ['alias' => 'Абель', 'gender' => 'female'],
+            ['alias' => 'Юша', 'gender' => 'male'],
+            ['alias' => 'Гретхен', 'gender' => 'male'],
+            ['alias' => 'Шелби', 'gender' => 'male'],
+            ['alias' => 'Сайга', 'gender' => 'female'],
+            ['alias' => 'Валгала', 'gender' => 'female'],
+            ['alias' => 'Диана', 'gender' => 'female'],
+            ['alias' => 'Ямайка', 'gender' => 'female'],
+            ['alias' => 'Ямми', 'gender' => 'female'],
+            ['alias' => 'Булка', 'gender' => 'female'],
+            ['alias' => 'Виоль', 'gender' => 'female'],
+            ['alias' => 'Рошель', 'gender' => 'female'],
+            ['alias' => 'Ильда', 'gender' => 'female'],
+            ['alias' => 'Анжи', 'gender' => 'female'],
+            ['alias' => 'Омега', 'gender' => 'female'],
+            ['alias' => 'Зайка', 'gender' => 'female'],
+            ['alias' => 'Гаара', 'gender' => 'female'],
+            ['alias' => 'Веселина', 'gender' => 'female'],
+            ['alias' => 'Сильва', 'gender' => 'female'],
+            ['alias' => 'Верна', 'gender' => 'female'],
+            ['alias' => 'Рони', 'gender' => 'male'],
+            ['alias' => 'Джеси', 'gender' => 'female'],
+            ['alias' => 'Йошка', 'gender' => 'male'],
+            ['alias' => 'Микаелла', 'gender' => 'female']
         ];
     }
 
@@ -367,30 +318,6 @@ class TaskCollection
                 'totalYears' => '6 лет',
                 'dateOfBirth' => ''
             ]
-        ];
-    }
-
-    private function dataUserLogin(): array
-    {
-        return [
-            ['login' => 'admin1', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin2', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin3', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin4', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin5', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin6', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin7', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin8', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin9', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin10', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin11', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin12', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin13', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin14', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin15', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin16', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin17', 'password' => 'iJ1x9nfO'],
-            ['login' => 'admin18', 'password' => 'iJ1x9nfO'],
         ];
     }
 }

@@ -26,8 +26,7 @@ class AdminController
      */
     private function getResultData(): array
     {
-        $allDataUser = (new Data())->getDataFromJsonFile(USER_TASKS_PATH);
-        return $allDataUser;
+        return (new Data())->getDataFromJsonFile(USER_TASKS_PATH);
     }
 
     private function getResultTrueMarks(array $data): float

@@ -13,7 +13,7 @@ class TasksController
 {
 
     public function __construct(
-         readonly int $idTask,
+        public int $idTask,
     )
     {
     }
@@ -35,17 +35,18 @@ class TasksController
         $time = (new Timer())->getTimerValues();
         $path = $this->getView();
         $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
+
         $html = new View(
             $path,
             [
                 'fullNameClient' => $_SESSION['FullNameClient'],
                 'lastAndFirstNameClient' => $_SESSION['LastAndFirstNameClient'],
                 'animalName' => $_SESSION['AnimalName'],
-                'animalColor' => $_SESSION['AnimalColor'],
-                'animalAge' => $_SESSION['AnimalAge']
+                'animalColor' => $_SESSION['AnimalColorGenitiveBase'],
+                'animalAge' => $_SESSION['AnimalAge'],
+                'breed' => $_SESSION['Breed']['title']
             ]
         );
-
         $timerHtml = new View(ViewPath::TimerContent,
             [
                 'minutes' => $time['minutes'],
@@ -65,6 +66,7 @@ class TasksController
                 'taskNumber' => $this->idTask
             ]
         );
+
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $templateWithContentTask]);
         (new Response((string)$templateWithContent))->echo();
     }

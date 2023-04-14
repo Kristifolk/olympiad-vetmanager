@@ -14,5 +14,4 @@ enum ViewPath: string
     case TimerContent = __DIR__ . "/../../view/component/timer.php";
     case PercentageCompletionContent = __DIR__ . "/../../view/component/percentage_completion.php";
     case ModalAuthorizationWindow = __DIR__ . "/../../view/component/authorization_modal.php";
-
 }
