@@ -2,35 +2,41 @@
   "add_client": {
     "title" : "Создание клиента",
     "done": "false",
-    "marks": "2"
+    "marks": "2",
+    "meaning": ""
   },
   "alias": {
     "title" : "Указали кличку питомца",
     "done": "false",
-    "marks": "0.5"
-  },
-  "type": {
-    "title" : "Указали тип питомца",
-    "done": "false",
-    "marks": "0.5"
+    "marks": "0.5",
+    "meaning": ""
   },
   "gender": {
     "title" : "Указали пол питомца",
     "done": "false",
-    "marks": "0.5"
+    "marks": "0.5",
+    "meaning": ""
   },
   "dateOfBirth": {
     "title" : "Указали дату рождения питомца",
     "done": "false",
-    "marks": "0.5"
+    "marks": "0.5",
+    "meaning": ""
   },
   "breed": {
     "title" : "Указали породу питомца",
     "done": "false",
-    "marks": "0.5"
+    "marks": "0.5",
+    "meaning": ""
   },
   "color": {
     "title" : "Указали окрас питомца",
+    "done": "false",
+    "marks": "0.5",
+    "meaning": ""
+  },
+  "type": {
+    "title" : "Указали тип питомца",
     "done": "false",
     "marks": "0.5"
   },

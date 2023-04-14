@@ -50,14 +50,14 @@ class Data
     /**
      * @throws \JsonException
      */
-    public function getIdAndLoginAndPasswordOfParticipant(array $participantData): array
+    public function getIdAndLoginAndPasswordOfParticipant(array $participantData, array $generateData): array
     {
 
         $idUser = $this->getAvailableUserId();
 
         $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_DATA_PATH);
         $dataUser = $arrayLoginAndPassword[(string)$idUser];
-        $this->putDefaultDataFileForTaskUser($idUser, $dataUser, $participantData);
+        $this->putDefaultDataFileForTaskUser($idUser, $dataUser, $participantData, $generateData);
         $dataUser['userId'] = $idUser;
         return $dataUser;
     }
@@ -65,10 +65,15 @@ class Data
     /**
      * @throws \JsonException
      */
-    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData): void
+    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData, array $generateData): void
     {
         $defaultTaskData = $this->getDataFromJsonFile(TASK_DEFAULT_DATA);
-        $arrayToInsert = [(string)$userId => [$participantData, $userLoginAndPassword, $defaultTaskData]];
+
+        foreach ($generateData as $key => $value) {
+            $defaultTaskData[$key]["meaning"] = $value;
+        }
+
+        $arrayToInsert = [(string)$userId => [$participantData, $userLoginAndPassword, $defaultTaskData, $generateData]];
 
         $existingUsersWithTasks = $this->getDataFromJsonFile(USER_TASKS_PATH);
 

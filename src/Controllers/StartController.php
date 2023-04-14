@@ -35,11 +35,6 @@ class StartController
      */
     private function loadDataTask(): void
     {
-        $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"]);
-        $_SESSION["UserId"] = $userData['userId'];
-        $_SESSION["TestLogin"] = $userData['login'];
-        $_SESSION["TestPassword"] = $userData['password'];
-
         $taskData = new TaskCollection();
         $taskData->defaultSessionData();
         $taskData->generateAnimalAge();
@@ -48,5 +43,19 @@ class StartController
         $taskData->generateBreedPet();
         $taskData->generateFullNameClient();
         $taskData->generateLastAndFirstNameClient();
+
+        $generateData =[
+            "add_client" => $_SESSION['FullNameClient'],
+            "alias" => $_SESSION['AnimalName'],
+            "gender" => $_SESSION['AnimalGender'],
+            "dateOfBirth" => $_SESSION['DateOfBirth'],
+            "breed" => $_SESSION['Breed']['title'],
+            "color" =>$_SESSION['AnimalColor']
+        ];
+
+        $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"], $generateData);
+        $_SESSION["UserId"] = $userData['userId'];
+        $_SESSION["TestLogin"] = $userData['login'];
+        $_SESSION["TestPassword"] = $userData['password'];
     }
 }
