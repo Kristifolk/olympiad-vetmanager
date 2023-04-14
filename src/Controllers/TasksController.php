@@ -2,9 +2,9 @@
 
 namespace App\Controllers;
 
-use App\Services\PercentageCompletion;
 use App\Services\Response;
-use App\Services\Timer;
+use App\Services\Task\PercentageCompletion;
+use App\Services\Task\Timer;
 use App\Services\View;
 use App\Services\ViewPath;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;

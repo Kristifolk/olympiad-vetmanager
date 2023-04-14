@@ -1,7 +1,8 @@
 <?php declare(strict_types=1);
 
-namespace App\Services;
+namespace App\Services\Task;
 
+use App\Services\Data;
 use Otis22\VetmanagerRestApi\Query\Builder;
 use VetmanagerApiGateway\ApiGateway;
 use VetmanagerApiGateway\DO\DTO\DAO;
@@ -59,10 +60,10 @@ class PercentageCompletion
             $_SESSION['PatronymicClient'],
             $_SESSION['SurnameClient']);
 
-        $medcard = $this->getMedicalCardDaoByName($pet, "Первичный");
+        $medicalCard = $this->getMedicalCardDaoByName($pet, "Первичный");
 
-        $diagnoses = $this->getAnimalDiagnosisForMedicalCard($medcard);
-        $invoice = $this->getInvoiceForClient($medcard);
+        $diagnoses = $this->getAnimalDiagnosisForMedicalCard($medicalCard);
+        $invoice = $this->getInvoiceForClient($medicalCard);
         return [
             "add_client" => $this->checkClientIsAdded($client),
 
@@ -77,9 +78,9 @@ class PercentageCompletion
 
             /*ADD MEDICARE*/
 
-            "purpose_appointment" => $this->checkPurposeAppointmentIsAdded($medcard, "Первичный"),
-            "text_template" => $this->checkTextTemplateIsAdded($medcard),
-            "result_appointment" => $this->checkResultAppointmentIsAdded($medcard, "Повторный прием"),
+            "purpose_appointment" => $this->checkPurposeAppointmentIsAdded($medicalCard, "Первичный"),
+            "text_template" => $this->checkTextTemplateIsAdded($medicalCard),
+            "result_appointment" => $this->checkResultAppointmentIsAdded($medicalCard, "Повторный прием"),
             "animal_diagnosis" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, (string)$_SESSION['Diagnose']),/**/
             "type_animal_diagnosis" => $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
 
@@ -477,6 +478,12 @@ class PercentageCompletion
     {
         if (is_null($invoice)) {
             return false;
+        }
+
+        $invoiceDocuments = $invoice->invoiceDocuments;
+
+        if ($invoiceDocuments[0]->discountCause = "cupon name") {
+            return true;
         }
 
         if ($invoice->discount == 10.0) {

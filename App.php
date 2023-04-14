@@ -6,8 +6,8 @@ use App\Controllers\ResultController;
 use App\Controllers\StartController;
 use App\Controllers\TasksController;
 use App\Services\Response;
+use App\Services\Task\Timer;
 use App\Services\Task\UpdateData;
-use App\Services\Timer;
 use App\Services\View;
 use App\Services\ViewPath;
 

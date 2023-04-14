@@ -2,8 +2,6 @@
 
 namespace App\Services\Task;
 
-use App\Services\PercentageCompletion;
-use App\Services\Timer;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
 session_start();
