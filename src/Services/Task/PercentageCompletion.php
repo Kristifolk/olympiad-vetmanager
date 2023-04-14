@@ -81,16 +81,16 @@ class PercentageCompletion
             "purpose_appointment" => $this->checkPurposeAppointmentIsAdded($medicalCard, "Первичный"),
             "text_template" => $this->checkTextTemplateIsAdded($medicalCard),
             "result_appointment" => $this->checkResultAppointmentIsAdded($medicalCard, "Повторный прием"),
-            "animal_diagnosis" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, (string)$_SESSION['Diagnose']),/**/
+            "animal_diagnosis" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, "Абцесс"),/**/
             "type_animal_diagnosis" => $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
 
             /*Creating Invoice*/
 
             "appointment_invoice" => $this->checkInitialAppointmentForInvoice($invoice),
-            "opening_of_abscess" => $this->checkInitialGoodInvoice($invoice, "БАК (общий)"),
-            "sanitation_of_wound" => $this->checkInitialGoodInvoice($invoice, "Анализ мочи (единица)"),
-            "injection_analgesic_antipyretic" => $this->checkInitialGoodInvoice($invoice, "БАК (Печеночный)"),
-            "injection_antibiotic" => $this->checkInitialGoodInvoice($invoice, "Байтрил (мл)"),
+            "opening_of_abscess" => $this->checkInitialGoodInvoice($invoice, "Вскрытие абцесса"),
+            "sanitation_of_wound" => $this->checkInitialGoodInvoice($invoice, "Санация раны"),
+            "injection_analgesic_antipyretic" => $this->checkInitialGoodInvoice($invoice, "Обезболивающий жаропонижающий"),
+            "injection_antibiotic" => $this->checkInitialGoodInvoice($invoice, "Антибиотик"),
             "payment_type" => $this->checkInitialPaymentTypeForInvoice($invoice),
 
             /*Coupon application*/
