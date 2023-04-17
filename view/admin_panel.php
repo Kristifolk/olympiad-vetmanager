@@ -1,6 +1,6 @@
 <h2 class="header-task">Панель администратора<span class="task-number" hidden="hidden">1</span></h2>
 <div class="container-task container container-admin">
-    <input id="inputSearch" class="input-search input-form" placeholder="Поле поиска пользователей по логину">
+    <input id="inputSearch" class="input-search input-form" placeholder="Поле поиска пользователей по фамилии">
     <div id="content-table">
         <?php if (!empty($this->arguments['resultTask'])): ?>
             <?php foreach ($this->arguments['resultTask'] as $value) :
@@ -8,10 +8,10 @@
                 $countMarks = 0 ?>
                 <article>
                     <h3>
-                        Участник: <?= $value[0]["lastName"] ?> <?= $value[0]["firstName"] ?> <?= $value[0]["middleName"] ?></h3>
+                        Участник: <span id="login-user"
+                                        class="login-text changeable-text"><?= $value[0]["lastName"] ?></span> <?= $value[0]["firstName"] ?> <?= $value[0]["middleName"] ?></h3>
                     <h3 class="login-container">Логин
-                        <span id="login-user"
-                              class="login-text changeable-text"><?= $value[1]["login"] ?></span></h3>
+                        <?= $value[1]["login"] ?></h3>
                     <table class="table-admin">
                         <tr>
                             <th>№</th>

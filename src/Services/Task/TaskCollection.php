@@ -46,11 +46,11 @@ class TaskCollection
         $surnameClientArray = $this->dataSurnameClient();
         $patronymicClientArray = $this->dataPatronymicClient();
 
-        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
-        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
-        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
+        $_SESSION['NameClient'] = $nameClientArray[rand(0, count($nameClientArray) - 1)];
+        $_SESSION['SurnameClient'] = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
+        $_SESSION['PatronymicClient'] = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
-        $_SESSION['FullNameClient'] = $nameClient . " " . $surnameClient . " " . $patronymicClient;
+        $_SESSION['FullNameClient'] = $_SESSION['NameClient'] . " " . $_SESSION['SurnameClient'] . " " . $_SESSION['PatronymicClient'];
         $this->clientFullName = $_SESSION['FullNameClient'];
     }
 

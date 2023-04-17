@@ -23,7 +23,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/result' => (new ResultController())->viewResult(),
             '/update_percentage_completion' => (new UpdateData())->updatePercentageCompletion(),
             '/update_time' => (new UpdateData())->updateTimeForTimerJS(),
-            '/admin' => (new AdminController())->viewResult(),
+            '/admin_vetmanager_info_olympiad' => (new AdminController())->viewResult(),
             '/authorization_participant' => (new AuthorizationController())->validationAuthentication(
                 trim($_POST['last-name']),
                 trim($_POST['first-name']),
