@@ -125,6 +125,7 @@ async function fetchAndViewUpdatePercentage() {
 
 
 /*SEARCH*/
+
 document.addEventListener('keyup', search);
 
 function search() {
@@ -153,7 +154,7 @@ async function fetchAndViewAuthorization() {
         method: 'POST',
         body: form
     });
-    window.location = "http://0.0.0.0:8080/tasks_preparation";
+    window.location = "/tasks_preparation";
 }
 
 function validateInputUser() {

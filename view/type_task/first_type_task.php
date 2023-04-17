@@ -11,7 +11,14 @@
     <p class="section-title">Ситуация</p>
     <p>В клинику «Котопес» пришел на первичный прием
         <span class="changeable-text"><?= $this->arguments['fullNameClient'] ?></span>
-        с купоном «Я профессионал» и своей любимой собакой по кличке
+        с купоном «Я профессионал» и своей любимой
+        <?php if ($_SESSION['AnimalGender'] === "female") :?>
+            <?= "собакой" ?>
+        <?php endif ?>
+        <?php if ($_SESSION['AnimalGender'] === "male") :?>
+            <?= "псом" ?>
+        <?php endif ?>
+        по кличке
         <span class="changeable-text"><?= $this->arguments['animalName'] ?></span>
         , породы <span class="changeable-text"><?= $this->arguments['breed'] ?></span>,
         <span class="changeable-text"><?= $this->arguments['animalColor'] ?></span>

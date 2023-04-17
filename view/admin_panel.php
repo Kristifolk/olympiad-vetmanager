@@ -9,7 +9,7 @@
                 <article>
                     <h3>
                         Участник: <span id="login-user"
-                                        class="login-text changeable-text"><?= $value[0]["lastName"] ?></span> <?= $value[0]["firstName"] ?> <?= $value[0]["middleName"] ?></h3>
+                                        class="login-text changeable-text"><?= $value[0]["firstName"] ?></span> <?= $value[0]["lastName"] ?> <?= $value[0]["middleName"] ?></h3>
                     <h3 class="login-container">Логин
                         <?= $value[1]["login"] ?></h3>
                     <table class="table-admin">
@@ -42,7 +42,7 @@
                                     <td><?= $item["marks"] ?></td>
                                     <td><?= $item["done"] ?></td>
                                 </tr>
-                                <?php $countMarks += (int)$item["marks"];
+                                <?php $countMarks += (float)$item["marks"];
                             endif ?>
                         <?php endforeach ?>
                     </table>

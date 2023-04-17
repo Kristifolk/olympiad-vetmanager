@@ -50,7 +50,7 @@ class TaskCollection
         $_SESSION['SurnameClient'] = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
         $_SESSION['PatronymicClient'] = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
-        $_SESSION['FullNameClient'] = $_SESSION['NameClient'] . " " . $_SESSION['SurnameClient'] . " " . $_SESSION['PatronymicClient'];
+        $_SESSION['FullNameClient'] =$_SESSION['SurnameClient'] . " " . $_SESSION['NameClient'] . " "  . $_SESSION['PatronymicClient'];
         $this->clientFullName = $_SESSION['FullNameClient'];
     }
 
@@ -111,7 +111,6 @@ class TaskCollection
             'Лев',
             'Мстислав',
             'Авраам',
-            'Любовь',
             'Адриан'
         ];
     }
