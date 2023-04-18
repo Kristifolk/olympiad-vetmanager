@@ -29,6 +29,8 @@ if (isset($_SERVER['REQUEST_URI'])) {
                 trim($_POST['first-name']),
                 trim($_POST['middle-name'])
             ),
+            '/store_end_time' => (new Timer())->storeTaskValueForEndTime(),
+            '/end_time' => (new ResultController())->viewEndTime(),
             default => throw new \Exception('Unexpected match value'),
         };
     } catch (Exception $e) {

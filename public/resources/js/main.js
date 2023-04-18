@@ -29,18 +29,25 @@ window.onload = function () {
         if (secondsLeft === 0) {
             minutesLeft--;
             secondsLeft = 59;
-            if (minutesLeft === 0) {
-                minutesLeft = 5;
-            }
         }
-        minutesLeft = minutesLeft < 10 ? "0" + minutesLeft : minutesLeft;
+
+        minutesLeft = minutesLeft === 9 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 8 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 7 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 6 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 5 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 4 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 3 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 2 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 1 ? "0" + minutesLeft : minutesLeft;
+        minutesLeft = minutesLeft === 0 ? "0" + minutesLeft : minutesLeft;
         secondsLeft = secondsLeft < 10 ? "0" + secondsLeft : secondsLeft;
 
-        if (minutesLeft === "00" && secondsLeft === "00") {
+        if (minutesLeft === "00" && secondsLeft === "01") {
             setTimeout(() => {
                 clearInterval(interval);
             }, 0);
-            creatModalWindowEndOlimpiada();
+            window.location = "/store_end_time";
         }
 
     }, 1000);
@@ -61,7 +68,7 @@ setInterval(function () {
         let secondsPastFromServer = apiData[1];
 
         if (minutesPastFromServer >= 25) {
-            creatModalWindowEndOlimpiada();
+            window.location = "/end_time";
         }
 
         let minutesLeft = 25 - minutesPastFromServer;
@@ -79,7 +86,6 @@ setInterval(function () {
             timerSecondContent.value = secondsLeft;
         }
 
-        console.log('Time from server: ' + apiData);
     });
 }, 30000);
 
@@ -101,8 +107,6 @@ function creatModalWindowEndOlimpiada() {
     if (numberTask.innerHTML === '1') {
         a.href = '/store?id=1';
     }
-
-    btnResultTasks.href = '#';
 
     app.appendChild(div);
 }

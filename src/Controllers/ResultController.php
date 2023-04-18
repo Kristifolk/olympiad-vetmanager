@@ -7,8 +7,16 @@ use App\Services\View;
 use App\Services\ViewPath;
 
 session_start();
+
 class ResultController
 {
+    public function viewEndTime(): void
+    {
+        $html = new View(ViewPath::EndTime);
+        $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
+        (new Response((string)$templateWithContent))->echo();
+    }
+
     public function viewResult(): void
     {
         $html = new View(ViewPath::Result,
