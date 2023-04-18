@@ -44,6 +44,18 @@ class Timer
         header('Location: /result');
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     * @throws \JsonException
+     */
+    public function storeTaskValueForEndTime(): void
+    {
+        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
+        (new PercentageCompletion())->storePercentageCompletionIntoFile();
+        $_SESSION["TimeEndTask"] = $this->getTimerValues();
+        header('Location: /end_time');
+    }
+
     private function convertTimeOnMinuteAndSecond(int $timeDifference): array
     {
         return [

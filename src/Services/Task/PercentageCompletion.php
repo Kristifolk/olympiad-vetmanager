@@ -72,22 +72,22 @@ class PercentageCompletion
             "alias" => $this->checkPetIsAdded($pet),
             "type" => $this->checkTypePetIsAdded($pet, "dog"),
             "gender" => $this->checkGenderPetIsAdded($pet, $_SESSION['AnimalGender']),
-            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['DateOfBirth']),/**/
+            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['DateOfBirth']),
             "breed" => $this->checkBreedPetIsAdded($pet, $_SESSION['Breed']['title']),
             "color" => $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
 
             /*ADD MEDICARE*/
 
-            "purpose_appointment" => $this->checkPurposeAppointmentIsAdded($medicalCard, "Первичный"),
+            "purpose_appointment" => $this->checkPurposeAppointmentIsAdded($medicalCard),
             "text_template" => $this->checkTextTemplateIsAdded($medicalCard),
             "result_appointment" => $this->checkResultAppointmentIsAdded($medicalCard, "Повторный прием"),
-            "animal_diagnosis" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, "Абцесс"),/**/
+            "animal_diagnosis" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, "Абсцесс "),
             "type_animal_diagnosis" => $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
 
             /*Creating Invoice*/
 
             "appointment_invoice" => $this->checkInitialAppointmentForInvoice($invoice),
-            "opening_of_abscess" => $this->checkInitialGoodInvoice($invoice, "Вскрытие абцесса"),
+            "opening_of_abscess" => $this->checkInitialGoodInvoice($invoice, "Вскрытие абсцесса"),
             "sanitation_of_wound" => $this->checkInitialGoodInvoice($invoice, "Санация раны"),
             "injection_analgesic_antipyretic" => $this->checkInitialGoodInvoice($invoice, "Обезболивающий жаропонижающий"),
             "injection_antibiotic" => $this->checkInitialGoodInvoice($invoice, "Антибиотик"),
@@ -162,17 +162,25 @@ class PercentageCompletion
             $this->apiGateway,
             (new Builder())
                 ->where('alias', $aliasPet)
-                ->top(1)
+                ->top(10)
         );
 
-        if (empty($pets) ||
-            $pets[0]->client->firstName != $firstName ||
-            $pets[0]->client->middleName != $middleName ||
-            $pets[0]->client->lastName != $lastName) {
+        if (empty($pets))
+        {
             return null;
         }
 
-        return $pets[0];
+        foreach ($pets as $pet){
+
+            if ($pet->client->firstName == $firstName &&
+                $pet->client->middleName == $middleName &&
+                $pet->client->lastName == $lastName)
+            {
+                return $pet;
+            }
+        }
+
+        return null;
     }
 
     /**
@@ -271,16 +279,18 @@ class PercentageCompletion
             return false;
         }
 
-        return $pet->sex == $gender;
+        return $pet->sex->value == $gender;
     }
 
     private function checkDateOfBirthPetIsAdded(?Pet $pet, string $dateOfBirth): bool
     {
-        if (is_null($pet)) {
+        $dateOfBirthForPet = $pet->birthday;
+        if (is_null($pet) || is_null($dateOfBirthForPet)) {
             return false;
         }
 
-        return $pet->birthday == $dateOfBirth;
+        $dateOfBirthForPet = $dateOfBirthForPet->format('Y-m-d');
+        return $dateOfBirthForPet == $dateOfBirth;
     }
 
     private function checkBreedPetIsAdded(?Pet $pet, string $breedPet): bool
@@ -297,7 +307,7 @@ class PercentageCompletion
      */
     private function checkColorPetIsAdded(?Pet $pet, string $animalColor): bool
     {
-        if (is_null($pet)) {
+        if (is_null($pet) || is_null($pet->colorId)) {
             return false;
         }
 
@@ -309,22 +319,13 @@ class PercentageCompletion
 
     /*ADD MEDICARE*/
 
-    private function checkPurposeAppointmentIsAdded(?MedicalCard $medicalCard, string $typeAdmissionTitle): bool
+    private function checkPurposeAppointmentIsAdded(?MedicalCard $medicalCard): bool
     {
         if (is_null($medicalCard)) {
             return false;
         }
 
-        $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::AdmissionType);
-
-        $typeAdmission = ComboManualItem::getByQueryBuilder(
-            $this->apiGateway,
-            (new Builder())
-                ->where('title', $typeAdmissionTitle)
-                ->where('combo_manual_id', (string)$comboManualNameId)
-        );
-
-        return $medicalCard->meetResultId == (int)$typeAdmission[0]->value;
+        return (bool)$medicalCard;
     }
 
     /**
@@ -383,12 +384,6 @@ class PercentageCompletion
             return true;
         }
 
-//        foreach ($diagnoses as $diagnosis) {
-//            if ($diagnosis["id"] == "118") {
-//                return true;
-//            }
-//        }
-
         return false;
     }
 
@@ -401,22 +396,9 @@ class PercentageCompletion
             return false;
         }
 
-        if ($diagnoses[0] == $nameTypeDiagnoseForPet) {
+        if ($diagnoses[1] == $nameTypeDiagnoseForPet) {
             return true;
         }
-//        $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::DiagnoseTypes);
-//        $typeDiagnoses = ComboManualItem::getByQueryBuilder(
-//            $this->apiGateway,
-//            (new Builder())
-//                ->where('title', $nameTypeDiagnoseForPet)
-//                ->where('combo_manual_id', (string)$comboManualNameId)
-//        );
-//
-//        foreach ($diagnoses as $diagnosis) {
-//            if ($diagnosis["type"] === $typeDiagnoses[0]->value) {
-//                return true;
-//            }
-//        }
 
         return false;
     }
@@ -442,7 +424,7 @@ class PercentageCompletion
         $dataInjection = DAO\Good::getByQueryBuilder(
             $this->apiGateway,
             (new Builder())
-                ->where('title', "БАК (общий)"),
+                ->where('title', $injectionTitle),
             1
         );
 
@@ -465,7 +447,7 @@ class PercentageCompletion
             return false;
         }
 
-        if ($invoice->status == "exec") {
+        if ($invoice->status->value == "exec") {
             return true;
         }
 
@@ -482,9 +464,9 @@ class PercentageCompletion
 
         $invoiceDocuments = $invoice->invoiceDocuments;
 
-        if ($invoiceDocuments[0]->discountCause = "cupon name") {
-            return true;
-        }
+//        if ($invoiceDocuments[0]->discountCause = "Я профессионал") {
+//            return true;
+//        }
 
         if ($invoice->discount == 10.0) {
             return true;
@@ -504,15 +486,16 @@ class PercentageCompletion
             return false;
         }
 
-        $repeatAdmission = DAO\AdmissionFromGetAll::getByQueryBuilder(
-            $this->apiGateway,
-            (new Builder())
-                ->where('client_id', (string)$client->id)
-                // ->where(['pet']['id'], $pet->id)
-                ->where('admission_date', '2023-04-22 15:00:00'),
-            1
-        );
-
-        return (bool)$repeatAdmission;
+//        $repeatAdmission = DAO\AdmissionFromGetAll::getByQueryBuilder(
+//            $this->apiGateway,
+//            (new Builder())
+//                ->where('client_id', (string)$client->id)
+//                // ->where(['pet']['id'], $pet->id)
+//                ->where('admission_date', '2023-04-28 15:00:00'),
+//            1
+//        );
+//
+//        return (bool)$repeatAdmission;
+        return false;
     }
 }

@@ -14,6 +14,7 @@ class TaskCollection
         $_SESSION["ResultPercentage"] = '0%';
         $_SESSION["TimeEndTask"] = ["minutes" => "00", "seconds" => "00"];
         $_SESSION['Diagnose'] = "Абсцесс";
+        $_SESSION['AnimalGender'] = "";
     }
 
     public function generateAnimalAge(): void
@@ -213,23 +214,23 @@ class TaskCollection
             ['alias' => 'Фира', 'gender' => 'female'],
             ['alias' => 'Лейла', 'gender' => 'female'],
             ['alias' => 'Сьюзен', 'gender' => 'female'],
-            ['alias' => 'Айрис', 'gender' => 'male'],
+            ['alias' => 'Айрис', 'gender' => 'female'],
             ['alias' => 'Аврора', 'gender' => 'female'],
             ['alias' => 'Галилея', 'gender' => 'female'],
-            ['alias' => 'Шанси', 'gender' => 'male'],
+            ['alias' => 'Шанси', 'gender' => 'female'],
             ['alias' => 'Рута', 'gender' => 'female'],
             ['alias' => 'Фабби', 'gender' => 'female'],
             ['alias' => 'Вента', 'gender' => 'female'],
             ['alias' => 'Ронда', 'gender' => 'female'],
-            ['alias' => 'Окки', 'gender' => 'male'],
+            ['alias' => 'Окки', 'gender' => 'female'],
             ['alias' => 'Шкода', 'gender' => 'female'],
             ['alias' => 'Лисичка', 'gender' => 'female'],
             ['alias' => 'Соня', 'gender' => 'female'],
             ['alias' => 'Вира', 'gender' => 'female'],
             ['alias' => 'Абель', 'gender' => 'female'],
-            ['alias' => 'Юша', 'gender' => 'male'],
-            ['alias' => 'Гретхен', 'gender' => 'male'],
-            ['alias' => 'Шелби', 'gender' => 'male'],
+            ['alias' => 'Юша', 'gender' => 'female'],
+            ['alias' => 'Гретхен', 'gender' => 'female'],
+            ['alias' => 'Шелби', 'gender' => 'female'],
             ['alias' => 'Сайга', 'gender' => 'female'],
             ['alias' => 'Валгала', 'gender' => 'female'],
             ['alias' => 'Диана', 'gender' => 'female'],
@@ -246,9 +247,9 @@ class TaskCollection
             ['alias' => 'Веселина', 'gender' => 'female'],
             ['alias' => 'Сильва', 'gender' => 'female'],
             ['alias' => 'Верна', 'gender' => 'female'],
-            ['alias' => 'Рони', 'gender' => 'male'],
+            ['alias' => 'Рони', 'gender' => 'female'],
             ['alias' => 'Джеси', 'gender' => 'female'],
-            ['alias' => 'Йошка', 'gender' => 'male'],
+            ['alias' => 'Йошка', 'gender' => 'female'],
             ['alias' => 'Микаелла', 'gender' => 'female']
         ];
     }
@@ -280,42 +281,43 @@ class TaskCollection
         return [
             [
                 'totalYears' => '2 мес',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2023-02-21'
             ],
             [
                 'totalYears' => '6 мес',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2022-10-21'
             ],
             [
                 'totalYears' => '8 мес',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2022-08-21'
             ],
             [
                 'totalYears' => '12 мес',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2022-04-21'
             ],
             [
                 'totalYears' => '18 мес',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2021-10-21'
             ],
             [
                 'totalYears' => '2 лет',
-                'dateOfBirth' => ''],
+                'dateOfBirth' => '2021-04-21'
+            ],
             [
                 'totalYears' => '3 лет',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2020-04-21'
             ],
             [
                 'totalYears' => '4 лет',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2019-04-21'
             ],
             [
                 'totalYears' => '5 лет',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2018-04-21'
             ],
             [
                 'totalYears' => '6 лет',
-                'dateOfBirth' => ''
+                'dateOfBirth' => '2017-04-21'
             ]
         ];
     }
