@@ -464,11 +464,7 @@ class PercentageCompletion
 
         $invoiceDocuments = $invoice->invoiceDocuments;
 
-//        if ($invoiceDocuments[0]->discountCause = "Я профессионал") {
-//            return true;
-//        }
-
-        if ($invoice->discount == 10.0) {
+        if ($invoiceDocuments[0]->discountCause = "Скидка: 10%, Купон: Я профессионал") {
             return true;
         }
 
