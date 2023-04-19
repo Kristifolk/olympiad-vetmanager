@@ -43,7 +43,7 @@ class TasksController
                 'lastAndFirstNameClient' => $_SESSION['LastAndFirstNameClient'],
                 'animalName' => $_SESSION['AnimalName'],
                 'animalColor' => $_SESSION['AnimalColorGenitiveBase'],
-                'animalAge' => $_SESSION['AnimalAge'],
+                'animalAge' => $_SESSION['DateOfBirth'],
                 'breed' => $_SESSION['Breed']['title']
             ]
         );

@@ -21,7 +21,7 @@ class TaskCollection
     {
         $animalAgeArray = $this->dataAnimalAge();
         $age = $animalAgeArray[rand(0, count($animalAgeArray) - 1)];
-        $_SESSION['DateOfBirth'] = $age['dateOfBirth'];
+        $_SESSION['DateOfBirth'] = $age['totalYears'];
         $_SESSION['TotalYearsEnglish'] = $age['totalYearsEnglish'];
     }
 
@@ -299,15 +299,15 @@ class TaskCollection
                 'totalYearsEnglish' => '6 month 1 year'
             ],
             [
-                'totalYears' => '2 лет',
+                'totalYears' => '2 года',
                 'totalYearsEnglish' => '2 year'
             ],
             [
-                'totalYears' => '3 лет',
+                'totalYears' => '3 года',
                 'totalYearsEnglish' => '3 year'
             ],
             [
-                'totalYears' => '4 лет',
+                'totalYears' => '4 года',
                 'totalYearsEnglish' => '4 year'
             ],
             [

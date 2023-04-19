@@ -291,7 +291,7 @@ class PercentageCompletion
 
         $dateOfBirthForPet = $pet->birthday;
 
-        if (is_null($dateOfBirthForPet)) {
+        if (empty($dateOfBirthForPet)) {
             return false;
         }
 
@@ -317,15 +317,26 @@ class PercentageCompletion
     /**
      * @throws VetmanagerApiGatewayException
      */
-    private function checkColorPetIsAdded(?Pet $pet, string $animalColor): bool
+    private function checkColorPetIsAdded(?Pet $pet, string $animalColorTitle): bool
     {
-        if (is_null($pet) || is_null($pet->colorId)) {
+        if (is_null($pet) || empty($pet->colorId)) {
             return false;
         }
 
-        $colorAsComboManualItem = ComboManualItem::getByPetColorId($this->apiGateway, $pet->colorId);
+        $comboManualNameId = DAO\ComboManualName::getIdByNameAsEnum($this->apiGateway, Name::PetColors);
 
-        return $animalColor == $colorAsComboManualItem->title;
+        $animalColor = ComboManualItem::getByQueryBuilder(
+            $this->apiGateway,
+            (new Builder())
+                ->where('title', $animalColorTitle)
+                ->where('combo_manual_id', (string)$comboManualNameId)
+        );
+
+        if ($animalColor[0]->value == (string)$pet->colorId) {
+            return true;
+        }
+
+        return false;
     }
 
 
@@ -503,7 +514,8 @@ class PercentageCompletion
         );
 
         foreach ($repeatAdmissions as $admission) {
-            if($admission->status->value == "save") {
+            $statusValue = $admission->status->value;
+            if($statusValue == "save" || $statusValue == "not_approved") {
                 return true;
             }
         }
