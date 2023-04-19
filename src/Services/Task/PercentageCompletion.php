@@ -3,6 +3,7 @@
 namespace App\Services\Task;
 
 use App\Services\Data;
+use DateInterval;
 use Otis22\VetmanagerRestApi\Query\Builder;
 use VetmanagerApiGateway\ApiGateway;
 use VetmanagerApiGateway\DO\DTO\DAO;
@@ -72,7 +73,7 @@ class PercentageCompletion
             "alias" => $this->checkPetIsAdded($pet),
             "type" => $this->checkTypePetIsAdded($pet, "dog"),
             "gender" => $this->checkGenderPetIsAdded($pet, $_SESSION['AnimalGender']),
-            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['DateOfBirth']),
+            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['TotalYearsEnglish']),
             "breed" => $this->checkBreedPetIsAdded($pet, $_SESSION['Breed']['title']),
             "color" => $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
 
@@ -282,15 +283,26 @@ class PercentageCompletion
         return $pet->sex->value == $gender;
     }
 
-    private function checkDateOfBirthPetIsAdded(?Pet $pet, string $dateOfBirth): bool
+    private function checkDateOfBirthPetIsAdded(?Pet $pet, string $animalDateLast): bool
     {
-        $dateOfBirthForPet = $pet->birthday;
-        if (is_null($pet) || is_null($dateOfBirthForPet)) {
+        if (is_null($pet)) {
             return false;
         }
 
-        $dateOfBirthForPet = $dateOfBirthForPet->format('Y-m-d');
-        return $dateOfBirthForPet == $dateOfBirth;
+        $dateOfBirthForPet = $pet->birthday;
+
+        if (is_null($dateOfBirthForPet)) {
+            return false;
+        }
+
+        $allowedInterval = new DateInterval('P7D');
+        $expectedDateTime = date('Y-m-d', strtotime("-" . "$animalDateLast"));
+
+        if ($dateOfBirthForPet->format('Y-m-d') - $expectedDateTime <= $allowedInterval) {
+            return true;
+        }
+
+        return false;
     }
 
     private function checkBreedPetIsAdded(?Pet $pet, string $breedPet): bool
@@ -464,7 +476,7 @@ class PercentageCompletion
 
         $invoiceDocuments = $invoice->invoiceDocuments;
 
-        if ($invoiceDocuments[0]->discountCause = "Скидка: 10%, Купон: Я профессионал") {
+        if ($invoiceDocuments[0]->discountCause == "Скидка: 10%, Купон: Я профессионал") {
             return true;
         }
 
@@ -482,16 +494,20 @@ class PercentageCompletion
             return false;
         }
 
-//        $repeatAdmission = DAO\AdmissionFromGetAll::getByQueryBuilder(
-//            $this->apiGateway,
-//            (new Builder())
-//                ->where('client_id', (string)$client->id)
-//                // ->where(['pet']['id'], $pet->id)
-//                ->where('admission_date', '2023-04-28 15:00:00'),
-//            1
-//        );
-//
-//        return (bool)$repeatAdmission;
+        $repeatAdmissions = DAO\AdmissionFromGetAll::getByQueryBuilder(
+            $this->apiGateway,
+            (new Builder())
+                ->where('client_id', (string)$client->id)
+                ->where('patient_id', (string)$pet->id),
+            10
+        );
+
+        foreach ($repeatAdmissions as $admission) {
+            if($admission->status->value == "save") {
+                return true;
+            }
+        }
+
         return false;
     }
 }

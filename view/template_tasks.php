@@ -11,3 +11,4 @@
         <a href="/store?id=1" id="btn-result" class="btn btn-for-a btn-start">Закончить олимпиаду</a>
     </div>
 </section>
+<script src="/resources/js/task.js"></script>

@@ -22,7 +22,7 @@ class TaskCollection
         $animalAgeArray = $this->dataAnimalAge();
         $age = $animalAgeArray[rand(0, count($animalAgeArray) - 1)];
         $_SESSION['DateOfBirth'] = $age['dateOfBirth'];
-        $_SESSION['AnimalAge'] = $age['totalYears'];
+        $_SESSION['TotalYearsEnglish'] = $age['totalYearsEnglish'];
     }
 
     public function generateAnimalColor(): void
@@ -137,7 +137,6 @@ class TaskCollection
             'Жуков',
             'Бобылёв',
             'Беспалов',
-            'Александр',
             'Зимин',
             'Данилов',
             'Панов',
@@ -281,43 +280,43 @@ class TaskCollection
         return [
             [
                 'totalYears' => '2 мес',
-                'dateOfBirth' => '2023-02-21'
+                'totalYearsEnglish' => '2 month'
             ],
             [
                 'totalYears' => '6 мес',
-                'dateOfBirth' => '2022-10-21'
+                'totalYearsEnglish' => '6 month'
             ],
             [
                 'totalYears' => '8 мес',
-                'dateOfBirth' => '2022-08-21'
+                'totalYearsEnglish' => '8 month'
             ],
             [
-                'totalYears' => '12 мес',
-                'dateOfBirth' => '2022-04-21'
+                'totalYears' => '1 год',
+                'totalYearsEnglish' => '1 year'
             ],
             [
                 'totalYears' => '18 мес',
-                'dateOfBirth' => '2021-10-21'
+                'totalYearsEnglish' => '6 month 1 year'
             ],
             [
                 'totalYears' => '2 лет',
-                'dateOfBirth' => '2021-04-21'
+                'totalYearsEnglish' => '2 year'
             ],
             [
                 'totalYears' => '3 лет',
-                'dateOfBirth' => '2020-04-21'
+                'totalYearsEnglish' => '3 year'
             ],
             [
                 'totalYears' => '4 лет',
-                'dateOfBirth' => '2019-04-21'
+                'totalYearsEnglish' => '4 year'
             ],
             [
                 'totalYears' => '5 лет',
-                'dateOfBirth' => '2018-04-21'
+                'totalYearsEnglish' => '5 year'
             ],
             [
                 'totalYears' => '6 лет',
-                'dateOfBirth' => '2017-04-21'
+                'totalYearsEnglish' => '6 year'
             ]
         ];
     }
