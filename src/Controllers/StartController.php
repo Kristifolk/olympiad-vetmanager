@@ -7,6 +7,7 @@ use App\Services\Response;
 use App\Services\Task\TaskCollection;
 use App\Services\View;
 use App\Services\ViewPath;
+use JsonException;
 
 session_start();
 
@@ -20,7 +21,7 @@ class StartController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function viewTasksPreparation(): void
     {
@@ -31,7 +32,7 @@ class StartController
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function loadDataTask(): void
     {
@@ -44,13 +45,13 @@ class StartController
         $taskData->generateFullNameClient();
         $taskData->generateLastAndFirstNameClient();
 
-        $generateData =[
+        $generateData = [
             "add_client" => $_SESSION['FullNameClient'],
             "alias" => $_SESSION['AnimalName'],
             "gender" => $_SESSION['AnimalGender'],
             "dateOfBirth" => $_SESSION['DateOfBirth'],
             "breed" => $_SESSION['Breed']['title'],
-            "color" =>$_SESSION['AnimalColor']
+            "color" => $_SESSION['AnimalColor']
         ];
 
         $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"], $generateData);

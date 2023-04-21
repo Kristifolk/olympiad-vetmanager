@@ -20,6 +20,6 @@ class UpdateData
 
     public function updateTimeForTimerJS(): void
     {
-        echo (new Timer())->getStringTime();
+        echo (new Timer())->getTimerAsString();
     }
 }

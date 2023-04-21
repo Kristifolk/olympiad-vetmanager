@@ -7,6 +7,7 @@ use App\Services\Task\PercentageCompletion;
 use App\Services\Task\Timer;
 use App\Services\View;
 use App\Services\ViewPath;
+use InvalidArgumentException;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
 class TasksController
@@ -23,7 +24,7 @@ class TasksController
     {
         return match ($this->idTask) {
             1 => ViewPath::FirstTypeTask,
-            default => throw new \InvalidArgumentException()
+            default => throw new InvalidArgumentException()
         };
     }
 
@@ -32,7 +33,7 @@ class TasksController
      */
     public function viewTask(): void
     {
-        $time = (new Timer())->getTimerValues();
+        $time = (new Timer())->getTimerAsArray();
         $path = $this->getView();
         $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
 

@@ -16,6 +16,11 @@ if (isset($_SERVER['REQUEST_URI'])) {
         match ($_SERVER['REQUEST_URI']) {
             '/' => (new StartController())->viewInstructions(),
             '/authorization' => (new AuthorizationController())->viewAuthentication(),
+            '/authorization_participant' => (new AuthorizationController())->storeNotEmptyNameInSession(
+                trim($_POST['last-name']),
+                trim($_POST['first-name']),
+                trim($_POST['middle-name'])
+            ),
             '/tasks_preparation' => (new StartController())->viewTasksPreparation(),
             '/start' => (new Timer())->startTimer(),
             '/task?id=1' => (new TasksController($_GET['id']))->viewTask(),
@@ -24,14 +29,9 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/update_percentage_completion' => (new UpdateData())->updatePercentageCompletion(),
             '/update_time' => (new UpdateData())->updateTimeForTimerJS(),
             '/admin_vetmanager_info_olympiad' => (new AdminController())->viewResult(),
-            '/authorization_participant' => (new AuthorizationController())->validationAuthentication(
-                trim($_POST['last-name']),
-                trim($_POST['first-name']),
-                trim($_POST['middle-name'])
-            ),
             '/store_end_time' => (new Timer())->storeTaskValueForEndTime(),
             '/end_time' => (new ResultController())->viewEndTime(),
-            default => throw new \Exception('Unexpected match value'),
+            default => throw new Exception('Unexpected match value'),
         };
     } catch (Exception $e) {
         $html = new View(ViewPath::NotFound);

@@ -1,9 +1,11 @@
-<?php declare(strict_types=1);
+<?php /** @noinspection PhpSameParameterValueInspection */
+declare(strict_types=1);
 
 namespace App\Services\Task;
 
 use App\Services\Data;
 use DateInterval;
+use JsonException;
 use Otis22\VetmanagerRestApi\Query\Builder;
 use VetmanagerApiGateway\ApiGateway;
 use VetmanagerApiGateway\DO\DTO\DAO;
@@ -15,6 +17,8 @@ use VetmanagerApiGateway\DO\DTO\DAO\Pet;
 use VetmanagerApiGateway\DO\Enum\ComboManualName\Name;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayRequestException;
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayResponseEmptyException;
+use VetmanagerApiGateway\Exception\VetmanagerApiGatewayResponseException;
 
 class PercentageCompletion
 {
@@ -49,17 +53,18 @@ class PercentageCompletion
      */
     private function calculateCompletedTaskItem(): array
     {
-        $_SESSION['Diagnose'] = "Аллергический дерматит";
         $client = $this->getClientDaoByName(
             (string)$_SESSION['NameClient'],
             (string)$_SESSION['PatronymicClient'],
             (string)$_SESSION['SurnameClient']
         );
 
-        $pet = $this->getPetDaoByAliasAndClient((string)$_SESSION['AnimalName'],
+        $pet = $this->getPetDaoByAliasAndClient(
+            (string)$_SESSION['AnimalName'],
             (string)$_SESSION['NameClient'],
             (string)$_SESSION['PatronymicClient'],
-            (string)$_SESSION['SurnameClient']);
+            (string)$_SESSION['SurnameClient']
+        );
 
         $medicalCard = $this->getMedicalCardDaoByName($pet, "Первичный");
 
@@ -105,7 +110,7 @@ class PercentageCompletion
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      * @throws VetmanagerApiGatewayException
      */
     public function storePercentageCompletionIntoFile(): void
@@ -144,6 +149,9 @@ class PercentageCompletion
         return round((100 * $this->numberOfTasksCompleted / $allTask), 2);
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     */
     private function getClientDaoByName(string $firstName, string $middleName, string $lastName): ?Client
     {
         $clients = Client::getByPagedQuery(
@@ -157,6 +165,12 @@ class PercentageCompletion
         return !empty($clients) ? $clients[0] : null;
     }
 
+    /**
+     * @throws VetmanagerApiGatewayException
+     * @throws VetmanagerApiGatewayRequestException
+     * @throws VetmanagerApiGatewayResponseException
+     * @throws VetmanagerApiGatewayResponseEmptyException
+     */
     private function getPetDaoByAliasAndClient(string $aliasPet, string $firstName, string $middleName, string $lastName): ?Pet
     {
         $pets = Pet::getByPagedQuery(
@@ -166,17 +180,15 @@ class PercentageCompletion
                 ->top(10)
         );
 
-        if (empty($pets))
-        {
+        if (empty($pets)) {
             return null;
         }
 
-        foreach ($pets as $pet){
+        foreach ($pets as $pet) {
 
             if ($pet->client->firstName == $firstName &&
                 $pet->client->middleName == $middleName &&
-                $pet->client->lastName == $lastName)
-            {
+                $pet->client->lastName == $lastName) {
                 return $pet;
             }
         }
@@ -211,7 +223,7 @@ class PercentageCompletion
         return null;
     }
 
-    private function getAnimalDiagnosisForMedicalCard(?MedicalCard $medicalCard): mixed
+    private function getAnimalDiagnosisForMedicalCard(?MedicalCard $medicalCard): ?array
     {
         if (is_null($medicalCard)) {
             return null;
@@ -237,21 +249,13 @@ class PercentageCompletion
      */
     private function getInvoiceForClient(?MedicalCard $medicalCard): ?Invoice
     {
-        if (is_null($medicalCard)) {
+        if (is_null($medicalCard) || is_null($medicalCard->invoice)) {
             return null;
         }
 
-        if (is_null($medicalCard->invoice)) {
-            return null;
-        }
-
-        $invoise = Invoice::getById($this->apiGateway, $medicalCard->invoiceId);
-        return $invoise;
+        return Invoice::getById($this->apiGateway, $medicalCard->invoiceId);
     }
 
-    /**
-     * @throws VetmanagerApiGatewayException
-     */
     private function checkClientIsAdded(?Client $client): bool
     {
         return (bool)$client;
@@ -265,13 +269,13 @@ class PercentageCompletion
         return (bool)$pet;
     }
 
-    private function checkTypePetIsAdded(?Pet $pet, string $typePet): bool
+    private function checkTypePetIsAdded(?Pet $pet, string $petTypeAsString): bool
     {
         if (is_null($pet)) {
             return false;
         }
 
-        return $pet->type->type == $typePet;
+        return $pet->type->type == $petTypeAsString;
     }
 
     private function checkGenderPetIsAdded(?Pet $pet, string $gender): bool
@@ -352,7 +356,6 @@ class PercentageCompletion
     }
 
     /**
-     * @throws VetmanagerApiGatewayException
      */
     private function checkTextTemplateIsAdded(?MedicalCard $medicalCard): bool
     {
@@ -411,7 +414,6 @@ class PercentageCompletion
     }
 
     /**
-     * @throws VetmanagerApiGatewayException
      */
     private function checkTypeAnimalDiagnosisIsAdded(array $diagnoses, string $nameTypeDiagnoseForPet): bool
     {
@@ -515,7 +517,7 @@ class PercentageCompletion
 
         foreach ($repeatAdmissions as $admission) {
             $statusValue = $admission->status->value;
-            if($statusValue == "save" || $statusValue == "not_approved") {
+            if ($statusValue == "save" || $statusValue == "not_approved") {
                 return true;
             }
         }

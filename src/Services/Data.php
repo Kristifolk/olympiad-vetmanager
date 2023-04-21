@@ -2,10 +2,13 @@
 
 namespace App\Services;
 
+use Exception;
+use JsonException;
+
 class Data
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getDataFromJsonFile(string $filePath): array
     {
@@ -25,21 +28,21 @@ class Data
     }
 
     /**
-     * @throws \JsonException
-     * @throws \Exception
+     * @throws JsonException
+     * @throws Exception
      */
     private function getAvailableUserId(): int
     {
         $availableUsersData = $this->getDataFromJsonFile(USER_AVAILABLE_PATH);
 
         if (!isset($availableUsersData["id"])) {
-            throw new \Exception('There is no key "id" in json-file: ' . USER_AVAILABLE_PATH);
+            throw new Exception('There is no key "id" in json-file: ' . USER_AVAILABLE_PATH);
         }
 
         $availableUsersIds = $availableUsersData["id"];
 
         if (empty($availableUsersIds)) {
-            throw new \Exception('No more available users in file: ' . USER_AVAILABLE_PATH);
+            throw new Exception('No more available users in file: ' . USER_AVAILABLE_PATH);
         }
 
         $idUser = array_shift($availableUsersData["id"]);
@@ -48,7 +51,7 @@ class Data
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getIdAndLoginAndPasswordOfParticipant(array $participantData, array $generateData): array
     {
@@ -63,7 +66,7 @@ class Data
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData, array $generateData): void
     {
@@ -82,7 +85,7 @@ class Data
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function putNewDataFileForTask(array $taskData, array $loginAndPassword, array $practicianData, int $userId): void
     {
@@ -92,7 +95,7 @@ class Data
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function getDataForUserId(int $userId): mixed
     {

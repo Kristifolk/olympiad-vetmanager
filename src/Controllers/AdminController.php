@@ -6,27 +6,20 @@ use App\Services\Data;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
+use JsonException;
 
 class AdminController
 {
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function viewResult(): void
     {
-        $dataResultUser = $this->getResultData();
+        $dataResultUser = (new Data())->getDataFromJsonFile(USER_TASKS_PATH);
         $html = new View(ViewPath::AdminPanel, ['resultTask' => $dataResultUser, 'resultMarks' => $this->getResultTrueMarks($dataResultUser)]);
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();
-    }
-
-    /**
-     * @throws \JsonException
-     */
-    private function getResultData(): array
-    {
-        return (new Data())->getDataFromJsonFile(USER_TASKS_PATH);
     }
 
     private function getResultTrueMarks(array $data): float

@@ -4,6 +4,7 @@ namespace App\Services\Task;
 
 
 use App\Services\Data;
+use JsonException;
 
 class TaskCollection
 {
@@ -62,7 +63,7 @@ class TaskCollection
     }
 
     /**
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function generateBreedPet(): void
     {

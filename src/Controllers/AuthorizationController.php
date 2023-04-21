@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
+use Exception;
 
 session_start();
 
@@ -18,12 +19,12 @@ class AuthorizationController
     }
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
-    public function validationAuthentication(string $firstName, string $lastName, string $middleName): void
+    public function storeNotEmptyNameInSession(string $firstName, string $lastName, string $middleName): void
     {
         if (empty($firstName) || empty($lastName) || empty($middleName)) {
-            throw new \Exception('');
+            throw new Exception('');
         }
 
         $_SESSION["participantData"] = [
