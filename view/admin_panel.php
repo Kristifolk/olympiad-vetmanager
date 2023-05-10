@@ -24,7 +24,7 @@
                                 <tr class="tr-failed-user">
                                     <td><?= ++$i ?></td>
                                     <td><?= $item["title"] ?>
-                                        <?php if ($item["meaning"]) : ?>
+                                        <?php if (isset($item["meaning"])) : ?>
                                             (<?= $item["meaning"] ?>)
                                         <?php endif; ?></td>
                                     <td><?= $item["marks"] ?></td>
@@ -35,9 +35,9 @@
                                 <tr>
                                     <td><?= ++$i ?></td>
                                     <td><?= $item["title"] ?>
-                                        <?php if ($item["meaning"]) : ?>
+                                        <?php if (isset($item["meaning"])) : ?>
                                             (<?= $item["meaning"] ?>)
-                                        <?php endif; ?>
+                                        <?php endif ?>
                                     </td>
                                     <td><?= $item["marks"] ?></td>
                                     <td><?= $item["done"] ?></td>

@@ -1,20 +1,20 @@
 {
-    "_readme": [
-        "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
-        "This file is @generated automatically"
-    ],
-    "content-hash": "8bfc65511cecfd02b4974a94200d7461",
-    "packages": [
-        {
-            "name": "elegant-bro/arrayee",
-            "version": "0.1.5",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/elegant-bro/arrayee.git",
-                "reference": "bb7934649b1c3d2bc1ead0da425c55daaa7a417f"
-            },
-            "dist": {
+  "_readme": [
+    "This file locks the dependencies of your project to a known state",
+    "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+    "This file is @generated automatically"
+  ],
+  "content-hash": "48d48f3706885d23f817b3cc84eee2e3",
+  "packages": [
+    {
+      "name": "elegant-bro/arrayee",
+      "version": "0.1.5",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/elegant-bro/arrayee.git",
+        "reference": "bb7934649b1c3d2bc1ead0da425c55daaa7a417f"
+      },
+      "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/elegant-bro/arrayee/zipball/bb7934649b1c3d2bc1ead0da425c55daaa7a417f",
                 "reference": "bb7934649b1c3d2bc1ead0da425c55daaa7a417f",
@@ -884,26 +884,84 @@
             "funding": [
                 {
                     "url": "https://github.com/GrahamCampbell",
-                    "type": "github"
+                  "type": "github"
                 },
-                {
-                    "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
-                    "type": "tidelift"
-                }
+              {
+                "url": "https://tidelift.com/funding/github/packagist/phpoption/phpoption",
+                "type": "tidelift"
+              }
             ],
-            "time": "2023-02-25T19:38:58+00:00"
+          "time": "2023-02-25T19:38:58+00:00"
         },
+    {
+      "name": "predis/predis",
+      "version": "v2.1.2",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/predis/predis.git",
+        "reference": "a77a43913a74f9331f637bb12867eb8e274814e5"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/predis/predis/zipball/a77a43913a74f9331f637bb12867eb8e274814e5",
+        "reference": "a77a43913a74f9331f637bb12867eb8e274814e5",
+        "shasum": ""
+      },
+      "require": {
+        "php": "^7.2 || ^8.0"
+      },
+      "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.3",
+        "phpstan/phpstan": "^1.9",
+        "phpunit/phpunit": "^8.0 || ~9.4.4"
+      },
+      "type": "library",
+      "autoload": {
+        "psr-4": {
+          "Predis\\": "src/"
+        }
+      },
+      "notification-url": "https://packagist.org/downloads/",
+      "license": [
+        "MIT"
+      ],
+      "authors": [
         {
-            "name": "psr/http-client",
-            "version": "1.0.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/php-fig/http-client.git",
-                "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/php-fig/http-client/zipball/2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
+          "name": "Till Krüss",
+          "homepage": "https://till.im",
+          "role": "Maintainer"
+        }
+      ],
+      "description": "A flexible and feature-complete Redis client for PHP.",
+      "homepage": "http://github.com/predis/predis",
+      "keywords": [
+        "nosql",
+        "predis",
+        "redis"
+      ],
+      "support": {
+        "issues": "https://github.com/predis/predis/issues",
+        "source": "https://github.com/predis/predis/tree/v2.1.2"
+      },
+      "funding": [
+        {
+          "url": "https://github.com/sponsors/tillkruss",
+          "type": "github"
+        }
+      ],
+      "time": "2023-03-02T18:32:04+00:00"
+    },
+    {
+      "name": "psr/http-client",
+      "version": "1.0.1",
+      "source": {
+        "type": "git",
+        "url": "https://github.com/php-fig/http-client.git",
+        "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621"
+      },
+      "dist": {
+        "type": "zip",
+        "url": "https://api.github.com/repos/php-fig/http-client/zipball/2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
                 "reference": "2dfb5f6c5eff0e91e20e913f8c5452ed95b86621",
                 "shasum": ""
             },

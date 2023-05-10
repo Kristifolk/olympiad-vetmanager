@@ -8,10 +8,11 @@
   "require": {
     "ext-iconv": "*",
     "ext-simplexml": "*",
-    "vlucas/phpdotenv": "*",
+    "vlucas/phpdotenv": "^5.5",
     "ext-pdo": "*",
     "guzzlehttp/guzzle": "^7.0",
-    "ioncurly/vetmanager-api-gateway": "dev-master"
+    "ioncurly/vetmanager-api-gateway": "dev-master",
+    "predis/predis": "^2.1"
   },
   "autoload": {
     "psr-4": {

@@ -28,13 +28,11 @@ class PercentageCompletion
 
     /** @throws VetmanagerApiGatewayRequestException */
     public function __construct(
-        string $domainName = 'deviproff',
-        string $apiKey = 'd7d4e868c36d0961c6b1d90a5797e00b'
     )
     {
         $this->apiGateway = ApiGateway::fromDomainAndApiKey(
-            $domainName,
-            $apiKey,
+            API_DOMAIN,
+            API_KEY,
             true,
         );
     }
