@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Services;
+namespace App\Services\Data;
 
 use Exception;
 use JsonException;
 
-class Data
+class DataForJonFile
 {
     /**
      * @throws JsonException
@@ -53,14 +53,14 @@ class Data
     /**
      * @throws JsonException
      */
-    public function getIdAndLoginAndPasswordOfParticipant(array $participantData, array $generateData): array
+    public function getIdAndLoginAndPasswordOfParticipant(array $participantData): array
     {
 
         $idUser = $this->getAvailableUserId();
 
         $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_DATA_PATH);
         $dataUser = $arrayLoginAndPassword[(string)$idUser];
-        $this->putDefaultDataFileForTaskUser($idUser, $dataUser, $participantData, $generateData);
+        $this->putDefaultDataFileForTaskUser($idUser, $dataUser, $participantData);
         $dataUser['userId'] = $idUser;
         return $dataUser;
     }
@@ -68,9 +68,10 @@ class Data
     /**
      * @throws JsonException
      */
-    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData, array $generateData): void
+    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData): void
     {
         $defaultTaskData = $this->getDataFromJsonFile(TASK_DEFAULT_DATA);
+        $generateData = $this->generateDataForTask();
 
         foreach ($generateData as $key => $value) {
             $defaultTaskData[$key]["meaning"] = $value;
@@ -101,5 +102,17 @@ class Data
     {
         $arrayDataAllUsers = $this->getDataFromJsonFile(USER_TASKS_PATH);
         return $arrayDataAllUsers[$userId];
+    }
+
+    private function generateDataForTask(): array
+    {
+        return [
+            "add_client" => $_SESSION['FullNameClient'],
+            "alias" => $_SESSION['AnimalName'],
+            "gender" => $_SESSION['AnimalGender'],
+            "dateOfBirth" => $_SESSION['DateOfBirth'],
+            "breed" => $_SESSION['Breed']['title'],
+            "color" => $_SESSION['AnimalColor']
+        ];
     }
 }

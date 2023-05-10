@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\Data;
+use App\Services\Data\DataForJonFile;
 use App\Services\Response;
 use App\Services\Task\TaskCollection;
 use App\Services\View;
@@ -45,16 +45,7 @@ class StartController
         $taskData->generateFullNameClient();
         $taskData->generateLastAndFirstNameClient();
 
-        $generateData = [
-            "add_client" => $_SESSION['FullNameClient'],
-            "alias" => $_SESSION['AnimalName'],
-            "gender" => $_SESSION['AnimalGender'],
-            "dateOfBirth" => $_SESSION['DateOfBirth'],
-            "breed" => $_SESSION['Breed']['title'],
-            "color" => $_SESSION['AnimalColor']
-        ];
-
-        $userData = (new Data())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"], $generateData);
+        $userData = (new DataForJonFile())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"]);
         $_SESSION["UserId"] = $userData['userId'];
         $_SESSION["TestLogin"] = $userData['login'];
         $_SESSION["TestPassword"] = $userData['password'];

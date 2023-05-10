@@ -2,7 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\Data;
+use App\Services\Data\DataForJonFile;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -15,7 +15,7 @@ class AdminController
      */
     public function viewResult(): void
     {
-        $dataResultUser = (new Data())->getDataFromJsonFile(USER_TASKS_PATH);
+        $dataResultUser = (new DataForJonFile())->getDataFromJsonFile(USER_TASKS_PATH);
         $html = new View(ViewPath::AdminPanel, ['resultTask' => $dataResultUser, 'resultMarks' => $this->getResultTrueMarks($dataResultUser)]);
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);

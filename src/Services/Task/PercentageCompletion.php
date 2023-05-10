@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services\Task;
 
-use App\Services\Data;
+use App\Services\Data\DataForJonFile;
 use DateInterval;
 use JsonException;
 use Otis22\VetmanagerRestApi\Query\Builder;
@@ -114,7 +114,7 @@ class PercentageCompletion
     public function storePercentageCompletionIntoFile(): void
     {
         $userId = (int)$_SESSION["UserId"];
-        $dataUser = (new Data())->getDataForUserId($userId);
+        $dataUser = (new DataForJonFile())->getDataForUserId($userId);
         $arrayResult = $this->calculateCompletedTaskItem();
 
         $practicianData = $dataUser[0];
@@ -127,7 +127,7 @@ class PercentageCompletion
             }
         }
 
-        (new Data())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId);
+        (new DataForJonFile())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId);
     }
 
     private function calculateResults(array $checkAddingClientToTheProgram): void

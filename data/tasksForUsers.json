@@ -855,5 +855,124 @@
       "breed": "Овчарка",
       "color": "серебристый"
     }
+  ],
+  "8": [
+    {
+      "firstName": "2",
+      "lastName": "2",
+      "middleName": "2"
+    },
+    {
+      "login": "admin8",
+      "password": "rbrZS8qvHQ"
+    },
+    {
+      "add_client": {
+        "title": "Создание клиента",
+        "done": "true",
+        "marks": "2",
+        "meaning": "Цветков Осип Мартынович"
+      },
+      "alias": {
+        "title": "Указали кличку питомца",
+        "done": "false",
+        "marks": "0.5",
+        "meaning": "Ильда"
+      },
+      "gender": {
+        "title": "Указали пол питомца",
+        "done": "false",
+        "marks": "0.5",
+        "meaning": "female"
+      },
+      "dateOfBirth": {
+        "title": "Указали дату рождения питомца",
+        "done": "false",
+        "marks": "0.5",
+        "meaning": "2 года"
+      },
+      "breed": {
+        "title": "Указали породу питомца",
+        "done": "false",
+        "marks": "0.5",
+        "meaning": "Американский бульдог"
+      },
+      "color": {
+        "title": "Указали окрас питомца",
+        "done": "false",
+        "marks": "0.5",
+        "meaning": "голубой черепаховый"
+      },
+      "type": {
+        "title": "Указали тип питомца",
+        "done": "false",
+        "marks": "0.5"
+      },
+      "purpose_appointment": {
+        "title": "Указали цель обращения",
+        "done": "false",
+        "marks": "1"
+      },
+      "text_template": {
+        "title": "Применили текстовый шаблон заболевания",
+        "done": "false",
+        "marks": "1"
+      },
+      "result_appointment": {
+        "title": "Указали результат посещения ",
+        "done": "false",
+        "marks": "1"
+      },
+      "animal_diagnosis": {
+        "title": "Указали диагноз",
+        "done": "false",
+        "marks": "2"
+      },
+      "type_animal_diagnosis": {
+        "title": "Указали тип диагноза",
+        "done": "false",
+        "marks": "1"
+      },
+      "appointment_invoice": {
+        "title": "Указали первичный прием ",
+        "done": "false",
+        "marks": "1"
+      },
+      "opening_of_abscess": {
+        "title": "Указали в счёте вскрытие абсцесса",
+        "done": "false",
+        "marks": "1"
+      },
+      "sanitation_of_wound": {
+        "title": "Указали в счёте санация раны",
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_analgesic_antipyretic": {
+        "title": "Указали в счёте укол обезболивающий жаропонижающий",
+        "done": "false",
+        "marks": "1"
+      },
+      "injection_antibiotic": {
+        "title": "Указали в счёте укол с антибиотиком",
+        "done": "false",
+        "marks": "1"
+      },
+      "payment_type": {
+        "title": "Указали тип оплаты счёта",
+        "done": "false",
+        "marks": "1"
+      },
+      "add_coupon": {
+        "title": "Применение купона",
+        "done": "false",
+        "marks": "6"
+      },
+      "add_repeat_appointment": {
+        "title": "Добавление повторного приема",
+        "done": "false",
+        "marks": "2"
+      }
+    }
   ]
 }

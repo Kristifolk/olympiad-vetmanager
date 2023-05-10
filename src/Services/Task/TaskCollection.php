@@ -3,7 +3,7 @@
 namespace App\Services\Task;
 
 
-use App\Services\Data;
+use App\Services\Data\DataForJonFile;
 use JsonException;
 
 class TaskCollection
@@ -67,7 +67,7 @@ class TaskCollection
      */
     public function generateBreedPet(): void
     {
-        $arrayBreeds = (new Data)->getDataFromJsonFile(PET_BREEDS_PATH);
+        $arrayBreeds = (new DataForJonFile)->getDataFromJsonFile(PET_BREEDS_PATH);
         $_SESSION['Breed'] = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
 
     }
