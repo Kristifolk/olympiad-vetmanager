@@ -67,7 +67,7 @@ class TaskCollection
      */
     public function generateBreedPet(): void
     {
-        $arrayBreeds = (new DataForJonFile)->getDataFromJsonFile(PET_BREEDS_PATH);
+        $arrayBreeds = (new DataForJonFile())->getDataFromJsonFile(PET_BREEDS_PATH);
         $_SESSION['Breed'] = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
 
     }

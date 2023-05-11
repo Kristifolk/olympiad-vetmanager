@@ -31,7 +31,7 @@ class DataForJonFile
      * @throws JsonException
      * @throws Exception
      */
-    private function getAvailableUserId(): int
+    public function getAvailableUserId(): int
     {
         $availableUsersData = $this->getDataFromJsonFile(USER_AVAILABLE_PATH);
 
@@ -53,55 +53,35 @@ class DataForJonFile
     /**
      * @throws JsonException
      */
-    public function getIdAndLoginAndPasswordOfParticipant(array $participantData): array
+    public function defaultDataUser(array $fullNameParticipant): array
     {
-
         $idUser = $this->getAvailableUserId();
 
-        $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_DATA_PATH);
-        $dataUser = $arrayLoginAndPassword[(string)$idUser];
-        $this->putDefaultDataFileForTaskUser($idUser, $dataUser, $participantData);
-        $dataUser['userId'] = $idUser;
-        return $dataUser;
+        $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_ACCOUNT_PATH);
+        $loginAndPassword = $arrayLoginAndPassword[(string)$idUser];
+
+        return $this->putDefaultDataTaskUser($idUser, $loginAndPassword, $fullNameParticipant);
     }
 
     /**
      * @throws JsonException
      */
-    private function putDefaultDataFileForTaskUser(int $userId, array $userLoginAndPassword, array $participantData): void
+    private function putDefaultDataTaskUser(int $userId, array $loginAndPassword, array $fullNameParticipant): array
     {
-        $defaultTaskData = $this->getDataFromJsonFile(TASK_DEFAULT_DATA);
+        $defaultTaskData = $this->getDataFromJsonFile(TASK_TEMPLATE_DATA);
         $generateData = $this->generateDataForTask();
 
         foreach ($generateData as $key => $value) {
             $defaultTaskData[$key]["meaning"] = $value;
         }
 
-        $arrayToInsert = [(string)$userId => [$participantData, $userLoginAndPassword, $defaultTaskData, $generateData]];
+        $arrayToInsert = [(string)$userId => [$fullNameParticipant, $loginAndPassword, $defaultTaskData, $generateData]];
 
-        $existingUsersWithTasks = $this->getDataFromJsonFile(USER_TASKS_PATH);
+        return $arrayToInsert;
+        //$existingUsersWithTasks = $this->getDataFromJsonFile(USER_DATA_PATH);
 
-        $existingUsersWithTasks[$userId] = $arrayToInsert[$userId];
-        file_put_contents(USER_TASKS_PATH, json_encode($existingUsersWithTasks, JSON_UNESCAPED_UNICODE));
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function putNewDataFileForTask(array $taskData, array $loginAndPassword, array $practicianData, int $userId): void
-    {
-        $userTasksData = $this->getDataFromJsonFile(USER_TASKS_PATH);
-        $userTasksData[$userId] = [$practicianData, $loginAndPassword, $taskData];
-        file_put_contents(USER_TASKS_PATH, json_encode($userTasksData, JSON_UNESCAPED_UNICODE));
-    }
-
-    /**
-     * @throws JsonException
-     */
-    public function getDataForUserId(int $userId): mixed
-    {
-        $arrayDataAllUsers = $this->getDataFromJsonFile(USER_TASKS_PATH);
-        return $arrayDataAllUsers[$userId];
+        //$existingUsersWithTasks[$userId] = $arrayToInsert[$userId];
+        //file_put_contents(USER_DATA_PATH, json_encode($existingUsersWithTasks, JSON_UNESCAPED_UNICODE));
     }
 
     private function generateDataForTask(): array
@@ -116,3 +96,22 @@ class DataForJonFile
         ];
     }
 }
+
+///**
+// * @throws JsonException
+// */
+//public function putNewDataFileForTask(array $taskData, array $loginAndPassword, array $practicianData, int $userId): void
+//{
+//    $userTasksData = $this->getDataFromJsonFile(USER_DATA_PATH);
+//    $userTasksData[$userId] = [$practicianData, $loginAndPassword, $taskData];
+//    file_put_contents(USER_DATA_PATH, json_encode($userTasksData, JSON_UNESCAPED_UNICODE));
+//}
+//
+///**
+// * @throws JsonException
+// */
+//public function getDataForUserId(int $userId): mixed
+//{
+//    $arrayDataAllUsers = $this->getDataFromJsonFile(USER_DATA_PATH);
+//    return $arrayDataAllUsers[$userId];
+//}

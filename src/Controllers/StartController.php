@@ -2,9 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Services\Data\DataForJonFile;
 use App\Services\Response;
-use App\Services\Task\TaskCollection;
 use App\Services\View;
 use App\Services\ViewPath;
 use JsonException;
@@ -25,29 +23,8 @@ class StartController
      */
     public function viewTasksPreparation(): void
     {
-        $this->loadDataTask();
         $html = new View(ViewPath::TasksPreparation);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();
-    }
-
-    /**
-     * @throws JsonException
-     */
-    private function loadDataTask(): void
-    {
-        $taskData = new TaskCollection();
-        $taskData->defaultSessionData();
-        $taskData->generateAnimalAge();
-        $taskData->generateAnimalColor();
-        $taskData->generateAnimalName();
-        $taskData->generateBreedPet();
-        $taskData->generateFullNameClient();
-        $taskData->generateLastAndFirstNameClient();
-
-        $userData = (new DataForJonFile())->getIdAndLoginAndPasswordOfParticipant($_SESSION["participantData"]);
-        $_SESSION["UserId"] = $userData['userId'];
-        $_SESSION["TestLogin"] = $userData['login'];
-        $_SESSION["TestPassword"] = $userData['password'];
     }
 }
