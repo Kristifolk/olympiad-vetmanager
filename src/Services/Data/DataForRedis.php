@@ -49,11 +49,6 @@ class DataForRedis
         return $this->predis->hget('user:' . $userId, $userData);
     }
 
-    public function getDataForLineTask($a, $s)
-    {
-        return $this->predis->hget($a, $s);
-    }
-
     public function putKeyForData(string $key, string $data)
     {
 

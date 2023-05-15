@@ -40,17 +40,15 @@ class TasksController
 
         $redis = new DataForRedis();
 
-        $a = $redis->getDataFileForTaskByUser($_SESSION["userId"], 'alias');
-        $w = $redis->getDataForLineTask($a, 'title');
         $html = new View(
             $path,
             [
-                'fullNameClient' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login'), $_SESSION['FullNameClient'],
-//                'lastAndFirstNameClient' => $_SESSION['LastAndFirstNameClient'],
-                'animalName' => $w,
-//                'animalColor' => $redis->getDataFileForTask($_SESSION["userId"], 'color'),
-//                'animalAge' => $redis->getDataFileForTask($_SESSION["userId"], 'dateOfBirth'),
-//                'breed' => $redis->getDataFileForTask($_SESSION["userId"], 'breed'),
+                'fullNameClient' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'add_client:meaning'),
+                'lastAndFirstNameClient' => $_SESSION['LastAndFirstNameClient'],
+                'animalName' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'alias:meaning'),
+                'animalColor' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'color:meaning'),
+                'animalAge' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'dateOfBirth:meaning'),
+                'breed' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'breed:meaning'),
                 'login' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login'),
                 'password' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'password')
             ]
