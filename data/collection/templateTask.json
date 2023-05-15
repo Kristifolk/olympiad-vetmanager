@@ -1,109 +1,69 @@
 {
-  "add_client": {
-    "title" : "Создание клиента",
-    "done": "false",
-    "marks": "2",
-    "meaning": ""
-  },
-  "alias": {
-    "title" : "Указали кличку питомца",
-    "done": "false",
-    "marks": "0.5",
-    "meaning": ""
-  },
-  "gender": {
-    "title" : "Указали пол питомца",
-    "done": "false",
-    "marks": "0.5",
-    "meaning": ""
-  },
-  "dateOfBirth": {
-    "title" : "Указали дату рождения питомца",
-    "done": "false",
-    "marks": "0.5",
-    "meaning": ""
-  },
-  "breed": {
-    "title" : "Указали породу питомца",
-    "done": "false",
-    "marks": "0.5",
-    "meaning": ""
-  },
-  "color": {
-    "title" : "Указали окрас питомца",
-    "done": "false",
-    "marks": "0.5",
-    "meaning": ""
-  },
-  "type": {
-    "title" : "Указали тип питомца",
-    "done": "false",
-    "marks": "0.5"
-  },
-  "purpose_appointment": {
-    "title" : "Указали цель обращения",
-    "done": "false",
-    "marks": "1"
-  },
-  "text_template": {
-    "title" : "Применили текстовый шаблон заболевания",
-    "done": "false",
-    "marks": "1"
-  },
-  "result_appointment": {
-    "title" : "Указали результат посещения ",
-    "done": "false",
-    "marks": "1"
-  },
-  "animal_diagnosis": {
-    "title": "Указали диагноз",
-    "done": "false",
-    "marks": "2",
-    "meaning": ""
-  },
-  "type_animal_diagnosis": {
-    "title" : "Указали тип диагноза",
-    "done": "false",
-    "marks": "1"
-  },
-  "appointment_invoice": {
-    "title" : "Указали первичный прием ",
-    "done": "false",
-    "marks": "1"
-  },
-  "opening_of_abscess": {
-    "title" : "Указали в счёте вскрытие абсцесса",
-    "done": "false",
-    "marks": "1"
-  },
-  "sanitation_of_wound": {
-    "title" : "Указали в счёте санация раны",
-    "done": "false",
-    "marks": "1"
-  },
-  "injection_analgesic_antipyretic": {
-    "title" : "Указали в счёте укол обезболивающий жаропонижающий",
-    "done": "false",
-    "marks": "1"
-  },
-  "injection_antibiotic": {
-    "title" : "Указали в счёте укол с антибиотиком",
-    "done": "false",
-    "marks": "1"
-  },
-  "payment_type": {
-    "title" : "Указали тип оплаты счёта",
-    "done": "false",
-    "marks": "1"
-  },
-  "add_coupon": {
-    "title" : "Применение купона",
-    "done": "false",
-    "marks": "6"
-  },
-  "add_repeat_appointment": {
-    "title" : "Добавление повторного приема",
-    "done": "false",
-    "marks": "2"
-  }
+  "add_client:title": "Создание клиента",
+  "add_client:done": "false",
+  "add_client:marks": "2",
+  "add_client:meaning": "",
+  "alias:title": "Указали кличку питомца",
+  "alias:done": "false",
+  "alias:marks": "0.5",
+  "alias:meaning": "",
+  "gender:title": "Указали пол питомца",
+  "gender:done": "false",
+  "gender:marks": "0.5",
+  "gender:meaning": "",
+  "dateOfBirth:title": "Указали дату рождения питомца",
+  "dateOfBirth:done": "false",
+  "dateOfBirth:marks": "0.5",
+  "dateOfBirth:meaning": "",
+  "breed:title": "Указали породу питомца",
+  "breed:done": "false",
+  "breed:marks": "0.5",
+  "breed:meaning": "",
+  "color:title": "Указали окрас питомца",
+  "color:done": "false",
+  "color:marks": "0.5",
+  "color:meaning": "",
+  "type:title": "Указали тип питомца",
+  "type:done": "false",
+  "type:marks": "0.5",
+  "purpose_appointment:title": "Указали цель обращения",
+  "purpose_appointment:done": "false",
+  "purpose_appointment:marks": "1",
+  "text_template: title": "Применили текстовый шаблон заболевания",
+  "text_template: done": "false",
+  "text_template: marks": "1",
+  "result_appointment:title": "Указали результат посещения ",
+  "result_appointment:done": "false",
+  "result_appointment:marks": "1",
+  "animal_diagnosis:title": "Указали диагноз",
+  "animal_diagnosis:done": "false",
+  "animal_diagnosis:marks": "2",
+  "animal_diagnosis:meaning": "",
+  "type_animal_diagnosis:title": "Указали тип диагноза",
+  "type_animal_diagnosis:done": "false",
+  "type_animal_diagnosis:marks": "1",
+  "appointment_invoice:title": "Указали первичный прием ",
+  "appointment_invoice:done": "false",
+  "appointment_invoice:marks": "1",
+  "opening_of_abscess:title": "Указали в счёте вскрытие абсцесса",
+  "opening_of_abscess:done": "false",
+  "opening_of_abscess:marks": "1",
+  "sanitation_of_wound:title": "Указали в счёте санация раны",
+  "sanitation_of_wound:done": "false",
+  "sanitation_of_wound:marks": "1",
+  "injection_analgesic_antipyretic:title": "Указали в счёте укол обезболивающий жаропонижающий",
+  "injection_analgesic_antipyretic:done": "false",
+  "injection_analgesic_antipyretic:marks": "1",
+  "injection_antibiotic:title": "Указали в счёте укол с антибиотиком",
+  "injection_antibiotic:done": "false",
+  "injection_antibiotic:marks": "1",
+  "payment_type:title": "Указали тип оплаты счёта",
+  "payment_type:done": "false",
+  "payment_type:marks": "1",
+  "add_coupon:title": "Применение купона",
+  "add_coupon:done": "false",
+  "add_coupon:marks": "6",
+  "add_repeat_appointment:title": "Добавление повторного приема",
+  "add_repeat_appointment:done": "false",
+  "add_repeat_appointment:marks": "2"
 }
