@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\Data\DataForRedis;
 use App\Services\Response;
 use App\Services\Task\PercentageCompletion;
 use App\Services\Task\Timer;
@@ -37,15 +38,21 @@ class TasksController
         $path = $this->getView();
         $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
 
+        $redis = new DataForRedis();
+
+        $a = $redis->getDataFileForTaskByUser($_SESSION["userId"], 'alias');
+        $w = $redis->getDataForLineTask($a, 'title');
         $html = new View(
             $path,
             [
-                'fullNameClient' => $_SESSION['FullNameClient'],
-                'lastAndFirstNameClient' => $_SESSION['LastAndFirstNameClient'],
-                'animalName' => $_SESSION['AnimalName'],
-                'animalColor' => $_SESSION['AnimalColorGenitiveBase'],
-                'animalAge' => $_SESSION['DateOfBirth'],
-                'breed' => $_SESSION['Breed']['title']
+                'fullNameClient' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login'), $_SESSION['FullNameClient'],
+//                'lastAndFirstNameClient' => $_SESSION['LastAndFirstNameClient'],
+                'animalName' => $w,
+//                'animalColor' => $redis->getDataFileForTask($_SESSION["userId"], 'color'),
+//                'animalAge' => $redis->getDataFileForTask($_SESSION["userId"], 'dateOfBirth'),
+//                'breed' => $redis->getDataFileForTask($_SESSION["userId"], 'breed'),
+                'login' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login'),
+                'password' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'password')
             ]
         );
         $timerHtml = new View(ViewPath::TimerContent,

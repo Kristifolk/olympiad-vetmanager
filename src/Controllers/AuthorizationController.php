@@ -9,6 +9,7 @@ use App\Services\Task\TaskCollection;
 use App\Services\View;
 use App\Services\ViewPath;
 use Exception;
+use JsonException;
 
 session_start();
 
@@ -16,6 +17,7 @@ class AuthorizationController
 {
     public function viewAuthentication(): void
     {
+        $this->defaultSessionData();
         $html = new View(ViewPath::ModalAuthorizationWindow);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();
@@ -30,46 +32,65 @@ class AuthorizationController
             throw new Exception('Not valid user data');
         }
 
-        if (!$this->checkAvailableUserId()) {
+        $userId = (new DataForJonFile())->getAvailableUserId();
+        $_SESSION["userId"] = $userId;
+
+        if (empty($userId)) {
             throw new Exception('No logins available');
         }
-        var_dump($this->loadDataTask());
-        (new DataForRedis())->putNewDataFileForTask($this->loadDataTask());
 
-        $_SESSION["participantData"] = [
+        $loginAndPassword = $this->previewLoginAndPasswordForId($userId);
+        $template = $this->issueTaskInTemplate();
+        $testData = $this->loadDataTask($template);
+
+        $fullNameParticipant = [
             "firstName" => $firstName,
             "lastName" => $lastName,
             "middleName" => $middleName
         ];
+        $_SESSION["participantData"] = $fullNameParticipant;
+
+        $userData = array_merge($fullNameParticipant, $loginAndPassword, $testData);
+        $redis = new DataForRedis();
+
+        foreach ($userData as $key => $value) {
+            $redis->putNewDataFileForTask($userId, $key, $value);
+        }
+
+        //$a = $redis->getDataForUserId($userId);
+        //$uer = $redis->getDataForUserId($userId);
+        //$users = $redis->getDataAllUsers();
     }
 
-    private function checkAvailableUserId(): bool
-    {
-        return true;
-    }
 
     /**
      * @throws JsonException
      * @throws Exception
      */
-    private function loadDataTask()
+    private function loadDataTask(array $template): array
     {
-        $taskData = new TaskCollection();
-        $taskData->defaultSessionData();
-        $taskData->generateAnimalAge();
-        $taskData->generateAnimalColor();
-        $taskData->generateAnimalName();
-        $taskData->generateBreedPet();
-        $taskData->generateFullNameClient();
-        $taskData->generateLastAndFirstNameClient();
+        return (new TaskCollection($template))->generateData();
+    }
 
+    /**
+     * @throws JsonException
+     */
+    private function previewLoginAndPasswordForId(int $userId)
+    {
+        return (new DataForJonFile())->getLoginAndPasswordAndTemplateForUserId($userId);
+    }
 
-        $userData = (new DataForJonFile())->getAvailableUserId();
-        var_dump($userData);
-//        $_SESSION["UserId"] = $userData[]['userId'];
-//        $_SESSION["TestLogin"] = $userData[]['login'];
-//        $_SESSION["TestPassword"] = $userData[]['password'];
+    /**
+     * @throws JsonException
+     */
+    private function issueTaskInTemplate(): array
+    {
+        return (new DataForJonFile())->getTemplateTask();
+    }
 
-        return (new DataForJonFile())->defaultDataUser($_SESSION["participantData"]);
+    private function defaultSessionData(): void
+    {
+        $_SESSION["ResultPercentage"] = '0%';
+        $_SESSION["TimeEndTask"] = ["minutes" => "00", "seconds" => "00"];
     }
 }

@@ -56,9 +56,10 @@
     "marks": "1"
   },
   "animal_diagnosis": {
-    "title" : "Указали диагноз",
+    "title": "Указали диагноз",
     "done": "false",
-    "marks": "2"
+    "marks": "2",
+    "meaning": ""
   },
   "type_animal_diagnosis": {
     "title" : "Указали тип диагноза",

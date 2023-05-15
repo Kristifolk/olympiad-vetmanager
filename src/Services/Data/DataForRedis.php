@@ -2,6 +2,7 @@
 
 namespace App\Services\Data;
 
+use JsonException;
 use Predis\Client;
 
 class DataForRedis
@@ -19,19 +20,42 @@ class DataForRedis
         );
     }
 
-    public function getDataAllUsers()
+    /**
+     * @throws JsonException
+     */
+    public function getDataAllUsers(): array
     {
-        return $this->predis->get('user_data');
+        $data = $this->predis->get('user_data');
+        $d = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
+        return $d;
     }
 
+    /**
+     * @throws JsonException
+     */
     public function getDataForUserId(int $userId): mixed
     {
-        $users = $this->predis->get('user_data');
-        return $users[(string)$userId];
+        $data = $this->predis->hget('user:' . $userId, 'login');
+        return $data;//json_decode($data, true, 512, JSON_THROW_ON_ERROR);
     }
 
-    public function putNewDataFileForTask(array $userTasksData): void
+    public function putNewDataFileForTask(int $userId, string $userData, $value): void
     {
-        $this->predis->humset('user_data', $userTasksData);
+        $this->predis->hset('user:' . $userId, $userData, $value);
+    }
+
+    public function getDataFileForTaskByUser(int $userId, string $userData): ?string
+    {
+        return $this->predis->hget('user:' . $userId, $userData);
+    }
+
+    public function getDataForLineTask($a, $s)
+    {
+        return $this->predis->hget($a, $s);
+    }
+
+    public function putKeyForData(string $key, string $data)
+    {
+
     }
 }

@@ -50,68 +50,21 @@ class DataForJonFile
         return $idUser;
     }
 
+
     /**
      * @throws JsonException
      */
-    public function defaultDataUser(array $fullNameParticipant): array
+    public function getLoginAndPasswordAndTemplateForUserId(int $userId)
     {
-        $idUser = $this->getAvailableUserId();
-
         $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_ACCOUNT_PATH);
-        $loginAndPassword = $arrayLoginAndPassword[(string)$idUser];
-
-        return $this->putDefaultDataTaskUser($idUser, $loginAndPassword, $fullNameParticipant);
+        return $arrayLoginAndPassword[(string)$userId];
     }
 
     /**
      * @throws JsonException
      */
-    private function putDefaultDataTaskUser(int $userId, array $loginAndPassword, array $fullNameParticipant): array
+    public function getTemplateTask(): array
     {
-        $defaultTaskData = $this->getDataFromJsonFile(TASK_TEMPLATE_DATA);
-        $generateData = $this->generateDataForTask();
-
-        foreach ($generateData as $key => $value) {
-            $defaultTaskData[$key]["meaning"] = $value;
-        }
-
-        $arrayToInsert = [(string)$userId => [$fullNameParticipant, $loginAndPassword, $defaultTaskData, $generateData]];
-
-        return $arrayToInsert;
-        //$existingUsersWithTasks = $this->getDataFromJsonFile(USER_DATA_PATH);
-
-        //$existingUsersWithTasks[$userId] = $arrayToInsert[$userId];
-        //file_put_contents(USER_DATA_PATH, json_encode($existingUsersWithTasks, JSON_UNESCAPED_UNICODE));
-    }
-
-    private function generateDataForTask(): array
-    {
-        return [
-            "add_client" => $_SESSION['FullNameClient'],
-            "alias" => $_SESSION['AnimalName'],
-            "gender" => $_SESSION['AnimalGender'],
-            "dateOfBirth" => $_SESSION['DateOfBirth'],
-            "breed" => $_SESSION['Breed']['title'],
-            "color" => $_SESSION['AnimalColor']
-        ];
+        return $this->getDataFromJsonFile(TASK_TEMPLATE_DATA);
     }
 }
-
-///**
-// * @throws JsonException
-// */
-//public function putNewDataFileForTask(array $taskData, array $loginAndPassword, array $practicianData, int $userId): void
-//{
-//    $userTasksData = $this->getDataFromJsonFile(USER_DATA_PATH);
-//    $userTasksData[$userId] = [$practicianData, $loginAndPassword, $taskData];
-//    file_put_contents(USER_DATA_PATH, json_encode($userTasksData, JSON_UNESCAPED_UNICODE));
-//}
-//
-///**
-// * @throws JsonException
-// */
-//public function getDataForUserId(int $userId): mixed
-//{
-//    $arrayDataAllUsers = $this->getDataFromJsonFile(USER_DATA_PATH);
-//    return $arrayDataAllUsers[$userId];
-//}

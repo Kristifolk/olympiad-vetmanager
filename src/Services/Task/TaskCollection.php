@@ -3,60 +3,78 @@
 namespace App\Services\Task;
 
 
+use AllowDynamicProperties;
 use App\Services\Data\DataForJonFile;
 use JsonException;
 
-class TaskCollection
+#[AllowDynamicProperties] class TaskCollection
 {
     private string $clientFullName;
 
-    public function defaultSessionData(): void
+    public function __construct(array $template)
     {
-        $_SESSION["ResultPercentage"] = '0%';
-        $_SESSION["TimeEndTask"] = ["minutes" => "00", "seconds" => "00"];
-        $_SESSION['Diagnose'] = "Абсцесс";
-        $_SESSION['AnimalGender'] = "";
+        $this->template = $template;
     }
 
-    public function generateAnimalAge(): void
+    /**
+     * @throws JsonException
+     */
+    public function generateData(): array
+    {
+        $this->generateAnimalAge();
+        $this->generateAnimalColor();
+        $this->generateAnimalName();
+        $this->generateBreedPet();
+        $this->generateFullNameClient();
+        $this->generateDiagnose();
+        return $this->template;
+    }
+
+    private function generateDiagnose(): void
+    {
+        $this->template["animal_diagnosis"]["meaning"] = "Абсцесс";
+    }
+
+    private function generateAnimalAge(): void
     {
         $animalAgeArray = $this->dataAnimalAge();
         $age = $animalAgeArray[rand(0, count($animalAgeArray) - 1)];
-        $_SESSION['DateOfBirth'] = $age['totalYears'];
+        $this->template["dateOfBirth"]["meaning"] = $age['totalYears'];
         $_SESSION['TotalYearsEnglish'] = $age['totalYearsEnglish'];
     }
 
-    public function generateAnimalColor(): void
+    private function generateAnimalColor(): void
     {
         $animalColorArray = $this->dataAnimalColor();
         $color = $animalColorArray[rand(0, count($animalColorArray) - 1)];
-        $_SESSION['AnimalColor'] = $color['nominativeBase'];
+        $this->template["color"]["meaning"] = $color['nominativeBase'];
         $_SESSION['AnimalColorGenitiveBase'] = $color['genitiveBase'];
     }
 
-    public function generateAnimalName(): void
+    private function generateAnimalName(): void
     {
         $animalNameArray = $this->dataAnimalName();
         $pet = $animalNameArray[rand(0, count($animalNameArray) - 1)];
-        $_SESSION['AnimalName'] = $pet["alias"];
-        $_SESSION['AnimalGender'] = $pet["gender"];
+        $this->template["alias"]["meaning"] = $pet["alias"];
+        $this->template["gender"]["meaning"] = $pet["gender"];
     }
 
-    public function generateFullNameClient(): void
+    private function generateFullNameClient(): void
     {
         $nameClientArray = $this->dataNameClient();
         $surnameClientArray = $this->dataSurnameClient();
         $patronymicClientArray = $this->dataPatronymicClient();
 
-        $_SESSION['NameClient'] = $nameClientArray[rand(0, count($nameClientArray) - 1)];
-        $_SESSION['SurnameClient'] = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
-        $_SESSION['PatronymicClient'] = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
+        $nameClient = $nameClientArray[rand(0, count($nameClientArray) - 1)];
+        $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
+        $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
-        $_SESSION['FullNameClient'] =$_SESSION['SurnameClient'] . " " . $_SESSION['NameClient'] . " "  . $_SESSION['PatronymicClient'];
-        $this->clientFullName = $_SESSION['FullNameClient'];
+        $this->template["add_client"]["meaning"] = $surnameClient . " " . $nameClient . " " . $patronymicClient;
+        $this->clientFullName = $this->template["add_client"]["meaning"];
+        $this->generateLastAndFirstNameClient();
     }
 
-    public function generateLastAndFirstNameClient(): void
+    private function generateLastAndFirstNameClient(): void
     {
         $fullName = explode(" ", $this->clientFullName);
         $_SESSION['LastAndFirstNameClient'] = $fullName[1] . " " . $fullName[2];
@@ -65,11 +83,10 @@ class TaskCollection
     /**
      * @throws JsonException
      */
-    public function generateBreedPet(): void
+    private function generateBreedPet(): void
     {
         $arrayBreeds = (new DataForJonFile())->getDataFromJsonFile(PET_BREEDS_PATH);
-        $_SESSION['Breed'] = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
-
+        $this->template["breed"]["meaning"] = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
     }
 
     private function dataNameClient(): array
