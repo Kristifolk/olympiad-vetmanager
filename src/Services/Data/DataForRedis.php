@@ -37,6 +37,11 @@ class DataForRedis
         return $this->predis->hget('user:' . $userId, $userData);
     }
 
+    public function getDataFileForTaskByArray(int $userId): array
+    {
+        return $this->predis->hgetall('user:' . $userId);
+    }
+
     public function putNewDataFileForTask(int $userId, string $userData, $value): void
     {
         $this->predis->hset('user:' . $userId, $userData, $value);
@@ -48,5 +53,10 @@ class DataForRedis
         foreach ($userData as $key => $value) {
             $this->putNewDataFileForTask($userId, $key, $value);
         }
+    }
+
+    public function deleteKeyUser(int $userId): void
+    {
+        $this->predis->del('user:' . $userId);
     }
 }

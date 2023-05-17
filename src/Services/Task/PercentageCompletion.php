@@ -73,37 +73,37 @@ class PercentageCompletion
 
             /*ADD PET*/
 
-            "alias" => $this->checkPetIsAdded($pet),
-            "type" => $this->checkTypePetIsAdded($pet, "dog"),
-            "gender" => $this->checkGenderPetIsAdded($pet, $_SESSION['AnimalGender']),
-            "dateOfBirth" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['TotalYearsEnglish']),
-            "breed" => $this->checkBreedPetIsAdded($pet, $_SESSION['Breed']['title']),
-            "color" => $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
+            "alias:done" => $this->checkPetIsAdded($pet),
+            "type:done" => $this->checkTypePetIsAdded($pet, "dog"),
+            "gender:done" => $this->checkGenderPetIsAdded($pet, $_SESSION['AnimalGender']),
+            "dateOfBirth:done" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['TotalYearsEnglish']),
+            "breed:done" => $this->checkBreedPetIsAdded($pet, $_SESSION['Breed']['title']),
+            "color:done" => $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
 
             /*ADD MEDICARE*/
 
-            "purpose_appointment" => $this->checkPurposeAppointmentIsAdded($medicalCard),
-            "text_template" => $this->checkTextTemplateIsAdded($medicalCard),
-            "result_appointment" => $this->checkResultAppointmentIsAdded($medicalCard, "Повторный прием"),
-            "animal_diagnosis" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, "Абсцесс "),
-            "type_animal_diagnosis" => $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
+            "purpose_appointment:done" => $this->checkPurposeAppointmentIsAdded($medicalCard),
+            "text_template:done" => $this->checkTextTemplateIsAdded($medicalCard),
+            "result_appointment:done" => $this->checkResultAppointmentIsAdded($medicalCard, "Повторный прием"),
+            "animal_diagnosis:done" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, "Абсцесс "),
+            "type_animal_diagnosis:done" => $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
 
             /*Creating Invoice*/
 
-            "appointment_invoice" => $this->checkInitialAppointmentForInvoice($invoice),
-            "opening_of_abscess" => $this->checkInitialGoodInvoice($invoice, "Вскрытие абсцесса"),
-            "sanitation_of_wound" => $this->checkInitialGoodInvoice($invoice, "Санация раны"),
-            "injection_analgesic_antipyretic" => $this->checkInitialGoodInvoice($invoice, "Обезболивающий жаропонижающий"),
-            "injection_antibiotic" => $this->checkInitialGoodInvoice($invoice, "Антибиотик"),
-            "payment_type" => $this->checkInitialPaymentTypeForInvoice($invoice),
+            "appointment_invoice:done" => $this->checkInitialAppointmentForInvoice($invoice),
+            "opening_of_abscess:done" => $this->checkInitialGoodInvoice($invoice, "Вскрытие абсцесса"),
+            "sanitation_of_wound:done" => $this->checkInitialGoodInvoice($invoice, "Санация раны"),
+            "injection_analgesic_antipyretic:done" => $this->checkInitialGoodInvoice($invoice, "Обезболивающий жаропонижающий"),
+            "injection_antibiotic:done" => $this->checkInitialGoodInvoice($invoice, "Антибиотик"),
+            "payment_type:done" => $this->checkInitialPaymentTypeForInvoice($invoice),
 
             /*Coupon application*/
 
-            "add_coupon" => $this->checkInitialCouponApplicationForInvoice($invoice),
+            "add_coupon:done" => $this->checkInitialCouponApplicationForInvoice($invoice),
 
             /*Repeat Appointment*/
 
-            "add_repeat_appointment" => $this->checkRepeatAppointmentToTheClinic($client, $pet),
+            "add_repeat_appointment:done" => $this->checkRepeatAppointmentToTheClinic($client, $pet),
         ];
     }
 
@@ -132,21 +132,17 @@ class PercentageCompletion
 
     public function storePercentageCompletionIntoRedis(): void
     {
-        $userId = (int)$_SESSION["UserId"];
-        $dataUser = (new DataForRedis())->getDataForUserId($userId);
+        $userId = (int)$_SESSION["userId"];
+        $dataUser = (new DataForRedis())->getDataFileForTaskByArray($userId);
         $arrayResult = $this->calculateCompletedTaskItem();
-
-        $practicianData = $dataUser[0];
-        $loginAndPassword = $dataUser[1];
-        $taskArray = $dataUser[2];
 
         foreach ($arrayResult as $key => $value) {
             if ($value) {
-                $taskArray[$key]["done"] = "true";
+                $dataUser[$key] = "true";
             }
         }
-
-        (new DataForRedis())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId); #TODO
+        (new DataForRedis())->deleteKeyUser($userId);
+        (new DataForRedis())->putNewDataFileForTaskArray($userId, $dataUser);
     }
     private function calculateResults(array $checkAddingClientToTheProgram): void
     {
