@@ -32,14 +32,14 @@ use JsonException;
 
     private function generateDiagnose(): void
     {
-        $this->template["animal_diagnosis"]["meaning"] = "Абсцесс";
+        $this->template["animal_diagnosis:meaning"] = "Абсцесс";
     }
 
     private function generateAnimalAge(): void
     {
         $animalAgeArray = $this->dataAnimalAge();
         $age = $animalAgeArray[rand(0, count($animalAgeArray) - 1)];
-        $this->template["dateOfBirth"]["meaning"] = $age['totalYears'];
+        $this->template["dateOfBirth:meaning"] = $age['totalYears'];
         $_SESSION['TotalYearsEnglish'] = $age['totalYearsEnglish'];
     }
 
@@ -47,7 +47,7 @@ use JsonException;
     {
         $animalColorArray = $this->dataAnimalColor();
         $color = $animalColorArray[rand(0, count($animalColorArray) - 1)];
-        $this->template["color"]["meaning"] = $color['nominativeBase'];
+        $this->template["color:meaning"] = $color['nominativeBase'];
         $_SESSION['AnimalColorGenitiveBase'] = $color['genitiveBase'];
     }
 
@@ -55,8 +55,8 @@ use JsonException;
     {
         $animalNameArray = $this->dataAnimalName();
         $pet = $animalNameArray[rand(0, count($animalNameArray) - 1)];
-        $this->template["alias"]["meaning"] = $pet["alias"];
-        $this->template["gender"]["meaning"] = $pet["gender"];
+        $this->template["alias:meaning"] = $pet["alias"];
+        $this->template["gender:meaning"] = $pet["gender"];
     }
 
     private function generateFullNameClient(): void
@@ -69,8 +69,8 @@ use JsonException;
         $surnameClient = $surnameClientArray[rand(0, count($surnameClientArray) - 1)];
         $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
-        $this->template["add_client"]["meaning"] = $surnameClient . " " . $nameClient . " " . $patronymicClient;
-        $this->clientFullName = $this->template["add_client"]["meaning"];
+        $this->template["add_client:meaning"] = $surnameClient . " " . $nameClient . " " . $patronymicClient;
+        $this->clientFullName = $this->template["add_client:meaning"];
         $this->generateLastAndFirstNameClient();
     }
 
@@ -86,7 +86,8 @@ use JsonException;
     private function generateBreedPet(): void
     {
         $arrayBreeds = (new DataForJonFile())->getDataFromJsonFile(PET_BREEDS_PATH);
-        $this->template["breed"]["meaning"] = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
+        $breed = $arrayBreeds["breed"][rand(0, count($arrayBreeds["breed"]) - 1)];
+        $this->template["breed:meaning"] = $breed['title'];
     }
 
     private function dataNameClient(): array

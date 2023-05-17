@@ -40,7 +40,7 @@ class Timer
     public function storeTaskValue(): void
     {
         $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
-        (new PercentageCompletion())->storePercentageCompletionIntoFile();
+        (new PercentageCompletion())->storePercentageCompletionIntoRedis();
         $_SESSION["TimeEndTask"] = $this->getTimerAsArray();
         header('Location: /result');
     }
@@ -52,7 +52,7 @@ class Timer
     public function storeTaskValueForEndTime(): void
     {
         $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
-        (new PercentageCompletion())->storePercentageCompletionIntoFile();
+        (new PercentageCompletion())->storePercentageCompletionIntoRedis();
         $_SESSION["TimeEndTask"] = $this->getTimerAsArray();
         header('Location: /end_time');
     }

@@ -54,7 +54,7 @@ class DataForJonFile
     /**
      * @throws JsonException
      */
-    public function getLoginAndPasswordAndTemplateForUserId(int $userId)
+    public function getLoginAndPasswordAndTemplateForUserId(int $userId): array
     {
         $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_ACCOUNT_PATH);
         return $arrayLoginAndPassword[(string)$userId];

@@ -26,7 +26,7 @@ class AuthorizationController
     /**
      * @throws Exception
      */
-    public function storeNotEmptyNameInSession(string $firstName, string $lastName, string $middleName): void
+    public function registerUser(string $firstName, string $lastName, string $middleName): void
     {
         if (empty($firstName) || empty($lastName) || empty($middleName)) {
             throw new Exception('Not valid user data');
@@ -40,7 +40,7 @@ class AuthorizationController
         }
 
         $loginAndPassword = $this->previewLoginAndPasswordForId($userId);
-        $template = $this->issueTaskInTemplate();
+        $template = $this->getTemplateForTask();
         $testData = $this->loadDataTask($template);
 
         $fullNameParticipant = [
@@ -51,15 +51,7 @@ class AuthorizationController
         $_SESSION["participantData"] = $fullNameParticipant;
 
         $userData = array_merge($fullNameParticipant, $loginAndPassword, $testData);
-        $redis = new DataForRedis();
-
-        foreach ($userData as $key => $value) {
-            $redis->putNewDataFileForTask($userId, $key, $value);
-        }
-
-        //$a = $redis->getDataForUserId($userId);
-        //$uer = $redis->getDataForUserId($userId);
-        //$users = $redis->getDataAllUsers();
+        (new DataForRedis())->putNewDataFileForTaskArray($userId, $userData);
     }
 
 
@@ -75,7 +67,7 @@ class AuthorizationController
     /**
      * @throws JsonException
      */
-    private function previewLoginAndPasswordForId(int $userId)
+    private function previewLoginAndPasswordForId(int $userId): array
     {
         return (new DataForJonFile())->getLoginAndPasswordAndTemplateForUserId($userId);
     }
@@ -83,7 +75,7 @@ class AuthorizationController
     /**
      * @throws JsonException
      */
-    private function issueTaskInTemplate(): array
+    private function getTemplateForTask(): array
     {
         return (new DataForJonFile())->getTemplateTask();
     }

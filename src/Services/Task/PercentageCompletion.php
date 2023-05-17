@@ -111,7 +111,26 @@ class PercentageCompletion
      * @throws JsonException
      * @throws VetmanagerApiGatewayException
      */
-    public function storePercentageCompletionIntoFile(): void
+//    public function storePercentageCompletionIntoFile(): void
+//    {
+//        $userId = (int)$_SESSION["UserId"];
+//        $dataUser = (new DataForRedis())->getDataForUserId($userId);
+//        $arrayResult = $this->calculateCompletedTaskItem();
+//
+//        $practicianData = $dataUser[0];
+//        $loginAndPassword = $dataUser[1];
+//        $taskArray = $dataUser[2];
+//
+//        foreach ($arrayResult as $key => $value) {
+//            if ($value) {
+//                $taskArray[$key]["done"] = "true";
+//            }
+//        }
+//
+//        (new DataForRedis())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId); #TODO
+//    }
+
+    public function storePercentageCompletionIntoRedis(): void
     {
         $userId = (int)$_SESSION["UserId"];
         $dataUser = (new DataForRedis())->getDataForUserId($userId);
@@ -129,7 +148,6 @@ class PercentageCompletion
 
         (new DataForRedis())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId); #TODO
     }
-
     private function calculateResults(array $checkAddingClientToTheProgram): void
     {
         foreach ($checkAddingClientToTheProgram as $result) {

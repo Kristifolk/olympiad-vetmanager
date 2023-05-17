@@ -20,7 +20,6 @@ class TasksController
     {
     }
 
-
     private function getView(): ViewPath
     {
         return match ($this->idTask) {

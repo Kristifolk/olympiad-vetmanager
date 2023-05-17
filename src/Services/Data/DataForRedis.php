@@ -20,28 +20,16 @@ class DataForRedis
         );
     }
 
-    /**
-     * @throws JsonException
-     */
     public function getDataAllUsers(): array
     {
-        $data = $this->predis->get('user_data');
-        $d = json_decode($data, true, 512, JSON_THROW_ON_ERROR);
-        return $d;
-    }
+        $keys = $this->predis->keys('*');
+        $data = [];
 
-    /**
-     * @throws JsonException
-     */
-    public function getDataForUserId(int $userId): mixed
-    {
-        $data = $this->predis->hget('user:' . $userId, 'login');
-        return $data;//json_decode($data, true, 512, JSON_THROW_ON_ERROR);
-    }
+        foreach ($keys as $key) {
+            $data[] = $this->predis->hgetall("$key");
+        }
 
-    public function putNewDataFileForTask(int $userId, string $userData, $value): void
-    {
-        $this->predis->hset('user:' . $userId, $userData, $value);
+        return $data;
     }
 
     public function getDataFileForTaskByUser(int $userId, string $userData): ?string
@@ -49,8 +37,16 @@ class DataForRedis
         return $this->predis->hget('user:' . $userId, $userData);
     }
 
-    public function putKeyForData(string $key, string $data)
+    public function putNewDataFileForTask(int $userId, string $userData, $value): void
     {
+        $this->predis->hset('user:' . $userId, $userData, $value);
+    }
 
+    /**  @throws JsonException */
+    public function putNewDataFileForTaskArray(int $userId, array $userData): void
+    {
+        foreach ($userData as $key => $value) {
+            $this->putNewDataFileForTask($userId, $key, $value);
+        }
     }
 }

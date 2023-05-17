@@ -16,7 +16,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
         match ($_SERVER['REQUEST_URI']) {
             '/' => (new StartController())->viewInstructions(),
             '/authorization' => (new AuthorizationController())->viewAuthentication(),
-            '/authorization_participant' => (new AuthorizationController())->storeNotEmptyNameInSession(
+            '/authorization_participant' => (new AuthorizationController())->registerUser(
                 trim($_POST['last-name']),
                 trim($_POST['first-name']),
                 trim($_POST['middle-name'])
