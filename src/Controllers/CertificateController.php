@@ -2,7 +2,9 @@
 
 namespace App\Controllers;
 
-use Fpdf\Fpdf;
+use App\Services\View;
+use App\Services\ViewPath;
+use Dompdf\Dompdf;
 
 class CertificateController
 {
@@ -45,42 +47,42 @@ class CertificateController
 //    }
 
 
-    public function getCertificate(): void
-    {
-
-        $pdf = new FPDF('L', 'mm', 'A4');
-        MakeFont(FONT_CERTIFICATE, 'cp125');
-        // MakeFont(FONT_CERTIFICATE,'.afm','cp1252');
-        $pdf->AddPage();
-        //$pdf->AddFont('Arial','B',16);
-        $pdf->Image(IMG_FON_CERTIFICATE, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
-        $pdf->SetFont('Arial', 'B', 16);
-
-        $text = "ериекаврвк";
-        $pdf->Cell(40, 10, $text);
-        $pdf->Output();
-
-        //$pdf->AddFont('MainFont','','119379869a251bdd6a14438b3c5514f2_arial.php');
-        //$pdf->AddPage();
-        // выбираем шрифт для текста.
-        // $pdf->SetFont('MainFont','',35);
-    }
-
-//    public function getCertificate()
+//    public function getCertificate(): void
 //    {
-//        $html = new View(ViewPath::TemplateCertificate);
 //
-//        $dompdf = new Dompdf();
+//        $pdf = new FPDF('L', 'mm', 'A4');
+//        //MakeFont(FONT_CERTIFICATE, 'cp125');
+//        // MakeFont(FONT_CERTIFICATE,'.afm','cp1252');
+//        $pdf->AddPage();
+//        //$pdf->AddFont('Arial','B',16);
+//        $pdf->Image(IMG_FON_CERTIFICATE, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
+//        $pdf->SetFont('Arial', 'B', 16);
 //
-//        $dompdf->loadHtml($html, 'UTF-8');
+//        $text = "ериекаврвк";
+//        $pdf->Cell(40, 10, $text);
+//        $pdf->Output();
 //
-//        $dompdf->setPaper('A4', 'landscape');
-//
-////        $dompdf->set_option('isFontSubsettingEnabled', true);
-////        $dompdf->set_option('defaultMediaType', 'all');
-////
-//        $dompdf->render();
-//
-//        $dompdf->stream();
+//        //$pdf->AddFont('MainFont','','119379869a251bdd6a14438b3c5514f2_arial.php');
+//        //$pdf->AddPage();
+//        // выбираем шрифт для текста.
+//        // $pdf->SetFont('MainFont','',35);
 //    }
+
+    public function getCertificate()
+    {
+        $html = new View(ViewPath::TemplateCertificate);
+
+        $dompdf = new Dompdf();
+
+        $dompdf->loadHtml($html, 'UTF-8');
+
+        $dompdf->setPaper('A4', 'landscape');
+
+//        $dompdf->set_option('isFontSubsettingEnabled', true);
+//        $dompdf->set_option('defaultMediaType', 'all');
+//
+        $dompdf->render();
+
+        $dompdf->stream();
+    }
 }

@@ -2,7 +2,7 @@
 
 namespace App\Services\Data;
 
-use JsonException;
+
 use Predis\Client;
 
 class DataForRedis
@@ -47,7 +47,7 @@ class DataForRedis
         $this->predis->hset('user:' . $userId, $userData, $value);
     }
 
-    /**  @throws JsonException */
+
     public function putNewDataFileForTaskArray(int $userId, array $userData): void
     {
         foreach ($userData as $key => $value) {

@@ -2,7 +2,6 @@
 
 namespace App\Services\Task;
 
-use JsonException;
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
 session_start();
@@ -35,7 +34,6 @@ class Timer
 
     /**
      * @throws VetmanagerApiGatewayException
-     * @throws JsonException
      */
     public function storeTaskValue(): void
     {
@@ -47,7 +45,6 @@ class Timer
 
     /**
      * @throws VetmanagerApiGatewayException
-     * @throws JsonException
      */
     public function storeTaskValueForEndTime(): void
     {

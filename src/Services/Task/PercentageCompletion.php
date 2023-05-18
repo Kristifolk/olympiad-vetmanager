@@ -5,7 +5,6 @@ namespace App\Services\Task;
 
 use App\Services\Data\DataForRedis;
 use DateInterval;
-use JsonException;
 use Otis22\VetmanagerRestApi\Query\Builder;
 use VetmanagerApiGateway\ApiGateway;
 use VetmanagerApiGateway\DO\DTO\DAO;
@@ -27,8 +26,7 @@ class PercentageCompletion
     private int $numberOfTasksFailed = 0;
 
     /** @throws VetmanagerApiGatewayRequestException */
-    public function __construct(
-    )
+    public function __construct()
     {
         $this->apiGateway = ApiGateway::fromDomainAndApiKey(
             API_DOMAIN,
@@ -51,41 +49,40 @@ class PercentageCompletion
      */
     private function calculateCompletedTaskItem(): array
     {
-        $client = $this->getClientDaoByName(
-            (string)$_SESSION['NameClient'],
-            (string)$_SESSION['PatronymicClient'],
-            (string)$_SESSION['SurnameClient']
-        );
+        $redis = new DataForRedis();
+        $arrayClientName = explode(" ", $redis->getDataFileForTaskByUser($_SESSION['userId'], 'add_client:meaning'));
+
+        $client = $this->getClientDaoByName($arrayClientName);
 
         $pet = $this->getPetDaoByAliasAndClient(
-            (string)$_SESSION['AnimalName'],
-            (string)$_SESSION['NameClient'],
-            (string)$_SESSION['PatronymicClient'],
-            (string)$_SESSION['SurnameClient']
+            $redis->getDataFileForTaskByUser($_SESSION['userId'], 'alias:meaning'),
+            $arrayClientName
         );
 
         $medicalCard = $this->getMedicalCardDaoByName($pet, "Первичный");
 
         $diagnoses = $this->getAnimalDiagnosisForMedicalCard($medicalCard);
         $invoice = $this->getInvoiceForClient($medicalCard);
+
+
         return [
-            "add_client" => $this->checkClientIsAdded($client),
+            "add_client:done" => $this->checkClientIsAdded($client),
 
             /*ADD PET*/
 
             "alias:done" => $this->checkPetIsAdded($pet),
             "type:done" => $this->checkTypePetIsAdded($pet, "dog"),
-            "gender:done" => $this->checkGenderPetIsAdded($pet, $_SESSION['AnimalGender']),
+            "gender:done" => $this->checkGenderPetIsAdded($pet, $redis->getDataFileForTaskByUser($_SESSION['userId'], 'gender:meaning')),
             "dateOfBirth:done" => $this->checkDateOfBirthPetIsAdded($pet, $_SESSION['TotalYearsEnglish']),
-            "breed:done" => $this->checkBreedPetIsAdded($pet, $_SESSION['Breed']['title']),
-            "color:done" => $this->checkColorPetIsAdded($pet, $_SESSION['AnimalColor']),
+            "breed:done" => $this->checkBreedPetIsAdded($pet, $redis->getDataFileForTaskByUser($_SESSION['userId'], 'breed:meaning')),
+            "color:done" => $this->checkColorPetIsAdded($pet, $redis->getDataFileForTaskByUser($_SESSION['userId'], 'color:meaning')),
 
             /*ADD MEDICARE*/
 
             "purpose_appointment:done" => $this->checkPurposeAppointmentIsAdded($medicalCard),
             "text_template:done" => $this->checkTextTemplateIsAdded($medicalCard),
             "result_appointment:done" => $this->checkResultAppointmentIsAdded($medicalCard, "Повторный прием"),
-            "animal_diagnosis:done" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, "Абсцесс "),
+            "animal_diagnosis:done" => $this->checkAnimalDiagnosisIsAdded((array)$diagnoses, $redis->getDataFileForTaskByUser($_SESSION['userId'], 'animal_diagnosis:meaning')),
             "type_animal_diagnosis:done" => $this->checkTypeAnimalDiagnosisIsAdded((array)$diagnoses, "Окончательные"),
 
             /*Creating Invoice*/
@@ -108,28 +105,8 @@ class PercentageCompletion
     }
 
     /**
-     * @throws JsonException
      * @throws VetmanagerApiGatewayException
      */
-//    public function storePercentageCompletionIntoFile(): void
-//    {
-//        $userId = (int)$_SESSION["UserId"];
-//        $dataUser = (new DataForRedis())->getDataForUserId($userId);
-//        $arrayResult = $this->calculateCompletedTaskItem();
-//
-//        $practicianData = $dataUser[0];
-//        $loginAndPassword = $dataUser[1];
-//        $taskArray = $dataUser[2];
-//
-//        foreach ($arrayResult as $key => $value) {
-//            if ($value) {
-//                $taskArray[$key]["done"] = "true";
-//            }
-//        }
-//
-//        (new DataForRedis())->putNewDataFileForTask($taskArray, $loginAndPassword, $practicianData, $userId); #TODO
-//    }
-
     public function storePercentageCompletionIntoRedis(): void
     {
         $userId = (int)$_SESSION["userId"];
@@ -144,6 +121,7 @@ class PercentageCompletion
         (new DataForRedis())->deleteKeyUser($userId);
         (new DataForRedis())->putNewDataFileForTaskArray($userId, $dataUser);
     }
+
     private function calculateResults(array $checkAddingClientToTheProgram): void
     {
         foreach ($checkAddingClientToTheProgram as $result) {
@@ -164,14 +142,14 @@ class PercentageCompletion
     /**
      * @throws VetmanagerApiGatewayException
      */
-    private function getClientDaoByName(string $firstName, string $middleName, string $lastName): ?Client
+    private function getClientDaoByName(array $arrayClientName): ?Client
     {
         $clients = Client::getByPagedQuery(
             $this->apiGateway,
             (new Builder ())
-                ->where('first_name', $firstName)
-                ->where('middle_name', $middleName)
-                ->where('last_name', $lastName)
+                ->where('last_name', $arrayClientName[0])
+                ->where('first_name', $arrayClientName[1])
+                ->where('middle_name', $arrayClientName[2])
                 ->top(1)
         );
         return !empty($clients) ? $clients[0] : null;
@@ -183,7 +161,7 @@ class PercentageCompletion
      * @throws VetmanagerApiGatewayResponseException
      * @throws VetmanagerApiGatewayResponseEmptyException
      */
-    private function getPetDaoByAliasAndClient(string $aliasPet, string $firstName, string $middleName, string $lastName): ?Pet
+    private function getPetDaoByAliasAndClient(string $aliasPet, array $arrayClientName): ?Pet
     {
         $pets = Pet::getByPagedQuery(
             $this->apiGateway,
@@ -198,9 +176,9 @@ class PercentageCompletion
 
         foreach ($pets as $pet) {
 
-            if ($pet->client->firstName == $firstName &&
-                $pet->client->middleName == $middleName &&
-                $pet->client->lastName == $lastName) {
+            if ($pet->client->lastName == $arrayClientName[0] &&
+                $pet->client->firstName == $arrayClientName[1] &&
+                $pet->client->middleName == $arrayClientName[2]) {
                 return $pet;
             }
         }

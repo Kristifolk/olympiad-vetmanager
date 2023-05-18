@@ -2,6 +2,7 @@
 
 use App\Controllers\AdminController;
 use App\Controllers\AuthorizationController;
+use App\Controllers\CertificateController;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
 use App\Controllers\TasksController;
@@ -31,6 +32,7 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/admin_vetmanager_info_olympiad' => (new AdminController())->viewResult(),
             '/store_end_time' => (new Timer())->storeTaskValueForEndTime(),
             '/end_time' => (new ResultController())->viewEndTime(),
+            '/certificate' => (new CertificateController())->getCertificate(),
             default => throw new Exception('Unexpected match value'),
         };
     } catch (Exception $e) {

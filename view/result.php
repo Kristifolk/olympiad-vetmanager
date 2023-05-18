@@ -15,5 +15,9 @@
         <div>
             <a class="btn btn-for-a btn-start" href="/" style="margin-left: auto; margin-right: auto;">Главная</a>
         </div>
+        <div>
+            <a class="btn btn-for-a btn-start" href="/certificate" style="margin-left: auto; margin-right: auto;">Получить
+                сертификат</a>
+        </div>
     </div>
 </section>
