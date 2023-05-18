@@ -13,7 +13,9 @@
     "guzzlehttp/guzzle": "^7.0",
     "ioncurly/vetmanager-api-gateway": "dev-master",
     "predis/predis": "^2.1",
-    "ext-xdebug": "*"
+    "fpdf/fpdf": "^1.85",
+    "dompdf/dompdf": "^2.0",
+    "tecnickcom/tcpdf": "v6.6.2"
   },
   "autoload": {
     "psr-4": {
