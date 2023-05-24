@@ -6,14 +6,11 @@ use App\Controllers\CertificateController;
 use App\Controllers\ResultController;
 use App\Controllers\StartController;
 use App\Controllers\TasksController;
-use App\Services\Response;
 use App\Services\Task\Timer;
 use App\Services\Task\UpdateData;
-use App\Services\View;
-use App\Services\ViewPath;
 
 if (isset($_SERVER['REQUEST_URI'])) {
-    try {
+   // try {
         match ($_SERVER['REQUEST_URI']) {
             '/' => (new StartController())->viewInstructions(),
             '/authorization' => (new AuthorizationController())->viewAuthentication(),
@@ -33,11 +30,11 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/store_end_time' => (new Timer())->storeTaskValueForEndTime(),
             '/end_time' => (new ResultController())->viewEndTime(),
             '/certificate' => (new CertificateController())->getCertificate(),
-            default => throw new Exception('Unexpected match value'),
+            //  default => throw new Exception('Unexpected match value'),
         };
-    } catch (Exception $e) {
-        $html = new View(ViewPath::NotFound);
-        $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
-    }
+//    } catch (Exception $e) {
+//        $html = new View(ViewPath::NotFound);
+//        $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
+//        (new Response((string)$templateWithContent))->echo();
+//    }
 }

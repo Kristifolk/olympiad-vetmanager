@@ -2,8 +2,6 @@
 
 namespace App\Controllers;
 
-use App\Services\View;
-use App\Services\ViewPath;
 use Dompdf\Dompdf;
 
 class CertificateController
@@ -55,7 +53,7 @@ class CertificateController
 //        // MakeFont(FONT_CERTIFICATE,'.afm','cp1252');
 //        $pdf->AddPage();
 //        //$pdf->AddFont('Arial','B',16);
-//        $pdf->Image(IMG_FON_CERTIFICATE, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
+    //       $pdf->Image(IMG_FON_CERTIFICATE, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
 //        $pdf->SetFont('Arial', 'B', 16);
 //
 //        $text = "ериекаврвк";
@@ -70,19 +68,72 @@ class CertificateController
 
     public function getCertificate()
     {
-        $html = new View(ViewPath::TemplateCertificate);
+
+//        $contents = PDF;
+//        $phone = '79181524517';
+//
+//        $curl = curl_init();
+//        curl_setopt($curl, CURLOPT_URL, "https://api.j12.wazapa.ru/sendwamessage/");
+//
+//        $client = new Client();
+//        $options = ['multipart' => [
+//                ['name' => 'body','contents' => $contents],
+//                ['name' => 'phone','contents' => $phone],
+//                ['name' => 'token','contents' => '306a06-e7b63f-e23cd2-ce148f-41c2e2']
+//            ]
+//        ];
+//
+//        $request = new Request('POST', 'https://api.j12.wazapa.ru/sendwamessage/');
+//        $res = $client->sendAsync($request, $options)->wait();
+//        echo $res->getBody();
+//        $response = curl_exec($curl);
+//        curl_close($curl);
+//        echo $response;
+
 
         $dompdf = new Dompdf();
 
+        $options = $dompdf->getOptions();
+//        $options->setDefaultFont('roboto');
+        $dompdf->setOptions($options);
+
+//        $image=file_get_contents(IMG_FON_CERTIFICATE);
+//        $imagedata=base64_encode($image);
+        //$imgpath=$imagedata;
+
+        $path_podpis = IMG_FON_CERTIFICATE;
+        $type = pathinfo($path_podpis, PATHINFO_EXTENSION);
+        $data = file_get_contents($path_podpis);
+        $podpis = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
+        $html = <<<HTML
+	<!DOCTYPE html>
+	<html lang="ru">
+		<head>
+			<meta charset="utf-8">
+			<title>Test Page</title>
+			<style>
+			body { 
+			font-family: DejaVu Sans;
+            }
+            
+			.d {
+			 width: 150px; height: 80px;
+            background: linear-gradient(10deg, rgba(4,213,255,1) 11%, rgba(0,250,202,1) 50%, rgba(255,255,255,1) 91%);
+			}
+            </style>
+		</head>
+		<body>
+			<p>fhftd, Мир>!</p> <img class="d" src="' . $podpis .'">
+			<div class="d"></div>
+		</body>
+	</html>
+HTML;
+        $dompdf->setPaper('A4', 'landscape');
         $dompdf->loadHtml($html, 'UTF-8');
 
-        $dompdf->setPaper('A4', 'landscape');
-
-//        $dompdf->set_option('isFontSubsettingEnabled', true);
-//        $dompdf->set_option('defaultMediaType', 'all');
-//
         $dompdf->render();
-
         $dompdf->stream();
     }
 }
+//<img style="width: 150px; height: 80px" src="data:image/' . $type . ';base64,' . base64_encode($data) . '">
