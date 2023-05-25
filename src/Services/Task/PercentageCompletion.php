@@ -60,7 +60,6 @@ class PercentageCompletion
         );
 
         $medicalCard = $this->getMedicalCardDaoByName($pet, "Первичный");
-
         $diagnoses = $this->getAnimalDiagnosisForMedicalCard($medicalCard);
         $invoice = $this->getInvoiceForClient($medicalCard);
 
@@ -150,6 +149,7 @@ class PercentageCompletion
                 ->where('last_name', $arrayClientName[0])
                 ->where('first_name', $arrayClientName[1])
                 ->where('middle_name', $arrayClientName[2])
+                ->where('status', "ACTIVE")
                 ->top(1)
         );
         return !empty($clients) ? $clients[0] : null;

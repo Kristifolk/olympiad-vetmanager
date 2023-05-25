@@ -1,4 +1,3 @@
-
 /*SEARCH*/
 
 document.addEventListener('keyup', search);

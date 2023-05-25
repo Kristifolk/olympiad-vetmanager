@@ -1,7 +1,0 @@
-// "add_client:meaning": "",
-// "alias:meaning": "",
-// "gender:meaning": "",
-// "dateOfBirth:meaning": "",
-//  "breed:meaning": "",
-// "color:meaning": "",
-"animal_diagnosis:meaning": "",

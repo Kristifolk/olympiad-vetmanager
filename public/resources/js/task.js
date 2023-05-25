@@ -6,7 +6,6 @@ let timerSecondContent = document.querySelector('#timer-second');
 
 const numberTask = document.querySelector('.task-number');
 
-
 /*TIMER*/
 
 window.onload = function () {

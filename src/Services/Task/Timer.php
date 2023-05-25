@@ -27,7 +27,6 @@ class Timer
     public function getTimerAsString(): string
     {
         $arrayTime = $this->getTimerAsArray();
-
         return $arrayTime["minutes"] . ":" . $arrayTime["seconds"];
     }
 
