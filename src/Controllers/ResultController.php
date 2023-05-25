@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Services\Data\DataForRedis;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
@@ -23,6 +24,7 @@ class ResultController
     {
         $html = new View(ViewPath::Result,
             [
+                'login' => (new DataForRedis())->getDataFileForTaskByUser($_SESSION["userId"], "login"),
                 'taskTransitTime' =>
                     [
                         'minute' => $this->convertToPrettyString((string)$_SESSION["TimeEndTask"]["minutes"]),

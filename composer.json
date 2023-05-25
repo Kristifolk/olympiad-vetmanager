@@ -13,8 +13,7 @@
     "guzzlehttp/guzzle": "^7.0",
     "ioncurly/vetmanager-api-gateway": "dev-master",
     "predis/predis": "^2.1",
-    "setasign/tfpdf": "1.33",
-    "ext-curl": "*"
+    "setasign/tfpdf": "1.33"
   },
   "autoload": {
     "psr-4": {

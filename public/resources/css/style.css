@@ -133,6 +133,10 @@ li {
     color: var(--primary-green);
 }
 
+.block-center {
+    margin-left: auto;
+    margin-right: auto;
+}
 /*TIMER*/
 .timer-container {
     margin: 20px;

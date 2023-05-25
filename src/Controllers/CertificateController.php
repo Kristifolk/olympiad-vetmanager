@@ -2,25 +2,13 @@
 
 namespace App\Controllers;
 
+use App\Services\Data\DataForRedis;
 use tFPDF;
+
+session_start();
 
 class CertificateController
 {
-    public function show()
-    {
-
-    }
-
-    public function create()
-    {
-
-    }
-
-    public function store()
-    {
-
-    }
-
     public function getCertificate(): void
     {
         $pdf = new tFPDF('L', 'mm', 'A4');
@@ -30,11 +18,13 @@ class CertificateController
 
         $pdf->Image(IMG_FON_CERTIFICATE, 0, 0, $pdf->GetPageWidth(), $pdf->GetPageHeight());
 
-        $text = "Сертификат";
+        $allDataUser = (new DataForRedis())->getDataFileForTaskByArray($_SESSION["userId"]);
+        $text = $allDataUser["lastName"] . " " . $allDataUser["firstName"] . " " . $allDataUser["middleName"];
         $pdf->Cell(40, 10, $text);
         $pdf->SetFont('DejaVu', '', 34);
         $text = "Вы молодцы";
         $pdf->Cell(40, 10, $text);
-        $pdf->Output();
+
+        $pdf->Output('D', 'certificate.pdf');
     }
 }

@@ -21,10 +21,11 @@ class StartController
     public function viewTasksPreparation(): void
     {
         $redis = new DataForRedis();
-        $login = $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login');
-        $password = $redis->getDataFileForTaskByUser($_SESSION["userId"], 'password');
-
-        $html = new View(ViewPath::TasksPreparation, ['login' => $login, 'password' => $password]);
+        $html = new View(ViewPath::TasksPreparation, [
+                'login' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login'),
+                'password' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'password')
+            ]
+        );
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
         (new Response((string)$templateWithContent))->echo();
     }
