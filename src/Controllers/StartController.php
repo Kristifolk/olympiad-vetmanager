@@ -7,7 +7,6 @@ use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
 
-session_start();
 
 class StartController
 {

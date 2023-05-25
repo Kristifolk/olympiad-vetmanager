@@ -345,8 +345,7 @@ class PercentageCompletion
         return (bool)$medicalCard;
     }
 
-    /**
-     */
+
     private function checkTextTemplateIsAdded(?MedicalCard $medicalCard): bool
     {
         if (is_null($medicalCard)) {

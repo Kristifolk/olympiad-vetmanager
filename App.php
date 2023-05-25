@@ -12,6 +12,7 @@ use App\Services\Task\UpdateData;
 use App\Services\View;
 use App\Services\ViewPath;
 
+session_start();
 
 if (isset($_SERVER['REQUEST_URI'])) {
     try {

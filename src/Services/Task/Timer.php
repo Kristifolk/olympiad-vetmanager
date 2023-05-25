@@ -4,7 +4,6 @@ namespace App\Services\Task;
 
 use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
-session_start();
 
 class Timer
 {

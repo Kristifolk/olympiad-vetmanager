@@ -10,8 +10,6 @@ use App\Services\View;
 use App\Services\ViewPath;
 use Exception;
 
-session_start();
-
 class AuthorizationController
 {
     public function viewAuthentication(): void
