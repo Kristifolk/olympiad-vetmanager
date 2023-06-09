@@ -1,16 +1,19 @@
 /*SEARCH*/
 
-document.addEventListener('keyup', search);
+document.querySelector("#inputSearch").addEventListener('keyup', search);
 
 function search() {
     let input = document.querySelector("#inputSearch");
     let filter = input.value.toUpperCase();
     let div = document.querySelector("#content-table");
+
+    let chosenVariant = document.querySelector("#searchVariant").value;
+
     let article = div.getElementsByTagName("article");
 
     for (let i = 0; i < article.length; i++) {
         let span = article[i].getElementsByTagName("span")[0];
-        if (span.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        if (span.innerHTML.toUpperCase().indexOf(filter) >= 0 && (chosenVariant === '0' || chosenVariant === article[i].getElementsByTagName("span")[1].innerHTML)) {
             article[i].style.display = "";
         } else {
             article[i].style.display = "none";
@@ -21,6 +24,8 @@ function search() {
 document.querySelector("#searchVariant").addEventListener('change', function (e) {
     let div = document.querySelector("#content-table");
     let article = div.getElementsByTagName("article");
+    let input = document.querySelector("#inputSearch");
+    input.value = "";
 
     for (let i = 0; i < article.length; i++) {
         let span = article[i].getElementsByTagName("span")[1];
