@@ -18,6 +18,45 @@ function search() {
     }
 }
 
+document.querySelector("#searchVariant").addEventListener('change', function (e) {
+    let div = document.querySelector("#content-table");
+    let article = div.getElementsByTagName("article");
+
+    for (let i = 0; i < article.length; i++) {
+        let span = article[i].getElementsByTagName("span")[1];
+
+        if (e.target.value == span.innerHTML) {
+            article[i].style.display = "";
+        } else {
+            if (e.target.value == 0) {
+                article[i].style.display = "";
+            } else {
+                article[i].style.display = "none";
+            }
+        }
+    }
+})
+
+document.querySelector("#sortBy").addEventListener('change', function (e) {
+    console.log("Changed to: " + e.target.value);
+    let div = document.querySelector("#content-table");
+    let article = div.getElementsByTagName("article");
+
+    for (let i = 0; i < article.length; i++) {
+        let span = article[i].getElementsByTagName("span")[2];
+
+        if (e.target.value == span.innerHTML && article[i].style.display == "") {
+            article[i].style.display = "";
+        } else {
+            if (e.target.value == 0) {
+                article[i].style.display = "";
+            } else {
+                article[i].style.display = "none";
+            }
+        }
+    }
+})
+
 /*AUTHORIZATION*/
 
 async function fetchAndViewAuthorization() {

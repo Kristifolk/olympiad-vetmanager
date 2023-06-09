@@ -41,6 +41,7 @@ class AuthorizationController
         $loginAndPassword = $dataForJonFile->getLoginAndPasswordAndTemplateForUserId($userId);
         $template = $dataForJonFile->getTemplateTask();
         $testData = (new TaskCollection($template))->generateData();
+        $variant = ["variant" => (string)rand(1, 2)];
 
         $fullNameParticipant = [
             "firstName" => $firstName,
@@ -48,7 +49,7 @@ class AuthorizationController
             "middleName" => $middleName
         ];
 
-        $userData = array_merge($fullNameParticipant, $loginAndPassword, $testData);
+        $userData = array_merge($fullNameParticipant, $loginAndPassword, $testData, $variant);
         (new DataForRedis())->putNewDataFileForTaskArray($userId, $userData);
     }
 

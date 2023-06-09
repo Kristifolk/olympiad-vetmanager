@@ -6,13 +6,10 @@ use App\Services\Data\DataForRedis;
 use App\Services\Response;
 use App\Services\View;
 use App\Services\ViewPath;
-use JsonException;
 
 class AdminController
 {
-    /**
-     * @throws JsonException
-     */
+
     public function viewResult(): void
     {
         $dataResultUser = (new DataForRedis())->getDataAllUsers();

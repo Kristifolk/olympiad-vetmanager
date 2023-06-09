@@ -287,13 +287,30 @@ th, td {
 }
 
 .input-search {
-    width: 35%;
+    height: 25px;
 }
 
-.tr-failed-user{
+.select-search {
+    height: 34px;
+    background-color: transparent;
+}
+
+.tr-failed-user {
     background-color: rgb(249 27 27 / 22%);
 }
 
 #content-table {
     width: 100%;
+}
+
+.search-panel {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.item-search-panel {
+    display: flex;
+    width: 30%;
+    flex-direction: column;
 }

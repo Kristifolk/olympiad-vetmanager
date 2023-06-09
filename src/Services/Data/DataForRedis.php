@@ -47,7 +47,6 @@ class DataForRedis
         $this->predis->hset('user:' . $userId, $userData, $value);
     }
 
-
     public function putNewDataFileForTaskArray(int $userId, array $userData): void
     {
         foreach ($userData as $key => $value) {

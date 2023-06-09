@@ -24,6 +24,7 @@ class TasksController
     {
         return match ($this->idTask) {
             1 => ViewPath::FirstTypeTask,
+            2 => ViewPath::SecondTypeTask,
             default => throw new InvalidArgumentException()
         };
     }

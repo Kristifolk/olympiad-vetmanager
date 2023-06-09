@@ -6,6 +6,7 @@ enum ViewPath: string
     case Start = __DIR__ . "/../../view/start.php";
     case TasksPreparation = __DIR__ . "/../../view/tasks_preparation.php";
     case FirstTypeTask = __DIR__ . "/../../view/type_task/first_type_task.php";
+    case SecondTypeTask = __DIR__ . "/../../view/type_task/second_type_task.php";
     case Result = __DIR__ . "/../../view/result.php";
     case EndTime = __DIR__ . "/../../view/end_time.php";
     case NotFound = __DIR__ . "/../../view/not_found.php";
