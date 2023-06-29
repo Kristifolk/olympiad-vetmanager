@@ -23,9 +23,9 @@ class AuthorizationController
     /**
      * @throws Exception
      */
-    public function registerUser(string $firstName, string $lastName, string $middleName): void
+    public function registerUser(string $firstName, string $lastName, string $middleName, string $email): void
     {
-        if (empty($firstName) || empty($lastName) || empty($middleName)) {
+        if (empty($firstName) || empty($lastName) || empty($middleName) || empty($email)) {
             throw new Exception('Not valid user data');
         }
 
@@ -46,7 +46,8 @@ class AuthorizationController
         $fullNameParticipant = [
             "firstName" => $firstName,
             "lastName" => $lastName,
-            "middleName" => $middleName
+            "middleName" => $middleName,
+            "email" => $email
         ];
 
         $userData = array_merge($fullNameParticipant, $loginAndPassword, $testData, $variant);

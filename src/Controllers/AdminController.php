@@ -24,7 +24,7 @@ class AdminController
         $result = 0;
 
         foreach ($data as $value) {
-            if ($value[2]["done"] == "true") {
+            if (isset($value[2]["done"]) && $value[2]["done"] == "true") {
                 $result += $value[2]["marks"];
             }
         }

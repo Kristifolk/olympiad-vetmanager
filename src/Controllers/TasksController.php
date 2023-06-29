@@ -48,6 +48,7 @@ class TasksController
                 'animalName' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'alias:meaning'),
                 'animalColor' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'color:meaning'),
                 'animalAge' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'dateOfBirth:meaning'),
+                'gender' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'gender:meaning'),
                 'breed' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'breed:meaning'),
                 'login' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'login'),
                 'password' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'password')

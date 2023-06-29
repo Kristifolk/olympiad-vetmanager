@@ -15,7 +15,4 @@
             <a class="btn btn-for-a btn-start" href="/">Назад</a>
         </div>
     </div>
-    <?php if (!empty($this->arguments)): ?>
-        <?= $this->arguments["modal"] ?>
-    <?php endif ?>
 </section>

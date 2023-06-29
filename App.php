@@ -22,7 +22,8 @@ if (isset($_SERVER['REQUEST_URI'])) {
             '/authorization_participant' => (new AuthorizationController())->registerUser(
                 trim($_POST['last-name']),
                 trim($_POST['first-name']),
-                trim($_POST['middle-name'])
+                trim($_POST['middle-name']),
+                trim($_POST['email'])
             ),
             '/tasks_preparation' => (new StartController())->viewTasksPreparation(),
             '/start' => (new Timer())->startTimer(),

@@ -33,6 +33,7 @@
                     </h3>
                     <h3 class="login-container">Логин
                         <?= $value["login"] ?></h3>
+                    <h3>Email <?= $value["email"] ?></h3>
                     <h3>Вариант: <span><?= $value["variant"] ?></span></h3>
                     <table class="table-admin">
                         <tr>

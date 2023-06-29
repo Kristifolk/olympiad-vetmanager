@@ -79,23 +79,44 @@ function validateInputUser() {
     let lastNameInput = document.querySelector("#last-name");
     let firstNameInput = document.querySelector("#first-name");
     let middleNameInput = document.querySelector("#middle-name");
+    let emailInput = document.querySelector("#email");
 
-    if(lastNameInput.value === "") {
-        lastNameInput.placeholder = "Введиете свою фамилию!";
+    if (lastNameInput.value === "") {
+        lastNameInput.placeholder = "Введите свою фамилию!";
         lastNameInput.style.borderColor = "red";
+    } else {
+        lastNameInput.style.borderColor = "green";
     }
 
-    if(firstNameInput.value === "") {
-        firstNameInput.placeholder = "Введиете своё имя!";
+    if (firstNameInput.value === "") {
+        firstNameInput.placeholder = "Введите своё имя!";
         firstNameInput.style.borderColor = "red";
+    } else {
+        firstNameInput.style.borderColor = "green";
     }
 
-    if(middleNameInput.value === "") {
-        middleNameInput.placeholder = "Введиете своё отчетсво!";
+    if (middleNameInput.value === "") {
+        middleNameInput.placeholder = "Введите своё отчетсво!";
         middleNameInput.style.borderColor = "red";
+    } else {
+        middleNameInput.style.borderColor = "green";
     }
 
-    if(lastNameInput.value !== "" && firstNameInput.value !== "" && middleNameInput.value !== "") {
+    if (emailInput.value === "") {
+        emailInput.placeholder = "Введите Email!";
+        emailInput.style.borderColor = "red";
+    } else if (validEmail(emailInput.value.trim()) === false) {
+        emailInput.style.borderColor = "red";
+    } else {
+        emailInput.style.borderColor = "green";
+    }
+
+    if (lastNameInput.value !== "" && firstNameInput.value !== "" && middleNameInput.value !== "") {
         fetchAndViewAuthorization().then(r => "");
     }
+}
+
+function validEmail(email) {
+    let regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    return regex.test(email);
 }

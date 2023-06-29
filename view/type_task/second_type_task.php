@@ -14,10 +14,10 @@
     <p>В клинику «Котопес» пришел на первичный прием
         <span class="changeable-text"><?= $this->arguments['fullNameClient'] ?></span>
         с купоном «Я профессионал»
-        <?php if ($_SESSION['AnimalGender'] === "female") : ?>
+        <?php if ($this->arguments['gender'] === "female") : ?>
             <?= "своей любимой собакой" ?>
         <?php endif ?>
-        <?php if ($_SESSION['AnimalGender'] === "male") : ?>
+        <?php if ($this->arguments['gender'] === "male") : ?>
             <?= "своим любимым псом" ?>
         <?php endif ?>
         по кличке
