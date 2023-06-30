@@ -12,6 +12,7 @@ use Exception;
 
 class AuthorizationController
 {
+
     public function viewAuthentication(): void
     {
         $this->defaultSessionData();
@@ -20,9 +21,7 @@ class AuthorizationController
         (new Response((string)$templateWithContent))->echo();
     }
 
-    /**
-     * @throws Exception
-     */
+    /** @throws Exception */
     public function registerUser(string $firstName, string $lastName, string $middleName, string $email): void
     {
         if (empty($firstName) || empty($lastName) || empty($middleName) || empty($email)) {

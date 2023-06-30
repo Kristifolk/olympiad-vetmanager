@@ -51,18 +51,14 @@ class DataForJonFile
     }
 
 
-    /**
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function getLoginAndPasswordAndTemplateForUserId(int $userId): array
     {
         $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_ACCOUNT_PATH);
         return $arrayLoginAndPassword[(string)$userId];
     }
 
-    /**
-     * @throws JsonException
-     */
+    /** @throws JsonException */
     public function getTemplateTask(): array
     {
         return $this->getDataFromJsonFile(TASK_TEMPLATE_DATA);

@@ -1,3 +1,10 @@
+<?php
+
+use App\Services\View;
+
+/** @var View $this */
+?>
+
 <h2 class="header-task">Панель администратора<span class="task-number" hidden="hidden">1</span></h2>
 <div class="container-task container container-admin">
     <div class="search-panel">

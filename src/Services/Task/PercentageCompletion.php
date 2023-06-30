@@ -1,4 +1,4 @@
-<?php /** @noinspection PhpSameParameterValueInspection */
+<?php
 declare(strict_types=1);
 
 namespace App\Services\Task;
@@ -25,7 +25,9 @@ class PercentageCompletion
     private int $numberOfTasksCompleted = 0;
     private int $numberOfTasksFailed = 0;
 
-    /** @throws VetmanagerApiGatewayRequestException */
+    /**
+     * @throws VetmanagerApiGatewayRequestException
+     */
     public function __construct()
     {
         $this->apiGateway = ApiGateway::fromDomainAndApiKey(

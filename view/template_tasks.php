@@ -1,3 +1,10 @@
+<?php
+
+use App\Services\View;
+
+/** @var View $this */
+?>
+
 <section class="container">
     <div id="content-task">
         <?= $this->arguments['task'] ?>

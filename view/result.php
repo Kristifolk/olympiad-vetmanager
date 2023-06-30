@@ -1,3 +1,10 @@
+<?php
+
+use App\Services\View;
+
+/** @var View $this */
+?>
+
 <section class="container" style="max-width: 670px;">
     <h2><?= $this->arguments['login'] ?></h2>
     <div>

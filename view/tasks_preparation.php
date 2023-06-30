@@ -1,3 +1,10 @@
+<?php
+
+use App\Services\View;
+
+/** @var View $this */
+?>
+
 <section class="container">
     <h2>Подготовка к прохождению олимпиады</h2>
     <div>

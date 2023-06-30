@@ -3,11 +3,10 @@
 namespace App\Services\Task;
 
 
-use AllowDynamicProperties;
 use App\Services\Data\DataForJonFile;
 use JsonException;
 
-#[AllowDynamicProperties] class TaskCollection
+class TaskCollection
 {
     private string $clientFullName;
 

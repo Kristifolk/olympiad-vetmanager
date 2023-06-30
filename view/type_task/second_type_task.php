@@ -1,3 +1,10 @@
+<?php
+
+use App\Services\View;
+
+/** @var View $this */
+?>
+
 <h2 class="header-task">Задание тип<span class="task-number" hidden="hidden">2</span></h2>
 <div class="container-task">
     <p class="section-title">Сведения об организации</p>
