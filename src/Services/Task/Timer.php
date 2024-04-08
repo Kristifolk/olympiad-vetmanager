@@ -8,7 +8,7 @@ use VetmanagerApiGateway\Exception\VetmanagerApiGatewayException;
 
 class Timer
 {
-    public function startTimer(): void
+    public function startTimer(): never
     {
         $variant = (new DataForRedis())->getDataFileForTaskByUser($_SESSION["userId"], 'variant');
 
@@ -20,6 +20,7 @@ class Timer
             $_SESSION["StartTime"] = time();
             header('Location: /task?id=2');
         }
+        exit();
     }
 
     /**
@@ -42,19 +43,21 @@ class Timer
     /**
      * @throws VetmanagerApiGatewayException
      */
-    public function storeTaskValueForResult(): void
+    public function storeTaskValueForResult(): never
     {
         $this->storeValue();
         header('Location: /result');
+        exit();
     }
 
     /**
      * @throws VetmanagerApiGatewayException
      */
-    public function storeTaskValueForEndTime(): void
+    public function storeTaskValueForEndTime(): never
     {
         $this->storeValue();
         header('Location: /end_time');
+        exit();
     }
 
     /**
@@ -62,8 +65,9 @@ class Timer
      */
     private function storeValue(): void
     {
-        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
-        (new PercentageCompletion())->storePercentageCompletionIntoRedis();
+        $userId = (int)$_SESSION["userId"];
+        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents($userId) . '%';
+        (new PercentageCompletion())->calculateResultsForUserAndStore($userId);
         $_SESSION["TimeEndTask"] = $this->getTimerAsArray();
     }
 

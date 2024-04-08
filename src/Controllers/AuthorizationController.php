@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\DTO\JSON\ErrorResponse;
+use App\DTO\JSON\SuccessResponse;
 use App\Services\Data\DataForJonFile;
 use App\Services\Data\DataForRedis;
 use App\Services\Response;
@@ -13,29 +15,37 @@ use Exception;
 class AuthorizationController
 {
 
-    public function viewAuthentication(): void
+    public function viewAuthentication(): never
     {
         $this->defaultSessionData();
         $html = new View(ViewPath::ModalAuthorizationWindow);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 
     /** @throws Exception */
-    public function registerUser(string $firstName, string $lastName, string $middleName, string $email): void
+    public function registerUser(string $firstName, string $lastName, string $middleName, string $email): never
     {
-        if (empty($firstName) || empty($lastName) || empty($middleName) || empty($email)) {
-            throw new Exception('Not valid user data');
+        try {
+            if (empty($firstName) || empty($lastName) || empty($middleName) || empty($email)) {
+                throw new \Exception('Not valid user data');
+            }
+        } catch (\Throwable $throwable) {
+            (new ErrorResponse($throwable->getMessage()))->displayAndStopPhp();
         }
 
         $dataForJonFile = new DataForJonFile();
 
-        $userId = $dataForJonFile->getAvailableUserId();
-        $_SESSION["userId"] = $userId;
+        try {
+            $userId = $dataForJonFile->getAvailableUserId();
 
-        if (empty($userId)) {
-            throw new Exception('No logins available');
+            if (empty($userId)) {
+                (new ErrorResponse('No logins available'))->displayAndStopPhp();
+            }
+        } catch (\Throwable $throwable) {
+            (new ErrorResponse($throwable->getMessage()))->displayAndStopPhp();
         }
+        $_SESSION["userId"] = $userId;
 
         $loginAndPassword = $dataForJonFile->getLoginAndPasswordAndTemplateForUserId($userId);
         $template = $dataForJonFile->getTemplateTask();
@@ -51,6 +61,7 @@ class AuthorizationController
 
         $userData = array_merge($fullNameParticipant, $loginAndPassword, $testData, $variant);
         (new DataForRedis())->putNewDataFileForTaskArray($userId, $userData);
+        (new SuccessResponse())->displayAndStopPhp();
     }
 
     private function defaultSessionData(): void

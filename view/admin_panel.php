@@ -142,6 +142,19 @@ use App\Services\View;
                             <?php $countMarks += (float)$value["type:marks"]; ?>
                         <?php endif ?>
 
+                        <tr <?php if ($value["text_template:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                            <td><?= $i++ ?></td>
+                            <td><?= $value["text_template:title"] ?>
+                                <?php if (isset($value["text_template:meaning"])) : ?>
+                                    (<?= $value["text_template:meaning"] ?>)
+                                <?php endif; ?></td>
+                            <td><?= $value["text_template:marks"] ?></td>
+                            <td><?= $value["text_template:done"] ?></td>
+                        </tr>
+                        <?php if ($value["text_template:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["text_template:marks"]; ?>
+                        <?php endif ?>
+
                         <tr <?php if ($value["purpose_appointment:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
                             <td><?= $value["purpose_appointment:title"] ?>
@@ -155,18 +168,6 @@ use App\Services\View;
                             <?php $countMarks += (float)$value["purpose_appointment:marks"]; ?>
                         <?php endif ?>
 
-                        <tr <?php if ($value["text_template:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
-                            <td><?= $i++ ?></td>
-                            <td><?= $value["text_template:title"] ?>
-                                <?php if (isset($value["text_template:meaning"])) : ?>
-                                    (<?= $value["text_template:meaning"] ?>)
-                                <?php endif; ?></td>
-                            <td><?= $value["text_template:marks"] ?></td>
-                            <td><?= $value["text_template:done"] ?></td>
-                        </tr>
-                        <?php if ($value["text_template:done"] === "true") : ?>
-                            <?php $countMarks += (float)$value["text_template:marks"]; ?>
-                        <?php endif ?>
 
                         <tr <?php if ($value["result_appointment:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
@@ -207,69 +208,108 @@ use App\Services\View;
                             <?php $countMarks += (float)$value["type_animal_diagnosis:marks"]; ?>
                         <?php endif ?>
 
-                        <tr <?php if ($value["appointment_invoice:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                        <tr <?php if ($value["initial_appointment:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
-                            <td><?= $value["appointment_invoice:title"] ?>
-                                <?php if (isset($value["appointment_invoice:meaning"])) : ?>
-                                    (<?= $value["appointment_invoice:meaning"] ?>)
+                            <td><?= $value["initial_appointment:title"] ?>
+                                <?php if (isset($value["initial_appointment:meaning"])) : ?>
+                                    (<?= $value["initial_appointment:meaning"] ?>)
                                 <?php endif; ?></td>
-                            <td><?= $value["appointment_invoice:marks"] ?></td>
-                            <td><?= $value["appointment_invoice:done"] ?></td>
+                            <td><?= $value["initial_appointment:marks"] ?></td>
+                            <td><?= $value["initial_appointment:done"] ?></td>
                         </tr>
-                        <?php if ($value["appointment_invoice:done"] === "true") : ?>
-                            <?php $countMarks += (float)$value["appointment_invoice:marks"]; ?>
+                        <?php if ($value["initial_appointment:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["initial_appointment:marks"]; ?>
                         <?php endif ?>
 
-                        <tr <?php if ($value["opening_of_abscess:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                        <tr <?php if ($value["quantity_initial_appointment:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
-                            <td><?= $value["opening_of_abscess:title"] ?>
-                                <?php if (isset($value["opening_of_abscess:meaning"])) : ?>
-                                    (<?= $value["opening_of_abscess:meaning"] ?>)
+                            <td><?= $value["quantity_initial_appointment:title"] ?>
+                                <?php if (isset($value["quantity_initial_appointment:meaning"])) : ?>
+                                    (<?= $value["quantity_initial_appointment:meaning"] ?>)
                                 <?php endif; ?></td>
-                            <td><?= $value["opening_of_abscess:marks"] ?></td>
-                            <td><?= $value["opening_of_abscess:done"] ?></td>
+                            <td><?= $value["quantity_initial_appointment:marks"] ?></td>
+                            <td><?= $value["quantity_initial_appointment:done"] ?></td>
                         </tr>
-                        <?php if ($value["opening_of_abscess:done"] === "true") : ?>
-                            <?php $countMarks += (float)$value["opening_of_abscess:marks"]; ?>
+                        <?php if ($value["quantity_initial_appointment:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["quantity_initial_appointment:marks"]; ?>
                         <?php endif ?>
 
-                        <tr <?php if ($value["sanitation_of_wound:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                        <tr <?php if ($value["skin_treatment:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
-                            <td><?= $value["sanitation_of_wound:title"] ?>
-                                <?php if (isset($value["sanitation_of_wound:meaning"])) : ?>
-                                    (<?= $value["sanitation_of_wound:meaning"] ?>)
+                            <td><?= $value["skin_treatment:title"] ?>
+                                <?php if (isset($value["skin_treatment:meaning"])) : ?>
+                                    (<?= $value["skin_treatment:meaning"] ?>)
                                 <?php endif; ?></td>
-                            <td><?= $value["sanitation_of_wound:marks"] ?></td>
-                            <td><?= $value["sanitation_of_wound:done"] ?></td>
+                            <td><?= $value["skin_treatment:marks"] ?></td>
+                            <td><?= $value["skin_treatment:done"] ?></td>
                         </tr>
-                        <?php if ($value["sanitation_of_wound:done"] === "true") : ?>
-                            <?php $countMarks += (float)$value["sanitation_of_wound:marks"]; ?>
+                        <?php if ($value["skin_treatment:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["skin_treatment:marks"]; ?>
                         <?php endif ?>
 
-                        <tr <?php if ($value["injection_analgesic_antipyretic:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                        <tr <?php if ($value["quantity_skin_treatment:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
-                            <td><?= $value["injection_analgesic_antipyretic:title"] ?>
-                                <?php if (isset($value["injection_analgesic_antipyretic:meaning"])) : ?>
-                                    (<?= $value["injection_analgesic_antipyretic:meaning"] ?>)
+                            <td><?= $value["quantity_skin_treatment:title"] ?>
+                                <?php if (isset($value["quantity_skin_treatment:meaning"])) : ?>
+                                    (<?= $value["quantity_skin_treatment:meaning"] ?>)
                                 <?php endif; ?></td>
-                            <td><?= $value["injection_analgesic_antipyretic:marks"] ?></td>
-                            <td><?= $value["injection_analgesic_antipyretic:done"] ?></td>
+                            <td><?= $value["quantity_skin_treatment:marks"] ?></td>
+                            <td><?= $value["quantity_skin_treatment:done"] ?></td>
                         </tr>
-                        <?php if ($value["injection_analgesic_antipyretic:done"] === "true") : ?>
-                            <?php $countMarks += (float)$value["injection_analgesic_antipyretic:marks"]; ?>
+                        <?php if ($value["quantity_skin_treatment:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["quantity_skin_treatment:marks"]; ?>
                         <?php endif ?>
 
-                        <tr <?php if ($value["payment_type:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                        <tr <?php if ($value["chlorhexidine_solution:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
                             <td><?= $i++ ?></td>
-                            <td><?= $value["payment_type:title"] ?>
-                                <?php if (isset($value["payment_type:meaning"])) : ?>
-                                    (<?= $value["payment_type:meaning"] ?>)
+                            <td><?= $value["chlorhexidine_solution:title"] ?>
+                                <?php if (isset($value["chlorhexidine_solution:meaning"])) : ?>
+                                    (<?= $value["chlorhexidine_solution:meaning"] ?>)
                                 <?php endif; ?></td>
-                            <td><?= $value["payment_type:marks"] ?></td>
-                            <td><?= $value["payment_type:done"] ?></td>
+                            <td><?= $value["chlorhexidine_solution:marks"] ?></td>
+                            <td><?= $value["chlorhexidine_solution:done"] ?></td>
                         </tr>
-                        <?php if ($value["payment_type:done"] === "true") : ?>
-                            <?php $countMarks += (float)$value["payment_type:marks"]; ?>
+                        <?php if ($value["chlorhexidine_solution:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["chlorhexidine_solution:marks"]; ?>
+                        <?php endif ?>
+
+                        <tr <?php if ($value["quantity_chlorhexidine_solution:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                            <td><?= $i++ ?></td>
+                            <td><?= $value["quantity_chlorhexidine_solution:title"] ?>
+                                <?php if (isset($value["quantity_chlorhexidine_solution:meaning"])) : ?>
+                                    (<?= $value["quantity_chlorhexidine_solution:meaning"] ?>)
+                                <?php endif; ?></td>
+                            <td><?= $value["quantity_chlorhexidine_solution:marks"] ?></td>
+                            <td><?= $value["quantity_chlorhexidine_solution:done"] ?></td>
+                        </tr>
+                        <?php if ($value["quantity_chlorhexidine_solution:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["quantity_chlorhexidine_solution:marks"]; ?>
+                        <?php endif ?>
+
+                        <tr <?php if ($value["payment_made:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                            <td><?= $i++ ?></td>
+                            <td><?= $value["payment_made:title"] ?>
+                                <?php if (isset($value["payment_made:meaning"])) : ?>
+                                    (<?= $value["payment_made:meaning"] ?>)
+                                <?php endif; ?></td>
+                            <td><?= $value["payment_made:marks"] ?></td>
+                            <td><?= $value["payment_made:done"] ?></td>
+                        </tr>
+                        <?php if ($value["payment_made:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["payment_made:marks"]; ?>
+                        <?php endif ?>
+
+                        <tr <?php if ($value["change_balance:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
+                            <td><?= $i++ ?></td>
+                            <td><?= $value["change_balance:title"] ?>
+                                <?php if (isset($value["change_balance:meaning"])) : ?>
+                                    (<?= $value["change_balance:meaning"] ?>)
+                                <?php endif; ?></td>
+                            <td><?= $value["change_balance:marks"] ?></td>
+                            <td><?= $value["change_balance:done"] ?></td>
+                        </tr>
+                        <?php if ($value["change_balance:done"] === "true") : ?>
+                            <?php $countMarks += (float)$value["change_balance:marks"]; ?>
                         <?php endif ?>
 
                         <tr <?php if ($value["add_coupon:done"] === "false") : ?>class="tr-failed-user" <?php else : ?> class="" <?php endif ?>>
@@ -305,3 +345,70 @@ use App\Services\View;
         <?php endif ?>
     </div>
 </div>
+
+<script>
+    /*SEARCH*/
+
+    document.querySelector("#inputSearch").addEventListener('keyup', search);
+
+    function search() {
+        let input = document.querySelector("#inputSearch");
+        let filter = input.value.toUpperCase();
+        let div = document.querySelector("#content-table");
+
+        let chosenVariant = document.querySelector("#searchVariant").value;
+
+        let article = div.getElementsByTagName("article");
+
+        for (let i = 0; i < article.length; i++) {
+            let span = article[i].getElementsByTagName("span")[0];
+            if (span.innerHTML.toUpperCase().indexOf(filter) >= 0 && (chosenVariant === '0' || chosenVariant === article[i].getElementsByTagName("span")[1].innerHTML)) {
+                article[i].style.display = "";
+            } else {
+                article[i].style.display = "none";
+            }
+        }
+    }
+
+    document.querySelector("#searchVariant").addEventListener('change', function (e) {
+        let div = document.querySelector("#content-table");
+        let article = div.getElementsByTagName("article");
+        let input = document.querySelector("#inputSearch");
+        input.value = "";
+
+        for (let i = 0; i < article.length; i++) {
+            let span = article[i].getElementsByTagName("span")[1];
+
+            if (e.target.value == span.innerHTML) {
+                article[i].style.display = "";
+            } else {
+                if (e.target.value == 0) {
+                    article[i].style.display = "";
+                } else {
+                    article[i].style.display = "none";
+                }
+            }
+        }
+    })
+
+    //закомментирован sortBy
+    document.querySelector("#sortBy").addEventListener('change', function (e) {
+        console.log("Changed to: " + e.target.value);
+        let div = document.querySelector("#content-table");
+        let article = div.getElementsByTagName("article");
+
+        for (let i = 0; i < article.length; i++) {
+            let span = article[i].getElementsByTagName("span")[2];
+
+            if (e.target.value == span.innerHTML && article[i].style.display == "") {
+                article[i].style.display = "";
+            } else {
+                if (e.target.value == 0) {
+                    article[i].style.display = "";
+                } else {
+                    article[i].style.display = "none";
+                }
+            }
+        }
+    })
+</script>

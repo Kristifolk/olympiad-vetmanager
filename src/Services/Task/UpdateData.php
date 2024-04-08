@@ -9,15 +9,18 @@ class UpdateData
     /**
      * @throws VetmanagerApiGatewayException
      */
-    public function updatePercentageCompletion(): void
+    public function updatePercentageCompletion(): never
     {
-        $string = (new PercentageCompletion())->checkCompletedTasksForUserInPercents();
+        $userId = $_SESSION['userId'];
+        $string = (new PercentageCompletion())->checkCompletedTasksForUserInPercents($userId);
         $_SESSION["ResultPercentage"] = $string . "%";
         echo $string;
+        exit();
     }
 
-    public function updateTimeForTimerJS(): void
+    public function updateTimeForTimerJS(): never
     {
         echo (new Timer())->getTimerAsString();
+        exit();
     }
 }

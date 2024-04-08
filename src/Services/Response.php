@@ -4,13 +4,14 @@ namespace App\Services;
 class Response
 {
     public function __construct(
-        private string $html,
+        private readonly string $html,
     )
     {
     }
 
-    public function echo(): void
+    public function echoAndDie(): never
     {
         echo $this->html;
+        exit();
     }
 }

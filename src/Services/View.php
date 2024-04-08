@@ -12,7 +12,7 @@ class View
 
     public function __toString(): string
     {
-        return $this->getRenderedFileAsString($this->viewPath->value);
+        return $this->getRenderedFileAsString(PROJECT_DIR . DIRECTORY_SEPARATOR . $this->viewPath->value);
     }
 
     /** Рендеринг страницы */

@@ -32,12 +32,11 @@ class TasksController
     /**
      * @throws VetmanagerApiGatewayException
      */
-    public function viewTask(): void
+    public function viewTask(): never
     {
-        $time = (new Timer())->getTimerAsArray();
         $path = $this->getView();
-        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents() . '%';
-
+        $userId = $_SESSION['userId'];
+        $_SESSION["ResultPercentage"] = (new PercentageCompletion())->checkCompletedTasksForUserInPercents($userId) . '%';
         $redis = new DataForRedis();
 
         $html = new View(
@@ -54,6 +53,8 @@ class TasksController
                 'password' => $redis->getDataFileForTaskByUser($_SESSION["userId"], 'password')
             ]
         );
+
+        $time = (new Timer())->getTimerAsArray();
         $timerHtml = new View(ViewPath::TimerContent,
             [
                 'minutes' => $time['minutes'],
@@ -75,6 +76,6 @@ class TasksController
         );
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $templateWithContentTask]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 }

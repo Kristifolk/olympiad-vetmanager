@@ -9,16 +9,16 @@ use App\Services\ViewPath;
 
 class ResultController
 {
-    public function viewEndTime(): void
+    public function viewEndTime(): never
     {
         $_SESSION["TimeEndTask"]["minutes"] = "25";
         $_SESSION["TimeEndTask"]["seconds"] = "00";
         $html = new View(ViewPath::EndTime);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 
-    public function viewResult(): void
+    public function viewResultForUser(): never
     {
         $html = new View(ViewPath::Result,
             [
@@ -33,7 +33,7 @@ class ResultController
         );
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 
     private function convertToPrettyString(string $time): string

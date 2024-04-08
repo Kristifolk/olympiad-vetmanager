@@ -3,19 +3,6 @@
 ###############################################################################
 version: '3.1'
 services:
-  mysql:
-        image: 'mysql:8.0'
-        working_dir: /application
-        volumes:
-            - '.:/application'
-        environment:
-            - MYSQL_ROOT_PASSWORD=user
-            - MYSQL_DATABASE=test_db
-            - MYSQL_USER=user
-            - MYSQL_PASSWORD=user
-        ports:
-          - '8082:3306'
-
   webserver:
     image: 'nginx:alpine'
     working_dir: /application
@@ -32,7 +19,6 @@ services:
     command: redis-server --save 600 1 --loglevel warning
   #        volumes:
   #            - redis:/data
-
   php-fpm:
     build: phpdocker/php-fpm
     working_dir: /application

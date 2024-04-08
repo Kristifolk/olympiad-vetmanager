@@ -10,13 +10,21 @@ use App\Services\ViewPath;
 class AdminController
 {
 
-    public function viewResult(): void
+    public function viewResult(): never
     {
         $dataResultUser = (new DataForRedis())->getDataAllUsers();
+
+//        foreach ($dataResultUser as $singleUserResult) {
+//            if() {
+//                $userId = $singleUserResult[];
+//                (new PercentageCompletion())->calculateResultsForUserAndStore($userId);
+//            }
+//        }
+
         $html = new View(ViewPath::AdminPanel, ['resultTask' => $dataResultUser, 'resultMarks' => $this->getResultTrueMarks((array)$dataResultUser)]);
 
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 
     private function getResultTrueMarks(array $data): float

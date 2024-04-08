@@ -7,7 +7,7 @@ use tFPDF;
 
 class CertificateController
 {
-    public function getCertificate(): void
+    public function getCertificate(): never
     {
         $pdf = new tFPDF('L', 'mm', 'A4');
         $pdf->AddPage();
@@ -20,9 +20,10 @@ class CertificateController
         $text = $allDataUser["firstName"] . " " . $allDataUser["lastName"] . " " . $allDataUser["middleName"];
         $pdf->Cell(40, 10, $text);
         $pdf->SetFont('DejaVu', '', 34);
-        $text = "Вы молодцы";
-        $pdf->Cell(40, 10, $text);
+        $text = "Вы молодец";
+        $pdf->Cell(40, 40, $text);
 
         $pdf->Output('D', 'certificate.pdf');
+        exit();
     }
 }

@@ -32,9 +32,9 @@ class DataForRedis
         return $data;
     }
 
-    public function getDataFileForTaskByUser(int $userId, string $userData): ?string
+    public function getDataFileForTaskByUser(int $userId, string $key): ?string
     {
-        return $this->predis->hget('user:' . $userId, $userData);
+        return $this->predis->hget('user:' . $userId, $key);
     }
 
     public function getDataFileForTaskByArray(int $userId): array

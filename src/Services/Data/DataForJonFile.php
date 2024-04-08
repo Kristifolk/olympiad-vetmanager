@@ -46,16 +46,19 @@ class DataForJonFile
         }
 
         $idUser = array_shift($availableUsersData["id"]);
-        file_put_contents(USER_AVAILABLE_PATH, json_encode($availableUsersData, JSON_UNESCAPED_UNICODE));
+        file_put_contents(USER_AVAILABLE_PATH, json_encode($availableUsersData, JSON_UNESCAPED_UNICODE));//перезапись файла availableUsers.json после того, как извлекли очередной id
         return $idUser;
     }
 
 
-    /** @throws JsonException */
+    /**
+     * @throws JsonException
+     */
     public function getLoginAndPasswordAndTemplateForUserId(int $userId): array
     {
-        $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_ACCOUNT_PATH);
-        return $arrayLoginAndPassword[(string)$userId];
+        // Парсит файл и возвращает массив со всеми логинами и паролями
+        $arrayLoginAndPassword = $this->getDataFromJsonFile(USER_ACCOUNT_PATH); // [..."5" => ["login" => "admin4", "password" => "EmXMVswUg2"], ...]
+        return $arrayLoginAndPassword[(string)$userId]; // ["login" => "admin4", "password" => "EmXMVswUg2"]
     }
 
     /** @throws JsonException */

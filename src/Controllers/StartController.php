@@ -14,10 +14,10 @@ class StartController
     {
         $html = (string)new View(ViewPath::Start);
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 
-    public function viewTasksPreparation(): void
+    public function viewTasksPreparation(): never
     {
         $redis = new DataForRedis();
         $html = new View(ViewPath::TasksPreparation, [
@@ -26,6 +26,6 @@ class StartController
             ]
         );
         $templateWithContent = new View(ViewPath::TemplateContent, ['content' => $html]);
-        (new Response((string)$templateWithContent))->echo();
+        (new Response((string)$templateWithContent))->echoAndDie();
     }
 }

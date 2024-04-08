@@ -20,6 +20,5 @@ use App\Services\View;
 <main id="app" >
     <?= $this->arguments['content'] ?>
 </main>
-<script src="/resources/js/main.js"></script>
 </body>
 </html>

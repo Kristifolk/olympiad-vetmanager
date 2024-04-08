@@ -11,7 +11,7 @@
     "vlucas/phpdotenv": "^5.5",
     "ext-pdo": "*",
     "guzzlehttp/guzzle": "^7.0",
-    "ioncurly/vetmanager-api-gateway": "dev-master",
+    "ioncurly/vetmanager-api-gateway": "^2",
     "predis/predis": "^2.1",
     "setasign/tfpdf": "1.33"
   },
@@ -21,6 +21,5 @@
     }
   },
   "require-dev": {
-    "vimeo/psalm": "^5.13"
   }
 }

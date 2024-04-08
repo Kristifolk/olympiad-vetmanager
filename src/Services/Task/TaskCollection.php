@@ -8,11 +8,10 @@ use JsonException;
 
 class TaskCollection
 {
-    private string $clientFullName;
-
-    public function __construct(array $template)
+    public function __construct(
+        public array $template,
+    )
     {
-        $this->template = $template;
     }
 
     /**
@@ -31,7 +30,7 @@ class TaskCollection
 
     private function generateDiagnose(): void
     {
-        $this->template["animal_diagnosis:meaning"] = "Абсцесс";
+        $this->template["animal_diagnosis:meaning"] = "Кошачье акне";
     }
 
     private function generateAnimalAge(): void
@@ -69,14 +68,18 @@ class TaskCollection
         $patronymicClient = $patronymicClientArray[rand(0, count($patronymicClientArray) - 1)];
 
         $this->template["add_client:meaning"] = $surnameClient . " " . $nameClient . " " . $patronymicClient;
-        $this->clientFullName = $this->template["add_client:meaning"];
         $this->generateLastAndFirstNameClient();
     }
 
     private function generateLastAndFirstNameClient(): void
     {
-        $fullName = explode(" ", $this->clientFullName);
+        $fullName = explode(" ", $this->clientFullName());
         $_SESSION['LastAndFirstNameClient'] = $fullName[1] . " " . $fullName[2];
+    }
+
+    private function clientFullName(): string
+    {
+        return $this->template["add_client:meaning"];
     }
 
     /**
@@ -148,9 +151,9 @@ class TaskCollection
             'Русаков',
             'Шилов',
             'Антонов',
-            'Абрамов ',
-            'Дмитриев ',
-            'Терентьевталий ',
+            'Абрамов',
+            'Дмитриев',
+            'Теребов',
             'Зимин',
             'Жуков',
             'Бобылёв',
@@ -159,7 +162,7 @@ class TaskCollection
             'Данилов',
             'Панов',
             'Агафонов',
-            'Большаковвид',
+            'Большаков',
             'Галкин',
             'Галкин',
             'Мамонтов',
@@ -228,46 +231,46 @@ class TaskCollection
     private function dataAnimalName(): array
     {
         return [
-            ['alias' => 'Фира', 'gender' => 'female'],
-            ['alias' => 'Лейла', 'gender' => 'female'],
-            ['alias' => 'Сьюзен', 'gender' => 'female'],
-            ['alias' => 'Айрис', 'gender' => 'female'],
-            ['alias' => 'Аврора', 'gender' => 'female'],
-            ['alias' => 'Галилея', 'gender' => 'female'],
-            ['alias' => 'Шанси', 'gender' => 'female'],
-            ['alias' => 'Рута', 'gender' => 'female'],
-            ['alias' => 'Фабби', 'gender' => 'female'],
-            ['alias' => 'Вента', 'gender' => 'female'],
-            ['alias' => 'Ронда', 'gender' => 'female'],
-            ['alias' => 'Окки', 'gender' => 'female'],
-            ['alias' => 'Шкода', 'gender' => 'female'],
-            ['alias' => 'Лисичка', 'gender' => 'female'],
-            ['alias' => 'Соня', 'gender' => 'female'],
-            ['alias' => 'Вира', 'gender' => 'female'],
-            ['alias' => 'Абель', 'gender' => 'female'],
-            ['alias' => 'Юша', 'gender' => 'female'],
-            ['alias' => 'Гретхен', 'gender' => 'female'],
-            ['alias' => 'Шелби', 'gender' => 'female'],
-            ['alias' => 'Сайга', 'gender' => 'female'],
-            ['alias' => 'Валгала', 'gender' => 'female'],
-            ['alias' => 'Диана', 'gender' => 'female'],
-            ['alias' => 'Ямайка', 'gender' => 'female'],
-            ['alias' => 'Ямми', 'gender' => 'female'],
-            ['alias' => 'Булка', 'gender' => 'female'],
-            ['alias' => 'Виоль', 'gender' => 'female'],
-            ['alias' => 'Рошель', 'gender' => 'female'],
-            ['alias' => 'Ильда', 'gender' => 'female'],
-            ['alias' => 'Анжи', 'gender' => 'female'],
-            ['alias' => 'Омега', 'gender' => 'female'],
-            ['alias' => 'Зайка', 'gender' => 'female'],
-            ['alias' => 'Гаара', 'gender' => 'female'],
-            ['alias' => 'Веселина', 'gender' => 'female'],
-            ['alias' => 'Сильва', 'gender' => 'female'],
-            ['alias' => 'Верна', 'gender' => 'female'],
-            ['alias' => 'Рони', 'gender' => 'female'],
-            ['alias' => 'Джеси', 'gender' => 'female'],
-            ['alias' => 'Йошка', 'gender' => 'female'],
-            ['alias' => 'Микаелла', 'gender' => 'female']
+            ['alias' => 'Aдaм', 'gender' => 'male'],
+            ['alias' => 'Aдoльф', 'gender' => 'male'],
+            ['alias' => 'Бaрс', 'gender' => 'male'],
+            ['alias' => 'Бaрри', 'gender' => 'male'],
+            ['alias' => 'Брут', 'gender' => 'male'],
+            ['alias' => 'Вoльт', 'gender' => 'male'],
+            ['alias' => 'Гaрфилд', 'gender' => 'male'],
+            ['alias' => 'Гaрри', 'gender' => 'male'],
+            ['alias' => 'Гeрaльд', 'gender' => 'male'],
+            ['alias' => 'Джo', 'gender' => 'male'],
+            ['alias' => 'Жeрaр', 'gender' => 'male'],
+            ['alias' => 'Жoрa', 'gender' => 'male'],
+            ['alias' => 'Зeвс', 'gender' => 'male'],
+            ['alias' => 'Зeфир', 'gender' => 'male'],
+            ['alias' => 'Изюм', 'gender' => 'male'],
+            ['alias' => 'Ирис', 'gender' => 'male'],
+            ['alias' => 'Кaй', 'gender' => 'male'],
+            ['alias' => 'Каспер', 'gender' => 'male'],
+            ['alias' => 'Клaус', 'gender' => 'male'],
+            ['alias' => 'Лукaс', 'gender' => 'male'],
+            ['alias' => 'Люк', 'gender' => 'male'],
+            ['alias' => 'Лeo', 'gender' => 'male'],
+            ['alias' => 'Луис', 'gender' => 'male'],
+            ['alias' => 'Мaрс', 'gender' => 'male'],
+            ['alias' => 'Мэтт', 'gender' => 'male'],
+            ['alias' => 'Нильс', 'gender' => 'male'],
+            ['alias' => 'Нуaр', 'gender' => 'male'],
+            ['alias' => 'Оджи', 'gender' => 'male'],
+            ['alias' => 'Олaф', 'gender' => 'male'],
+            ['alias' => 'Оливeр', 'gender' => 'male'],
+            ['alias' => 'Орбит', 'gender' => 'male'],
+            ['alias' => 'Оскaр', 'gender' => 'male'],
+            ['alias' => 'Остин', 'gender' => 'male'],
+            ['alias' => 'Пaтрик', 'gender' => 'male'],
+            ['alias' => 'Пeпeр', 'gender' => 'male'],
+            ['alias' => 'Пoтaп', 'gender' => 'male'],
+            ['alias' => 'Рaлли', 'gender' => 'male'],
+            ['alias' => 'Рaфик', 'gender' => 'male'],
+            ['alias' => 'Сириус', 'gender' => 'male'],
+            ['alias' => 'Цeзaрь', 'gender' => 'male']
         ];
     }
 
@@ -283,7 +286,7 @@ class TaskCollection
             ['nominativeBase' => 'палевый', 'genitiveBase' => 'палевого'],
             ['nominativeBase' => 'персиковый', 'genitiveBase' => 'персикового'],
             ['nominativeBase' => 'разнообразный', 'genitiveBase' => 'разнообразного'],
-            ['nominativeBase' => 'рыжий', 'genitiveBase' => 'рыжого'],
+            ['nominativeBase' => 'рыжий', 'genitiveBase' => 'рыжего'],
             ['nominativeBase' => 'серебристый', 'genitiveBase' => 'серебристого'],
             ['nominativeBase' => 'серый', 'genitiveBase' => 'серого'],
             ['nominativeBase' => 'тигровый', 'genitiveBase' => 'тигрового'],
